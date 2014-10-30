@@ -37,7 +37,7 @@ include('header.php');
 		
 		<!-- Message reporting and action logging -->
 		<?php
-		session_start();
+		session_start();		
 		locationSetter();			
 
 		// 
@@ -148,7 +148,7 @@ include('header.php');
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<p>
-						<a href="/forms/ref_stats/crud/list.php"><button type="button" class="btn btn-sm btn-info">Make Changes</button></a>
+						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-info">Edit Transactions</button></a>
 						<a href="#" onclick="window.open('./index.php','ref_stats','menubar=0,resizable=0,width=350,height=880');"><button type="button" class="btn btn-sm btn-info">Launch Pop-Up</button></a>
 					</p>
 				</div>

@@ -11,7 +11,10 @@
 	<script src="../inc/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
 
 	<!-- Local JS -->
-	<script src="../inc/functions.js"></script>
+	<script src="../inc/functions.js"></script>	
+
+	<!-- CRUD css -->
+	<link rel="stylesheet" href="crud.css">	
 	
 </head>
 

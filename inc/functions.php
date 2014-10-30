@@ -106,8 +106,12 @@ function statsGraph($link){
 
 }
 
-
-
+// reference type
+$ref_type_hash = array(
+	1 => "Directional",
+	2 => "Brief Reference",
+	3 => "Extended Reference"
+)
 
 
 
