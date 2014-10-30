@@ -1,0 +1,57 @@
+input[name="type"] {
+	display: none;
+}
+
+.container {
+	margin-top:20px;
+	max-width: 554px;
+	min-width:320px;
+}
+
+.row-fluid {
+    margin-bottom: 10px;
+}
+
+#header {
+	text-align:center;
+}
+
+#feedback{
+	height:20px;	
+	text-align:center;
+	clear:both;			
+}
+
+#logo{
+	height:75px;
+}
+
+#msg{
+	margin:0px;
+	padding:0px;
+}
+
+.actions {
+	margin-top: 30px;
+}
+
+#ref_actions {
+	text-align:center;
+}
+
+#ref_actions div {
+	margin-top:15px;
+}
+
+#refreport table{
+	font-family:"Lucida Console", Monaco, monospace;
+}
+
+#refreport table td{
+	border-top:none;
+	padding:0px;		
+}
+
+.time_col{
+	width:40px;
+}

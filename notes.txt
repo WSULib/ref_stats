@@ -1,0 +1,12 @@
+Database: data_counts
+Table: ref_stats
+
+SQL:
+CREATE TABLE `ref_stats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ref_type` int(11) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `ip` varchar(45) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=437 DEFAULT CHARSET=latin1
