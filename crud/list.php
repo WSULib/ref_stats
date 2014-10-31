@@ -41,7 +41,7 @@ $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 				<h2>Reference Statistics Management</h2>
 				<p>					
 					<a class="btn btn-info" href="../index.php">Back to refStats</a></p>
-				</p>
+				</p>				
 			</div>
 		</div>
 		
