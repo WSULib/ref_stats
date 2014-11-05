@@ -30,17 +30,14 @@
 
 /* green --> yellow --> red tallies */
 .ref_type_1 {
-	color:#009700; 
 	color:#67BF67; 
 }
 
 .ref_type_2 {
-	color:#FFE800; 
 	color:#EFE581; 
 }
 
 .ref_type_3 {
-	color:#BD0900;
 	color:#EF8681;
 }
 

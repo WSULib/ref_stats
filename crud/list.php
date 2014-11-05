@@ -117,7 +117,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 						foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
 						echo "<tr>";  
 						echo "<td>" . nl2br( $row['id']) . "</td>";  
-						echo "<td>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
+						echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
 						echo "<td>" . nl2br( $row['location']) . "</td>";  
 						echo "<td>" . nl2br( $row['ip']) . "</td>";  
 						echo "<td>" . nl2br( $row['print_timestamp']) . "</td>";  
