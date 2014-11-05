@@ -27,7 +27,7 @@ else {
 }					
 
 // perform query
-$query = "SELECT id, ref_type, location, ip, DATE_FORMAT(timestamp, '%r') AS print_timestamp, UNIX_TIMESTAMP(timestamp) as sort_timestamp FROM ref_stats WHERE DATE(timestamp) = DATE_ADD(CURDATE(), INTERVAL $page DAY) AND $location_where ORDER BY sort_timestamp DESC";
+$query = "SELECT id, ref_type, location, ip, DATE_FORMAT(timestamp, '%r') AS print_timestamp, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) = DATE_ADD(CURDATE(), INTERVAL $page DAY) AND $location_where ORDER BY ordering_timestamp DESC";
 $result = mysqli_query($link, $query) or trigger_error(mysqli_error());
 $total_day_stats = mysqli_num_rows($result);
 $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));

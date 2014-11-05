@@ -1,0 +1,64 @@
+/* graph colors */
+
+/* gradient blue tallies */
+/*.ref_type_1 {
+	color:#A4CFF2; 	
+}
+
+.ref_type_2 {
+	color:#6BAADF; 	
+}
+
+.ref_type_3 {
+	color:#2575B7;	 
+}*/
+
+/* gradient blue button backgrounds */
+/*.ref_type_button_1 {
+	background-color:#A4CFF2; 	
+}
+
+.ref_type_button_2 {
+	background-color:#6BAADF; 	
+}
+
+.ref_type_button_3 {
+	background-color:#2575B7;	 
+}*/
+
+
+
+/* green --> yellow --> red tallies */
+.ref_type_1 {
+	color:#009700; 
+	color:#67BF67; 
+}
+
+.ref_type_2 {
+	color:#FFE800; 
+	color:#EFE581; 
+}
+
+.ref_type_3 {
+	color:#BD0900;
+	color:#EF8681;
+}
+
+
+
+#refreport h4 {
+    cursor:pointer;
+}
+
+/* colors */
+.light_green {
+	color:#dee6e6; 
+}
+
+.yellow {
+	color:#fc3; 
+}
+
+.dark_green {
+	color:#093f39; 
+}

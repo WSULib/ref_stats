@@ -15,6 +15,7 @@
 
 	<!-- CRUD css -->
 	<link rel="stylesheet" href="crud.css">	
+	<link rel="stylesheet" href="../inc/shared.css">	
 	
 </head>
 

@@ -24,6 +24,11 @@ if (isset($_GET['id']) ) {
 		foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
 		$sql = "UPDATE `ref_stats` SET  `ref_type` =  '{$_POST['ref_type']}' ,  `location` =  '{$_POST['location']}' ,  `ip` =  '{$_POST['ip']}' ,  `timestamp` =  '$insert_date'   WHERE `id` = '$id' "; 
 		mysqli_query($link, $sql) or die(mysqli_error());
+
+		// if coming from index.php, return
+		if (isset($_REQUEST['origin']) && $_REQUEST['origin'] == 'index' ){
+			header('Location: ../', true, 302);
+		}
 ?>
 
 		<div class="row">

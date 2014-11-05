@@ -106,8 +106,8 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 // reference type
 $ref_type_hash = array(
 	1 => "Directional",
-	2 => "Brief Reference",
-	3 => "Extended Reference"
+	2 => "Brief",
+	3 => "Extended"
 )
 
 

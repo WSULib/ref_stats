@@ -17,6 +17,7 @@ include('header.php');
 
 	<!-- Local CSS -->
 	<link rel="stylesheet" href="inc/main.css">
+	<link rel="stylesheet" href="inc/shared.css">
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="inc/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
@@ -42,8 +43,8 @@ include('header.php');
 
 		// 
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-			if (isset($_SESSION['result']) && $_SESSION['result'] == "success") {
-				reporter("green", "Successful Submission at ".$_SESSION['date']);
+			if (isset($_SESSION['result']) && $_SESSION['result'] == "success") {								
+				reporter("green", "<a style='color:green;'href='crud/edit.php?id={$_SESSION['last_trans_id']}&origin=index'>Submitted '{$_SESSION['ref_type_string']}' at ".$_SESSION['date']."</a>");
 			}
 			elseif (isset($_SESSION['result']) && $_SESSION['result'] == "fail") {
 				reporter("red", "Error: Submission Failed", " ");
@@ -59,20 +60,23 @@ include('header.php');
 
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			
+			// set location
 			if (isset($_POST['location'])) {
 				$_COOKIE['location'] = $_POST['location'];
 				setcookie('location', $_POST['location']);				
 				$_SESSION['result'] = "location";				
-				header('Location: ./', true, 303);
+				header('Location: ./', true, 302);
 			}
 			elseif ($_COOKIE['location'] == 'NOPE') {
 				reporter("red", "Please Set Your Location", " ");		
 			}
+
+			// register reference transaction
 			else {
 			  	$type = $_POST['type'];
 			  	$ip = ipGrabber();
 				$location = $_COOKIE['location'];
-
 
 				if (mysqli_connect_errno()) {
 					reporter("red", "Error: Submission Failed" . mysqli_connect_error());
@@ -82,17 +86,19 @@ include('header.php');
 
 				if($stmt = mysqli_prepare($link, $query)) {
 
-				    $insert_result = mysqli_stmt_execute($stmt);
+				    $insert_result = mysqli_stmt_execute($stmt);				    
 
 					if ($insert_result === TRUE) {
 						$_SESSION['result'] = "success";
 						$_SESSION['date'] = date("h:i:sa");
+						$_SESSION['ref_type_string'] = $ref_type_hash[$_POST['type']];
+						$_SESSION['last_trans_id'] = mysqli_insert_id($link);
 					}
 					else {						
 						$_SESSION['result'] = "success";
 					}
 				    mysqli_stmt_close($stmt);
-				    header('Location: ./', true, 303);
+				    header('Location: ./', true, 302);
 
 			   }
 			   // if it fails
@@ -111,7 +117,7 @@ include('header.php');
 				<div class="col-md-12">
 				<form action="" method="POST">
 					<input name="type" type="number" value="1"></input>
-					<button type="submit" class="btn btn-primary btn-block btn-lg">Directional</button>
+					<button type="submit" class="btn ref_type_button_1 btn-primary btn-block btn-lg">Directional</button>
 				</form>
 				</div>
 			</div> <!-- row -->
@@ -120,7 +126,7 @@ include('header.php');
 				<div class="col-md-12">
 				<form action="" method="POST">
 					<input name="type" type="number" value="2">
-					<button type="submit" class="btn btn-primary btn-block btn-lg">Brief Reference</button>
+					<button type="submit" class="btn ref_type_button_2 btn-primary btn-block btn-lg">Brief Reference</button>
 				</form>
 				</div>
 			</div> <!-- row -->
@@ -129,7 +135,7 @@ include('header.php');
 				<div class="col-md-12">
 				<form action="" method="POST">
 					<input name="type" type="number" value="3">
-					<button type="submit" class="btn btn-primary btn-block btn-lg">Extended Reference</button>
+					<button type="submit" class="btn ref_type_button_3 btn-primary btn-block btn-lg">Extended Reference</button>
 				</form>
 				</div>
 			</div> <!-- row -->
