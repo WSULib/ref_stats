@@ -27,9 +27,11 @@ else {
 }					
 
 // perform query
-$result = mysqli_query($link, "SELECT * FROM ref_stats WHERE DATE(timestamp) = CURDATE()+$page AND $location_where ORDER BY timestamp DESC") or trigger_error(mysqli_error());
+$query = "SELECT id, ref_type, location, ip, DATE_FORMAT(timestamp, '%r') AS print_timestamp, UNIX_TIMESTAMP(timestamp) as sort_timestamp FROM ref_stats WHERE DATE(timestamp) = DATE_ADD(CURDATE(), INTERVAL $page DAY) AND $location_where ORDER BY sort_timestamp DESC";
+$result = mysqli_query($link, $query) or trigger_error(mysqli_error());
 $total_day_stats = mysqli_num_rows($result);
 $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
+$graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 ?>
 <body>
@@ -37,7 +39,7 @@ $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 	<div class="container">
 
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 text-center">
 				<h2>Reference Statistics Management</h2>
 				<p>					
 					<a class="btn btn-info" href="../index.php">Back to refStats</a></p>
@@ -46,13 +48,14 @@ $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 		</div>
 		
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 text-center">
 				<h3>Add Transaction</h3>				
 				<a class="btn btn-info" href="./new.php">New Row</a></p>	
 			</div>
 		</div>			
 
 		<div class="row">
+
 			<div class="col-md-12">
 				<h3>Edit Transactions</h3>				
 				
@@ -77,55 +80,69 @@ $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="PK">All Locations</option>
 							</select>					
 						</div>
-					</form>
-					</p>
+					</form>					
 				</div>
 
-				<div id="transactions_total" class="col-md-9">
-					<h4 class="pull-right text-center">
-						<?php echo "Location: $current_edit_location<br>$results_date, $total_day_stats transactions"; ?>
-					</h4>
-				</div>
-
-				<div class="col-md-12" id="transactions_table">
-					<table class="table table-striped">
-						<tr>
-							<td><b>Id</b></td> 
-							<td><b>Ref Type</b></td> 
-							<td><b>Location</b></td> 
-							<td><b>Ip</b></td> 
-							<td><b>Timestamp</b></td>
-							<td><b>Actions</b></td> 
-						</tr>
-						<?php						
-						while($row = mysqli_fetch_array($result)){ 
-							foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
-							echo "<tr>";  
-							echo "<td>" . nl2br( $row['id']) . "</td>";  
-							echo "<td>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
-							echo "<td>" . nl2br( $row['location']) . "</td>";  
-							echo "<td>" . nl2br( $row['ip']) . "</td>";  
-							echo "<td>" . nl2br( $row['timestamp']) . "</td>";  
-							echo "<td><a href=edit.php?id={$row['id']}>Edit</a> / <a href=delete.php?id={$row['id']}>Delete</a></td> "; 
-							echo "</tr>"; 
-						}
-						?>
-					</table>
-				</div>
-			
-
-				<div class="col-md-12">
+				<div class="col-md-5">
 					<ul class="pager">											
 						<li class="<?php if ($page >= 0) {echo 'disabled'; }?>"><a href="list.php?page=<?php echo ($page+1).'&edit_location='.$current_edit_location;; ?>"><?php echo date('l\, m\-j\-y', strtotime( ($page+1)." days" )); ?></a></li>
 						<li class=""><a href="list.php?page=0&edit_location=<?php echo $current_edit_location; ?>"><strong>Today</strong></a></li>
 						<li class=""><a href="list.php?page=<?php echo ($page-1).'&edit_location='.$current_edit_location; ?>"><?php echo date('l\, m\-j-y', strtotime( ($page-1)." days" )); ?></a></li>
 					</ul>				
 				</div>
-				<?php
-				
-				?>				
+
+				<div id="transactions_total" class="col-md-3">
+					<h4 class="text-center">
+						<?php echo "Location: $current_edit_location<br>$results_date, $total_day_stats transactions"; ?>
+					</h4>
+				</div>		
+			
 			</div>
 		</div>
-	</div>
+
+		<!-- Table Row -->
+		<div class="row">
+			<div class="col-md-12" id="transactions_table">
+				<table class="table table-striped">
+					<tr>
+						<td><b>Id</b></td> 
+						<td><b>Ref Type</b></td> 
+						<td><b>Location</b></td> 
+						<td><b>Ip</b></td> 
+						<td><b>Timestamp</b></td>
+						<td><b>Actions</b></td> 
+					</tr>
+					<?php						
+					while($row = mysqli_fetch_array($result)){ 
+						foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
+						echo "<tr>";  
+						echo "<td>" . nl2br( $row['id']) . "</td>";  
+						echo "<td>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
+						echo "<td>" . nl2br( $row['location']) . "</td>";  
+						echo "<td>" . nl2br( $row['ip']) . "</td>";  
+						echo "<td>" . nl2br( $row['print_timestamp']) . "</td>";  
+						echo "<td><a href=edit.php?id={$row['id']}>Edit</a> / <a href=delete.php?id={$row['id']}>Delete</a></td> "; 
+						echo "</tr>"; 
+					}
+					?>
+				</table>
+			</div>
+		</div>
+
+		<!-- graph -->
+		<div id="stats_graph" class="row">	
+			<div class="col-md-12" id="refreport">				
+				<h4 onclick="toggleIndexStats();">Stats Graph</h4>	
+				<div id="table_wrapper">
+					<table class="table table-striped table-condensed">						
+						<?php						
+						statsGraph($link, "crud", $current_edit_location, $graph_date);							
+						?>
+					</table>
+				</div>
+			</div>
+		</div> 
+
+	
 </body>
 </html>

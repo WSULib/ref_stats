@@ -1,5 +1,5 @@
 #transactions_table {
-	max-height:640px;
+	max-height:480px;
 	overflow-y:scroll;
 	overflow: -moz-scrollbars-vertical;
 }
@@ -30,4 +30,23 @@
 
 .hour_radio {
 	visibility:hidden;
+}
+
+#refreport h4 {
+    cursor:pointer;
+}
+
+/* graph colors */
+.ref_type_1 {
+    color:green;
+}
+.ref_type_2 {
+    color:yellow;
+}
+.ref_type_3 {
+    color:red;
+}
+
+#stats_graph {
+    margin-top:20px;
 }

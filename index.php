@@ -156,20 +156,22 @@ include('header.php');
 
 		</div>
 		<hr>
-		<div id="ref_graph">
 
+		<div id="ref_graph">
 			<div class="row-fluid">	
 				<div class="col-md-12" id="refreport">				
-					<h4 style="color:green;">Today's Stats</h4>	
-					<table class="table table-striped table-condensed">						
-						<?php						
-						statsGraph($link);							
-						?>
-					</table>
+					<h4 onclick="toggleIndexStats();">Today's Stats <span style="font-size:50%;">(click to toggle)</span></h4>	
+					<div id="table_wrapper">
+						<table class="table table-striped table-condensed">						
+							<?php						
+							statsGraph($link,"index",'','');							
+							?>
+						</table>
+					</div>
 				</div>
-			</div> <!-- row -->
+			</div> 
+		</div> 
 
-		</div> <!-- ref_actions --> 
 	</div> <!-- container -->
 </body>
 </html>

@@ -51,14 +51,23 @@ function makeDropdown() {
 
 
 // function to report 8am - 11pm table rows showing stats
-function statsGraph($link){			
+function statsGraph($link, $context, $current_edit_location, $graph_date){			
 
 	// get location
 	$location = $_COOKIE['location'];	
 
-	$query = "SELECT HOUR(timestamp) AS hour, COUNT(ref_type) AS ref_count FROM `ref_stats` WHERE DATE(timestamp)=DATE(NOW()) AND location = '$location' GROUP BY HOUR(timestamp)";	
 
-	$result = mysqli_query($link, $query) or trigger_error(mysqli_error()); 	
+	# main index, current time
+	if ($context == "index") {
+		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE(timestamp)=DATE(NOW()) AND location = '$location' ORDER BY ref_type";
+		$result = mysqli_query($link, $query) or trigger_error(mysqli_error()); 	
+	}
+
+	# crud, based on $graph_date
+	if ($context == "crud") {
+		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE_FORMAT(timestamp, '%m %d %Y') = '$graph_date' AND location = '$current_edit_location' ORDER BY ref_type";		
+		$result = mysqli_query($link, $query) or trigger_error(mysqli_error()); 	
+	}	
 
 	// prepare results array
 	$shown_hours = array(
@@ -78,22 +87,11 @@ function statsGraph($link){
 		21 => array("9pm",""),
 		22 => array("10pm",""),
 		23 => array("11pm","")		
-		);	
-
+		);			
 
 	// update graph marks for each hour returned
-	while($row = mysqli_fetch_array($result)){
-		$total_count = (int) $row['ref_count'];		
-		$print_marks = "";
-		$count = 0;
-		do {
-		    $print_marks = $print_marks."-";
-		    $count++;
-		} while ( $count < $total_count && $count < 20);		
-		if ($total_count > 20){
-			$print_marks = $print_marks."(+)";
-		}
-		$shown_hours[ (int) $row['hour'] ][1] = $print_marks;
+	while($row = mysqli_fetch_array($result)) {
+		$shown_hours[(int)$row['hour']][1].= "<span class='ref_type_{$row['ref_type']}'>&#9608;</span>"; 		
 	}
 
 	// push to page
@@ -103,7 +101,6 @@ function statsGraph($link){
 		echo "<td><strong>{$hour[1]}</strong></td>";
 		echo "</tr>";
 	}
-
 }
 
 // reference type
