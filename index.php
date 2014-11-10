@@ -178,6 +178,17 @@ include('header.php');
 			</div> 
 		</div> 
 
+		<div class="row-fluid">
+			<div class="col-md-12">
+				<p>
+					<p>
+						<em><div class="stuff" style="font-size:80%; font-weight: bold; text-align:center;">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div></em>
+					</p>
+					<center><a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a></center>
+				</p>
+			</div>
+		</div>
+
 	</div> <!-- container -->
 </body>
 </html>
