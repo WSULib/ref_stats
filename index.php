@@ -179,12 +179,12 @@ include('header.php');
 		</div> 
 
 		<div class="row-fluid">
-			<div class="col-md-12">
+			<div class="col-md-12 bookmarklet">
 				<p>
 					<p>
-						<em><div class="stuff" style="font-size:80%; font-weight: bold; text-align:center;">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div></em>
+						<div class="bookmark-text">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div>
 					</p>
-					<center><a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a></center>
+					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
 				</p>
 			</div>
 		</div>
