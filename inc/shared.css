@@ -1,35 +1,7 @@
 /* graph colors */
 
-/* gradient blue tallies */
+/* green / yellow / red tallies */
 /*.ref_type_1 {
-	color:#A4CFF2; 	
-}
-
-.ref_type_2 {
-	color:#6BAADF; 	
-}
-
-.ref_type_3 {
-	color:#2575B7;	 
-}*/
-
-/* gradient blue button backgrounds */
-/*.ref_type_button_1 {
-	background-color:#A4CFF2; 	
-}
-
-.ref_type_button_2 {
-	background-color:#6BAADF; 	
-}
-
-.ref_type_button_3 {
-	background-color:#2575B7;	 
-}*/
-
-
-
-/* green --> yellow --> red tallies */
-.ref_type_1 {
 	color:#67BF67; 
 }
 
@@ -39,9 +11,41 @@
 
 .ref_type_3 {
 	color:#EF8681;
+}*/
+
+/* gradient blue tallies */
+.ref_type_1 {
+	color:#FFCC33; 	
 }
 
+.ref_type_2 {
+	color:#238B8B; 	
+}
 
+.ref_type_3 {
+	color:#3b3b3b;	 
+}
+
+/* buttons */
+.ref_type_button {
+	background-color:#238B8B;
+	border-color:#238B8B
+}
+
+.ref_type_button:hover {
+	background-color:#046060;
+}
+
+.btn-WSUgreen {
+	background-color:#9CB2B2;
+	border-color:#9CB2B2;
+	color:white;
+}
+
+.btn-WSUgreen:hover, .btn-WSUgreen:active, .btn-WSUgreen:target, .btn-WSUgreen:focus {
+	background-color:#6f6f6f;
+	color:white;
+}
 
 #refreport h4 {
     cursor:pointer;
