@@ -1,7 +1,5 @@
 <?php
 include('inc/functions.php');
-include('header.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +25,7 @@ include('header.php');
 </head>
 
 <body onBlur="window.focus();">	
-	<div class="container">
+	<div class="container tool">
 
 		<div class="row-fluid">
 			<div id="header" class="col-md-12">
@@ -156,6 +154,7 @@ include('header.php');
 					<p>
 						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen">Edit Transactions</button></a>
 						<a href="#" onclick="window.open('./index.php','ref_stats','menubar=0,resizable=0,width=350,height=880');"><button type="button" class="btn btn-sm btn-WSUgreen">Launch Pop-Up</button></a>
+						<a href="RefStats_Tool_Documentation.html" ><button type="button" class="btn btn-sm btn-WSUgreen">?</button></a>
 					</p>
 				</div>
 			</div>

@@ -50,7 +50,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<h3>Add Transaction</h3>				
-				<a class="btn btn-info" href="./new.php">New Row</a></p>	
+				<a class="btn btn-info" href="./new.php">New Transaction</a></p>	
 			</div>
 		</div>			
 
