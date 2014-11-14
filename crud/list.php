@@ -42,7 +42,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 			<div class="col-md-12 text-center">
 				<h2>Reference Statistics Management</h2>
 				<p>					
-					<a class="btn btn-info" href="../index.php">Back to refStats</a></p>
+					<a class="btn btn-WSUgreen" href="../index.php">Back to refStats</a></p>
 				</p>				
 			</div>
 		</div>
@@ -50,7 +50,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<h3>Add Transaction</h3>				
-				<a class="btn btn-info" href="./new.php">New Transaction</a></p>	
+				<a class="btn btn-WSUgreen" href="./new.php">New Transaction</a></p>	
 			</div>
 		</div>			
 
@@ -58,7 +58,6 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 			<div class="col-md-12">
 				<h3>Edit Transactions</h3>				
-				
 				<div class="col-md-3">					
 					<form action="./list.php" method="GET">	
 						<div class="form-group">		
@@ -85,7 +84,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 					</form>					
 				</div>
 
-				<div class="col-md-5">
+				<div class="col-md-6">
 					<ul class="pager">											
 						<li class=""><a data-toggle="tooltip" data-placement="top" title='<?php echo date('l\, m\-j-y', strtotime( ($page-1)." days" )); ?>' href="list.php?page=<?php echo ($page-1).'&edit_location='.$current_edit_location; ?>">&lt;</a></li>
 						<li class=""><a href="list.php?page=0&edit_location=<?php echo $current_edit_location; ?>"><strong>Today</strong></a></li>						
@@ -102,48 +101,75 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 			</div>
 		</div>
 
-		<!-- Table Row -->
-		<div class="row">
-			<div class="col-md-12" id="transactions_table">
-				<table class="table table-striped">
-					<tr>
-						<td><b>Id</b></td> 
-						<td><b>Ref Type</b></td> 
-						<td><b>Location</b></td> 
-						<td><b>Ip</b></td> 
-						<td><b>Timestamp</b></td>
-						<td><b>Actions</b></td> 
-					</tr>
-					<?php						
-					while($row = mysqli_fetch_array($result)){ 
-						foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
-						echo "<tr>";  
-						echo "<td>" . nl2br( $row['id']) . "</td>";  
-						echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
-						echo "<td>" . nl2br( $row['location']) . "</td>";  
-						echo "<td>" . nl2br( $row['ip']) . "</td>";  
-						echo "<td>" . nl2br( $row['print_timestamp']) . "</td>";  
-						echo "<td><a href=edit.php?id={$row['id']}>Edit</a> / <a href=delete.php?id={$row['id']}>Delete</a></td> "; 
-						echo "</tr>"; 
-					}
-					?>
-				</table>
-			</div>
-		</div>
+		<?php
+		if ($total_day_stats > 0) {
+		?>
 
-		<!-- graph -->
-		<div id="stats_graph" class="row">	
-			<div class="col-md-12" id="refreport">				
-				<h4 onclick="toggleIndexStats();">Stats Graph</h4>	
-				<div id="table_wrapper">
-					<table class="table table-striped table-condensed">						
-						<?php
-						statsGraph($link, "crud", $current_edit_location, $graph_date);							
-						?>
-					</table>
+			<!-- Table Row -->
+			<div id="edit_table" class="row">
+				<div class="col-md-12">
+					<!-- <h4 onclick="toggleEditTable();">Edit Table <span style="font-size:50%;">(click to toggle)</span></h4>	 -->
+					<h4 id="toggle_table">Edit Table <span style="font-size:50%;">(click to toggle)</span></h4>	
+				</div>
+				<div class="col-md-12" id="transactions_table">				
+					<table class="table table-striped">
+						<tr>
+							<td><b>Id</b></td> 
+							<td><b>Ref Type</b></td> 
+							<td><b>Location</b></td> 
+							<td><b>Ip</b></td> 
+							<td><b>Timestamp</b></td>
+							<td><b>Actions</b></td> 
+						</tr>
+						<?php	
+						if ($total_day_stats > 0) {
+							while($row = mysqli_fetch_array($result)){ 
+								foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
+								echo "<tr>";  
+								echo "<td>" . nl2br( $row['id']) . "</td>";  
+								echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
+								echo "<td>" . nl2br( $row['location']) . "</td>";  
+								echo "<td>" . nl2br( $row['ip']) . "</td>";  
+								echo "<td>" . nl2br( $row['print_timestamp']) . "</td>";  
+								echo "<td><a href=edit.php?id={$row['id']}>Edit</a> / <a href=delete.php?id={$row['id']}>Delete</a></td> "; 
+								echo "</tr>"; 
+							}	
+						}
+						?>					
+					</table>				
+					<?php	
+					if ($total_day_stats == 0) {			
+						echo "<h4 style='text-align:center;'>No transactions recorded for this day.</h4>";
+					}
+					?>	
 				</div>
 			</div>
-		</div> 
+
+			<!-- graph -->
+			<div id="stats_graph" class="row">	
+				<div class="col-md-12" id="refreport">				
+					<h4 id="toggle_graph">Stats Graph <span style="font-size:50%;">(click to toggle)</span></h4>	
+					<div id="table_wrapper">
+						<table class="table table-striped table-condensed">						
+							<?php						
+							statsGraph($link, "crud", $current_edit_location, $graph_date);														
+							?>
+						</table>
+					</div>
+				</div>
+			</div> 
+		<?php
+		}
+		else {
+		?>
+		<div id="no_trans" class="row">
+			<div class="col-md-12">
+				<h4>No transactions recorded for this day.</h4>
+			</div>
+		</div>
+		<?php
+		}
+		?>
 
 	</div>
 	<script type="text/javascript">

@@ -165,7 +165,7 @@ include('inc/functions.php');
 		<div id="ref_graph">
 			<div class="row-fluid">	
 				<div class="col-md-12" id="refreport">				
-					<h4 onclick="toggleIndexStats();">Today's Stats <span style="font-size:50%;">(click to toggle)</span></h4>	
+					<h4 id="toggle_graph">Today's Stats <span style="font-size:50%;">(click to toggle)</span></h4>	
 					<div id="table_wrapper">
 						<table class="table table-striped table-condensed">						
 							<?php						

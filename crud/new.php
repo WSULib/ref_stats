@@ -55,17 +55,17 @@ else {
 						<label>Reference Type:</label>		
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='1'><span class="btn btn-primary">Directional</span>
+								<input type='radio' name='ref_type' value='1'><span class="btn btn-primary ref_type_button">Directional</span>
 							</label>
 						</div>
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='2'><span class="btn btn-primary">Brief Reference</span>
+								<input type='radio' name='ref_type' value='2'><span class="btn btn-primary ref_type_button">Brief Reference</span>
 							</label>
 						</div>
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='3'><span class="btn btn-primary">Extended Reference</span>
+								<input type='radio' name='ref_type' value='3'><span class="btn btn-primary ref_type_button">Extended Reference</span>
 							</label>
 						</div>
 					</div>

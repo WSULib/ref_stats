@@ -53,17 +53,17 @@ else {
 						<label>Reference Type:</label>		
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='1' <?php if ( $row['ref_type'] == 1) { echo "checked='checked'"; } ?>><span class="btn btn-primary">Directional</span>
+								<input type='radio' name='ref_type' value='1' <?php if ( $row['ref_type'] == 1) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Directional</span>
 							</label>
 						</div>
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='2' <?php if ( $row['ref_type'] == 2) { echo "checked='checked'"; } ?>><span class="btn btn-primary">Brief Reference</span>
+								<input type='radio' name='ref_type' value='2' <?php if ( $row['ref_type'] == 2) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Brief Reference</span>
 							</label>
 						</div>
 						<div class='radio'>
 							<label>
-								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 3) { echo "checked='checked'"; } ?>><span class="btn btn-primary">Extended Reference</span>
+								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 3) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Extended Reference</span>
 							</label>
 						</div>
 					</div>

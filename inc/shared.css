@@ -1,18 +1,3 @@
-/* graph colors */
-
-/* green / yellow / red tallies */
-/*.ref_type_1 {
-	color:#67BF67; 
-}
-
-.ref_type_2 {
-	color:#EFE581; 
-}
-
-.ref_type_3 {
-	color:#EF8681;
-}*/
-
 /* gradient blue tallies */
 .ref_type_1 {
 	color:#FFCC33; 	
@@ -48,6 +33,10 @@
 }
 
 #refreport h4 {
+    cursor:pointer;
+}
+
+#edit_table h4 {
     cursor:pointer;
 }
 
