@@ -65,7 +65,10 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 
 	# crud, based on $graph_date
 	if ($context == "crud") {
-		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE_FORMAT(timestamp, '%m %d %Y') = '$graph_date' AND location = '$current_edit_location' ORDER BY ref_type";		
+		if ($current_edit_location != "ALL") {
+			$location_filter = "AND location = '$current_edit_location'";			
+		}		
+		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE_FORMAT(timestamp, '%m %d %Y') = '$graph_date' $location_filter ORDER BY ref_type";				
 		$result = mysqli_query($link, $query) or trigger_error(mysqli_error()); 	
 	}	
 

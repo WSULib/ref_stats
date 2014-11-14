@@ -77,17 +77,19 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								<option <?php if ( $current_edit_location=="UGL") echo 'selected="selected"'; ?> value="UGL">Undergraduate Library</option>
 								<option <?php if ( $current_edit_location=="LAW") echo 'selected="selected"'; ?> value="LAW">Neef Law Library</option>
 								<option <?php if ( $current_edit_location=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>
-								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="PK">All Locations</option>
-							</select>					
+								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="ALL">All Locations</option>
+							</select>	
+							<!-- hidden input to maintain current page -->
+							<input type="hidden" name="page" value="<?php echo $page; ?>"/>
 						</div>
 					</form>					
 				</div>
 
 				<div class="col-md-5">
 					<ul class="pager">											
-						<li class="<?php if ($page >= 0) {echo 'disabled'; }?>"><a href="list.php?page=<?php echo ($page+1).'&edit_location='.$current_edit_location;; ?>"><?php echo date('l\, m\-j\-y', strtotime( ($page+1)." days" )); ?></a></li>
-						<li class=""><a href="list.php?page=0&edit_location=<?php echo $current_edit_location; ?>"><strong>Today</strong></a></li>
-						<li class=""><a href="list.php?page=<?php echo ($page-1).'&edit_location='.$current_edit_location; ?>"><?php echo date('l\, m\-j-y', strtotime( ($page-1)." days" )); ?></a></li>
+						<li class=""><a data-toggle="tooltip" data-placement="top" title='<?php echo date('l\, m\-j-y', strtotime( ($page-1)." days" )); ?>' href="list.php?page=<?php echo ($page-1).'&edit_location='.$current_edit_location; ?>">&lt;</a></li>
+						<li class=""><a href="list.php?page=0&edit_location=<?php echo $current_edit_location; ?>"><strong>Today</strong></a></li>						
+						<li class="<?php if ($page >= 0) {echo 'disabled'; }?>"><a data-toggle="tooltip" data-placement="top" title='<?php echo date('l\, m\-j\-y', strtotime( ($page+1)." days" )); ?>' href="list.php?page=<?php echo ($page+1).'&edit_location='.$current_edit_location;; ?>">&gt;</a></li>
 					</ul>				
 				</div>
 
@@ -135,7 +137,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 				<h4 onclick="toggleIndexStats();">Stats Graph</h4>	
 				<div id="table_wrapper">
 					<table class="table table-striped table-condensed">						
-						<?php						
+						<?php
 						statsGraph($link, "crud", $current_edit_location, $graph_date);							
 						?>
 					</table>
@@ -143,6 +145,11 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 			</div>
 		</div> 
 
-	
+	</div>
+	<script type="text/javascript">
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
 </body>
 </html>
