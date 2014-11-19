@@ -20,7 +20,7 @@ if (isset($_POST['submitted'])) {
 	foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
 	$IP = IPgrabber();
 	$insert_date = date("Y-m-d")." {$_REQUEST['hour']}";
-	$sql = "INSERT INTO `ref_stats` ( `ref_type` ,  `location` ,  `ip`, `timestamp` ) VALUES(  '{$_POST['ref_type']}' ,  '{$_COOKIE['location']}' ,  '$IP', '$insert_date'  ) ";
+	$sql = "INSERT INTO `ref_stats` ( `ref_type` ,  `location` ,  `ip`, `timestamp` ) VALUES(  '{$_REQUEST['ref_type']}' ,  '{$_REQUEST['location']}' ,  '$IP', '$insert_date'  ) ";
 	$result = mysqli_query($link, $sql) or die(mysqli_error());
 	?>
 
@@ -42,12 +42,14 @@ else {
 				<form action='new.php' method='POST' class="form" role="form">
 					<div class="form-group">	
 						<label>Select location for this transaction:</label>													
-						<select class="form-control" id="location" name="location">									
-							<option <?php if ( !isset($_COOKIE['location']) || $_COOKIE['location'] == "NOPE" ) echo 'selected="selected"'; ?> value="PK">Please Select your Location</option>
-							<option <?php if ( $_COOKIE['location']=="PK") echo 'selected="selected"'; ?> value="PK">Purdy Kresge Library</option>
+						<select class="form-control" id="location" name="location">		
+							<?php makeDropdown(False); ?>							
+							<!-- <option <?php if ( !isset($_COOKIE['location']) || $_COOKIE['location'] == "NOPE" ) echo 'selected="selected"'; ?> value="PK">Please Select your Location</option>
+							<option <?php if ( $_COOKIE['location']=="PK1") echo 'selected="selected"'; ?> value="PK1">Purdy Kresge Library - Desk 1</option>
+							<option <?php if ( $_COOKIE['location']=="PK2") echo 'selected="selected"'; ?> value="PK2">Purdy Kresge Library - Desk 2</option>
 							<option <?php if ( $_COOKIE['location']=="UGL") echo 'selected="selected"'; ?> value="UGL">Undergraduate Library</option>
 							<option <?php if ( $_COOKIE['location']=="LAW") echo 'selected="selected"'; ?> value="LAW">Neef Law Library</option>
-							<option <?php if ( $_COOKIE['location']=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>								
+							<option <?php if ( $_COOKIE['location']=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>								 -->
 						</select>
 					</div>
 

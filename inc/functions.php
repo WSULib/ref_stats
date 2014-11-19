@@ -1,6 +1,7 @@
 <?php
 
 include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/ref_stats_config.php');
+include(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
 
 function reporter($color, $msg, $visibility) {
 		// $color = ($type == 'success' ? "green" : "red");
@@ -30,15 +31,14 @@ function locationSetter() {
 }
 
 
-function makeDropdown() {
-	$array = array(
-		"NOPE" => "Please Select Your Location",
-		"PK" => "Purdy Kresge Library",
-		"UGL" => "Undergraduate Library",
-		"LAW" => "Neef Law Library",
-		"MED" => "Shiffman Medical Library"
-		);
-	foreach ($array as $key => $value) {
+function makeDropdown($please_select=True) {	
+	// $location_array loaded from config.php
+	global $location_array;
+	if ($please_select == False){
+		unset($location_array['NOPE']);
+	}
+
+	foreach ($location_array as $key => $value) {
 		if($key == $_COOKIE['location']) {
 			echo '<option value="'.$key.'" selected>'.$value.'</option>';
 		}

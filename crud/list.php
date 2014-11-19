@@ -70,13 +70,12 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								}
 								else {									
 									$current_edit_location = $_COOKIE['location'];
-								}	
-								?>							
-								<option <?php if ( $current_edit_location=="PK") echo 'selected="selected"'; ?> value="PK">Purdy Kresge Library</option>
-								<option <?php if ( $current_edit_location=="UGL") echo 'selected="selected"'; ?> value="UGL">Undergraduate Library</option>
-								<option <?php if ( $current_edit_location=="LAW") echo 'selected="selected"'; ?> value="LAW">Neef Law Library</option>
-								<option <?php if ( $current_edit_location=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>
+								}
+								?>
+								<!-- adding "All Locations" option element -->								
 								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="ALL">All Locations</option>
+								<?php makeDropdown(False); ?>							
+
 							</select>	
 							<!-- hidden input to maintain current page -->
 							<input type="hidden" name="page" value="<?php echo $page; ?>"/>

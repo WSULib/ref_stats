@@ -71,10 +71,7 @@ else {
 					<div class="form-group">					
 						<label>Location</label>
 						<select class="form-control" id="location" name="location">
-							<option <?php if ( stripslashes($row['location'])=="PK") echo 'selected="selected"'; ?> value="PK">Purdy Kresge Library</option>
-							<option <?php if ( stripslashes($row['location'])=="UGL") echo 'selected="selected"'; ?> value="UGL">Undergraduate Library</option>
-							<option <?php if ( stripslashes($row['location'])=="LAW") echo 'selected="selected"'; ?> value="LAW">Neef Law Library</option>
-							<option <?php if ( stripslashes($row['location'])=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>
+							<?php makeDropdown(False); ?>
 						</select>
 					</div>
 					<div class="form-group">						
