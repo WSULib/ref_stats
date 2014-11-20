@@ -6,6 +6,7 @@ include('inc/functions.php');
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RefStats Tool - Wayne State University Libraries</title>
 	<link rel="icon" href="../../inc/img/favicon.ico" type="image/x-icon" />
 	<!-- jQuery -->
 	<script src="inc/jquery-1.11.1.min.js"></script>
@@ -183,7 +184,7 @@ include('inc/functions.php');
 					<p>
 						<div class="bookmark-text">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div>
 					</p>
-					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
+					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,scrollbars=yes,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
 				</p>
 			</div>
 		</div>

@@ -36,6 +36,19 @@
     cursor:pointer;
 }
 
+#refreport table{
+	font-family:"Lucida Console", Monaco, monospace;
+}
+
+#refreport table td{
+	border-top:none;
+	padding:0px;		
+}
+
+.time_col{
+	width:45px;
+}
+
 #edit_table h4 {
     cursor:pointer;
 }

@@ -43,13 +43,7 @@ else {
 					<div class="form-group">	
 						<label>Select location for this transaction:</label>													
 						<select class="form-control" id="location" name="location">		
-							<?php makeDropdown(False); ?>							
-							<!-- <option <?php if ( !isset($_COOKIE['location']) || $_COOKIE['location'] == "NOPE" ) echo 'selected="selected"'; ?> value="PK">Please Select your Location</option>
-							<option <?php if ( $_COOKIE['location']=="PK1") echo 'selected="selected"'; ?> value="PK1">Purdy Kresge Library - Desk 1</option>
-							<option <?php if ( $_COOKIE['location']=="PK2") echo 'selected="selected"'; ?> value="PK2">Purdy Kresge Library - Desk 2</option>
-							<option <?php if ( $_COOKIE['location']=="UGL") echo 'selected="selected"'; ?> value="UGL">Undergraduate Library</option>
-							<option <?php if ( $_COOKIE['location']=="LAW") echo 'selected="selected"'; ?> value="LAW">Neef Law Library</option>
-							<option <?php if ( $_COOKIE['location']=="MED") echo 'selected="selected"'; ?> value="MED">Shiffman Medical Library</option>								 -->
+							<?php makeDropdown(False); ?>						
 						</select>
 					</div>
 

@@ -1,3 +1,7 @@
+html {
+	overflow-y:scroll;	
+}
+
 input[name="type"] {
 	display: none;
 }
@@ -28,7 +32,7 @@ input[name="type"] {
 }
 
 #logo{
-	height:75px;
+	height:35px;
 }
 
 #msg{
@@ -46,19 +50,6 @@ input[name="type"] {
 
 #ref_actions div {
 	margin-top:15px;
-}
-
-#refreport table{
-	font-family:"Lucida Console", Monaco, monospace;
-}
-
-#refreport table td{
-	border-top:none;
-	padding:0px;		
-}
-
-.time_col{
-	width:40px;
 }
 
 .bookmarklet {
