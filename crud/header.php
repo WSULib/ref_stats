@@ -27,9 +27,9 @@
 	<div class="container">
 
 	<div id="breadcrumb" class="row">
-		<div class="col-md-12">
-			<!-- <h3><a href="../">RefStats Tool</a> / <a href="./list.php">Edit Transactions</a></h3> -->
-			<h3><a class="btn btn-WSUgreen" href="../">RefStats Tool</a> <a class="btn btn-WSUgreen" href="./list.php">Edit Transactions</a></h3>
+		<div class="col-md-12 text-center">
+			<h2>RefStats Management</h2>
+			<h3><a class="btn btn-WSUgreen" href="../">RefStats Tool</a> <a class="btn btn-WSUgreen" href="./list.php">Edit Transactions</a></h3>			
 		</div>
 	</div>
 

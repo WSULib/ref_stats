@@ -33,16 +33,7 @@ $total_day_stats = mysqli_num_rows($result);
 $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
-?>
-
-
-	
-
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<h2>Reference Statistics Management</h2>							
-			</div>
-		</div>
+?>		
 		
 		<div class="row">
 			<div class="col-md-12">

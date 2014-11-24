@@ -15,10 +15,15 @@ include('../inc/functions.php');
 
 <?php
 if (isset($_POST['submitted'])) {
-
 	foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
 	$IP = IPgrabber();
-	$insert_date = date("Y-m-d")." {$_REQUEST['hour']}";
+	if ( isset($_POST['date']) ){
+		$date = date("Y-m-d", strtotime($_POST['date']));
+	}
+	else {
+		$date = date("Y-m-d");
+	}	
+	$insert_date = $date." {$_REQUEST['hour']}";
 	$sql = "INSERT INTO `ref_stats` ( `ref_type` ,  `location` ,  `ip`, `timestamp` ) VALUES(  '{$_REQUEST['ref_type']}' ,  '{$_REQUEST['location']}' ,  '$IP', '$insert_date'  ) ";
 	$result = mysqli_query($link, $sql) or die(mysqli_error());
 	?>
@@ -91,10 +96,11 @@ else {
 
 					<div class="form-group">
 						<label>Date</label>
-						<input type="text" id="date" name="id">
+						<input type="hidden" id="date" name="date">
+						<div id="datepicker"></div>
 						<script>
 							$(function() {
-								$( "#date" ).datepicker();
+								$( "#datepicker" ).datepicker(({altField: "#date"}));
 							});
 						</script>
 					</div>
@@ -114,11 +120,7 @@ else {
 <?php
 }
 ?>
-<script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-  });
-  </script>
+
 </body>
 </html>
 

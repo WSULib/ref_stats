@@ -19,7 +19,13 @@ include('../inc/functions.php');
 if (isset($_GET['id']) ) { 
 	$id = (int) $_GET['id']; 
 	if ($_SERVER['REQUEST_METHOD'] == "POST") { 
-		$insert_date = date("Y-m-d")." {$_REQUEST['hour']}";
+		if ( isset($_POST['date']) ){
+			$date = date("Y-m-d", strtotime($_POST['date']));
+		}
+		else {
+			$date = date("Y-m-d");
+		}	
+		$insert_date = $date." {$_REQUEST['hour']}";
 		foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
 		$sql = "UPDATE `ref_stats` SET  `ref_type` =  '{$_POST['ref_type']}' ,  `location` =  '{$_POST['location']}' ,  `ip` =  '{$_POST['ip']}' ,  `timestamp` =  '$insert_date'   WHERE `id` = '$id' "; 
 		mysqli_query($link, $sql) or die(mysqli_error());
@@ -33,7 +39,7 @@ if (isset($_GET['id']) ) {
 		<div class="row">
 			<div class="col-md-10">
 				<p style="color:green;">Success!  Transaction edited.</p>
-				<a href='list.php'>Back To Listing</a> 
+				<a class="btn btn-default" href='list.php'>Back to Transactions</a> 
 			</div>
 		</div>
 
@@ -103,6 +109,17 @@ else {
 							}
 							?>
 						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Date</label>
+						<input type="hidden" id="date" name="date">
+						<div id="datepicker"></div>
+						<script>
+							$(function() {
+								$( "#datepicker" ).datepicker(({altField: "#date"}));
+							});
+						</script>
 					</div>
 
 
