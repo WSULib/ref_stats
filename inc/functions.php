@@ -31,7 +31,7 @@ function locationSetter() {
 }
 
 
-function makeDropdown($please_select=True,$location=False) {	
+function makeDropdown($please_select=True, $location=False) {	
 	// $location_array loaded from config.php
 	global $location_array;
 	if ($please_select == False){
@@ -50,7 +50,6 @@ function makeDropdown($please_select=True,$location=False) {
 			echo '<option value="'.$key.'">'.$value.'</option>';
 		}
 	}
-
 }
 
 

@@ -9,16 +9,25 @@ include('../inc/functions.php');
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Add Transaction</h2>				
-				<p>Current location: <span style="font-size:150%;"><?php echo $_COOKIE['location']; ?></span></p>				
+				<p>Current location: <span style="font-size:150%;">
+					<?php 
+						if ($_COOKIE['location'] != "NOPE"){
+							echo $_COOKIE['location']; 
+						}
+						else {
+							echo "None Selected";
+						}						
+					?>
+				</span></p>				
 			</div>
 		</div>
 
 <?php
-if (isset($_POST['submitted'])) {
-	foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
+if (isset($_REQUEST['submitted']) & $_REQUEST['location'] != "NOPE") {
+	foreach($_REQUEST AS $key => $value) { $_REQUEST[$key] = mysqli_real_escape_string($link, $value); } 
 	$IP = IPgrabber();
-	if ( isset($_POST['date']) ){
-		$date = date("Y-m-d", strtotime($_POST['date']));
+	if ( isset($_REQUEST['date']) ){
+		$date = date("Y-m-d", strtotime($_REQUEST['date']));
 	}
 	else {
 		$date = date("Y-m-d");
@@ -45,9 +54,15 @@ else {
 			<div class="col-md-6">
 				<form action='new.php' method='POST' class="form" role="form">
 					<div class="form-group">	
-						<label>Select location for this transaction:</label>													
+						<label>Select location for this transaction:
+							<?php
+							if (isset($_REQUEST['submitted']) & $_REQUEST['location'] == "NOPE"){
+								echo "<span style='color:red;'>*location required</span>";
+							}
+							?>
+						</label>													
 						<select class="form-control" id="location" name="location">		
-							<?php makeDropdown(False); ?>						
+							<?php makeDropdown(True); ?>						
 						</select>
 					</div>
 

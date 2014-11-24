@@ -184,7 +184,7 @@ include('inc/functions.php');
 					<p>
 						<div class="bookmark-text">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div>
 					</p>
-					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=0,scrollbars=yes,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
+					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=1,scrollbars=yes,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
 				</p>
 			</div>
 		</div>
