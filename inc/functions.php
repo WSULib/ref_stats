@@ -31,15 +31,19 @@ function locationSetter() {
 }
 
 
-function makeDropdown($please_select=True) {	
+function makeDropdown($please_select=True,$location=False) {	
 	// $location_array loaded from config.php
 	global $location_array;
 	if ($please_select == False){
 		unset($location_array['NOPE']);
 	}
 
+	if ($location == False){
+		$location = $_COOKIE['location'];	
+	}	
+
 	foreach ($location_array as $key => $value) {
-		if($key == $_COOKIE['location']) {
+		if($key == $location) {
 			echo '<option value="'.$key.'" selected>'.$value.'</option>';
 		}
 		else {

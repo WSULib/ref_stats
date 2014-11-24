@@ -34,21 +34,18 @@ $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
 $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 ?>
-<body>
 
-	<div class="container">
+
+	
 
 		<div class="row">
 			<div class="col-md-12 text-center">
-				<h2>Reference Statistics Management</h2>
-				<p>					
-					<a class="btn btn-WSUgreen" href="../index.php">Back to refStats</a></p>
-				</p>				
+				<h2>Reference Statistics Management</h2>							
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-md-12 text-center">
+			<div class="col-md-12">
 				<h3>Add Transaction</h3>				
 				<a class="btn btn-WSUgreen" href="./new.php">New Transaction</a></p>	
 			</div>
@@ -74,7 +71,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								?>
 								<!-- adding "All Locations" option element -->								
 								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="ALL">All Locations</option>
-								<?php makeDropdown(False); ?>							
+								<?php makeDropdown(False, $current_edit_location); ?>							
 
 							</select>	
 							<!-- hidden input to maintain current page -->
@@ -175,6 +172,6 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
 	})
-	</script>
+	</script>	
 </body>
 </html>

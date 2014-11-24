@@ -4,8 +4,7 @@ include('header.php');
 include('../inc/functions.php');
 ?>
 
-<body>
-	<div class="container">
+
 
 		<div class="row">
 			<div class="col-md-12">
@@ -67,25 +66,7 @@ else {
 					</div>
 
 					<div class="form-group">
-						<label>Time (Hour)</label>
-						<?php 
-							// $current_hour = date("H");							
-							// $hour = 8;							
-
-							// while ($hour < 24) {								
-							// 	$startHour = date("g a", strtotime("$hour:00"));
-							// 	$endHour = date("g a", strtotime(($hour+1).":00"));
-
-							// 	if ($current_hour != $hour){
-							// 		echo "<div class='radio'><label><input type='radio' name='hour' id='hour_$hour' value='$hour'>$startHour - $endHour</label></div>";	
-							// 	}
-							// 	else {
-							// 		// mark selected hour
-							// 		echo "<div class='radio'><label><input type='radio' name='hour' id='hour_$hour' value='$hour' checked='checked'>$startHour - $endHour</label></div>";
-							// 	}
-							// 	$hour ++;
-							// }
-						?>
+						<label>Time (Hour)</label>						
 						<select class="form-control" id="hour" name="hour">
 							<?php
 							$current_hour = date("H");							
@@ -108,11 +89,23 @@ else {
 						</select>
 					</div>
 
+					<div class="form-group">
+						<label>Date</label>
+						<input type="text" id="date" name="id">
+						<script>
+							$(function() {
+								$( "#date" ).datepicker();
+							});
+						</script>
+					</div>
+
 					<input type="hidden" name="submitted" value="true"/>
 					<button type="submit" class="btn btn-default">Submit</button> 
 				</form>
+
+
 				
-			</div>
+			</div>			
 		</div>
 
 	</div>
@@ -121,7 +114,11 @@ else {
 <?php
 }
 ?>
-
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
 </body>
 </html>
 

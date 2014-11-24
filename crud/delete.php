@@ -4,8 +4,7 @@ include('header.php');
 include('../inc/functions.php');
 ?>
 
-<body>
-	<div class="container">
+
 
 <?php
 $id = (int) $_GET['id']; 

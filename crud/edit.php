@@ -4,8 +4,7 @@ include('header.php');
 include('../inc/functions.php');
 ?>
 
-<body>
-	<div class="container">
+
 
 		<div class="row">
 			<div class="col-md-12">
