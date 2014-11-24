@@ -28,8 +28,18 @@
 
 	<div id="breadcrumb" class="row">
 		<div class="col-md-12 text-center">
-			<h2>RefStats Management</h2>
-			<h3><a class="btn btn-WSUgreen" href="../">RefStats Tool</a> <a class="btn btn-WSUgreen" href="./list.php">Edit Transactions</a></h3>			
+			<h2>RefStats Management</h2>			
+			<p>Current location: <span style="font-size:125%;">
+				<?php 
+					if ($_COOKIE['location'] != "NOPE"){
+						echo $_COOKIE['location']; 
+					}
+					else {
+						echo "<span style='color:red;'>Unselected</span>";
+					}						
+				?>
+			</span></p>			
+			<p><a class="btn btn-WSUgreen" href="../">Back to RefStats Tool</a> <a class="btn btn-WSUgreen" href="./list.php">Edit Transactions</a></p>
 		</div>
 	</div>
 

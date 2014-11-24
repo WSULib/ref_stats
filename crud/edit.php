@@ -4,17 +4,12 @@ include('header.php');
 include('../inc/functions.php');
 ?>
 
-
-
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Edit Transaction</h2>
-				<p>Current location: <span style="font-size:150%;"><?php echo $_COOKIE['location']; ?></span></p>
+				<h2>Edit Transaction</h2>				
 			</div>
 		</div>
-
-
-
+		
 <? 
 if (isset($_GET['id']) ) { 
 	$id = (int) $_GET['id']; 
@@ -74,7 +69,7 @@ else {
 					</div>
 
 					<div class="form-group">					
-						<label>Location</label>
+						<label>Select location for this transaction</label>
 						<select class="form-control" id="location" name="location">
 							<?php makeDropdown(False); ?>
 						</select>
@@ -85,7 +80,7 @@ else {
 					</div>	
 
 					<div class="form-group">
-						<label>Time (Hour)</label>						
+						<label>Time (hour window)</label>						
 						<select class="form-control" id="hour" name="hour">
 							<?php
 

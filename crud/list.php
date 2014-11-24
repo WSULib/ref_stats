@@ -49,7 +49,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 				<div class="col-md-3">					
 					<form action="./list.php" method="GET">	
 						<div class="form-group">		
-							<label>Where would you like to edit?</label>														
+							<label>What location would you like to edit?</label>														
 							<select class="form-control" id="edit_location" name="edit_location" onchange='this.form.submit()'>
 								<?php
 								// select transactions from dropdown, or default to current tool location
@@ -81,7 +81,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 				<div id="transactions_total" class="col-md-3">
 					<h4 class="text-center">
-						<?php echo "Location: $current_edit_location<br>$results_date, $total_day_stats transactions"; ?>
+						<?php echo "Location: $current_edit_location<br>$results_date<br>$total_day_stats transactions"; ?>
 					</h4>
 				</div>		
 			

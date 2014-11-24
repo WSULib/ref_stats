@@ -8,17 +8,7 @@ include('../inc/functions.php');
 
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Add Transaction</h2>				
-				<p>Current location: <span style="font-size:150%;">
-					<?php 
-						if ($_COOKIE['location'] != "NOPE"){
-							echo $_COOKIE['location']; 
-						}
-						else {
-							echo "None Selected";
-						}						
-					?>
-				</span></p>				
+				<h2>Add Transaction</h2>
 			</div>
 		</div>
 
@@ -86,7 +76,7 @@ else {
 					</div>
 
 					<div class="form-group">
-						<label>Time (Hour)</label>						
+						<label>Time (hour window)</label>						
 						<select class="form-control" id="hour" name="hour">
 							<?php
 							$current_hour = date("H");							
@@ -110,7 +100,7 @@ else {
 					</div>
 
 					<div class="form-group">
-						<label>Date</label>
+						<label>Date (default is today)</label>
 						<input type="hidden" id="date" name="date">
 						<div id="datepicker"></div>
 						<script>
