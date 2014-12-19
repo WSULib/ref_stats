@@ -30,26 +30,34 @@ function locationSetter() {
 	}
 }
 
+function userSetter() {
+	setcookie('userType', 'NOPE');
+}
 
-function makeDropdown($please_select=True, $location=False) {	
+function makeDropdown($type, $please_select=True) {	
 	// $location_array loaded from config.php
-	global $location_array;
-	if ($please_select == False){
-		unset($location_array['NOPE']);
+	if ($_COOKIE['location'] == "LAW" && $type == "law") {
+		global $user_array;
+		$array = $user_array;
+	}
+	else {
+		global $location_array;
+		$array = $location_array;
 	}
 
-	if ($location == False){
-		$location = $_COOKIE['location'];	
-	}	
+	if ($please_select == False){
+		unset($array['NOPE']);
+	}
 
-	foreach ($location_array as $key => $value) {
-		if($key == $location) {
+	foreach ($array as $key => $value) {
+		if($key == $_COOKIE['location']) {
 			echo '<option value="'.$key.'" selected>'.$value.'</option>';
 		}
 		else {
 			echo '<option value="'.$key.'">'.$value.'</option>';
 		}
 	}
+
 }
 
 

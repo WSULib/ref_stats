@@ -19,4 +19,16 @@ $location_array = array(
 	"MED" => "Shiffman Medical Library"
 );
 
+// user array used to populate location dropdowns around app
+$user_array = array(
+	"NOPE" => "Please Select Your User",
+	"WLF" => "WSU Law Faculty",
+	"OTF" => "Other Faculty",
+	"WLS" => "WSU Law Students",
+	"OTS" => "Other Students",
+	"WSA" => "WSU Administration/Staff",
+	"LGP" => "Legal Professionals",
+	"COP" => "Community Patrons",
+);
+
 ?>

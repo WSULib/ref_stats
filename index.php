@@ -39,6 +39,7 @@ include('inc/functions.php');
 		<?php
 		session_start();		
 		locationSetter();			
+		userSetter();
 
 		// 
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -55,6 +56,8 @@ include('inc/functions.php');
 				reporter("white", "Nothing to report.", "visible");
 			}
 			session_destroy();
+			// RESET userType cookie
+			userSetter();
 		}
 
 
@@ -70,12 +73,16 @@ include('inc/functions.php');
 			elseif ($_COOKIE['location'] == 'NOPE') {
 				reporter("red", "Please Set Your Location", " ");		
 			}
+			elseif ($_COOKIE['userType'] == 'NOPE' && $_COOKIE['location'] == "LAW") {
+				reporter("red", "Please Select Your User Type", " ");
+			}
 
 			// register reference transaction
 			else {
 			  	$type = $_POST['type'];
 			  	$ip = ipGrabber();
 				$location = $_COOKIE['location'];
+				$userType = $_COOKIE['userType'];
 
 				if (mysqli_connect_errno()) {
 					reporter("red", "Error: Submission Failed" . mysqli_connect_error());
@@ -105,12 +112,28 @@ include('inc/functions.php');
 					reporter("error", "Error: Submission Failed ", " ");
 			   }				
 			} // cookie
+			userSetter();
 		} // post
 
 		
 		?>
 
 		<div id="ref_actions">
+			<?php
+			// Law dropdown
+			if ($_COOKIE['location'] == 'LAW') {
+				echo '	<div class="row-fluid">
+							<div class="col-md-12">
+								<form action="" method="POST">
+									<select class="form-control" id="userType" name="userType" onchange="userCookie(this.value)">';
+										makeDropdown("law");						
+				echo 				'</select>
+								</form>
+							</div>
+						</div> <!-- row -->';
+
+			}
+			?>
 
 			<div class="row-fluid">
 				<div class="col-md-12">
