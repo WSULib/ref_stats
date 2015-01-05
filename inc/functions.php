@@ -34,16 +34,12 @@ function userSetter() {
 	setcookie('userType', 'NOPE');
 }
 
-function makeDropdown($type, $please_select=True) {	
-	// $location_array loaded from config.php
-	if ($_COOKIE['location'] == "LAW" && $type == "law") {
-		global $user_array;
-		$array = $user_array;
-	}
-	else {
-		global $location_array;
-		$array = $location_array;
-	}
+
+# function to create location dropdown selections
+function makeLocationDropdown($type, $please_select=True) {	
+	
+	global $location_array;
+	$array = $location_array;
 
 	if ($please_select == False){
 		unset($array['NOPE']);
@@ -60,6 +56,27 @@ function makeDropdown($type, $please_select=True) {
 
 }
 
+# function to create user dropdown selections
+function makeUserDropdown($type, $please_select=True) {	
+	
+	# get user array from config.php
+	global $user_array;
+	$array = $user_array[$_COOKIE['location']];	
+
+	if ($please_select == False){
+		unset($array['NOPE']);
+	}
+
+	foreach ($array as $key => $value) {
+		if($key == $_COOKIE['location']) {
+			echo '<option value="'.$key.'" selected>'.$value.'</option>';
+		}
+		else {
+			echo '<option value="'.$key.'">'.$value.'</option>';
+		}
+	}
+
+}
 
 // function to report 8am - 11pm table rows showing stats
 function statsGraph($link, $context, $current_edit_location, $graph_date){			

@@ -52,7 +52,7 @@ else {
 							?>
 						</label>													
 						<select class="form-control" id="location" name="location">		
-							<?php makeDropdown(True); ?>						
+							<?php makeLocationDropdown(True); ?>						
 						</select>
 					</div>
 

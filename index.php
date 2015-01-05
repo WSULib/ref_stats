@@ -121,18 +121,18 @@ include('inc/functions.php');
 		<div id="ref_actions">
 			<?php
 			// Law dropdown
-			if ($_COOKIE['location'] == 'LAW') {
-				echo '	<div class="row-fluid">
-							<div class="col-md-12">
-								<form action="" method="POST">
-									<select class="form-control" id="userType" name="userType" onchange="userCookie(this.value)">';
-										makeDropdown("law");						
-				echo 				'</select>
-								</form>
-							</div>
-						</div> <!-- row -->';
+			// if ($_COOKIE['location'] == 'LAW') {
+			// 	echo '	<div class="row-fluid">
+			// 				<div class="col-md-12">
+			// 					<form action="" method="POST">
+			// 						<select class="form-control" id="userType" name="userType" onchange="userCookie(this.value)">';
+			// 							makeDropdown("law");						
+			// 	echo 				'</select>
+			// 					</form>
+			// 				</div>
+			// 			</div> <!-- row -->';
 
-			}
+			// }
 			?>
 
 			<div class="row-fluid">
@@ -167,7 +167,7 @@ include('inc/functions.php');
 					<form action="" method="POST">
 					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
 						<?php 
-						makeDropdown();						
+						makeLocationDropdown();						
 						?>
 					</select>
 					</form>

@@ -71,7 +71,7 @@ else {
 					<div class="form-group">					
 						<label>Select location for this transaction</label>
 						<select class="form-control" id="location" name="location">
-							<?php makeDropdown(False); ?>
+							<?php makeLocationDropdown(False); ?>
 						</select>
 					</div>
 					<div class="form-group">						

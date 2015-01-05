@@ -62,7 +62,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								?>
 								<!-- adding "All Locations" option element -->								
 								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="ALL">All Locations</option>
-								<?php makeDropdown(False, $current_edit_location); ?>							
+								<?php makeLocationDropdown(False, $current_edit_location); ?>							
 
 							</select>	
 							<!-- hidden input to maintain current page -->
