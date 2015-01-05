@@ -17,7 +17,7 @@ $location_array = array(
 
 // user array used to populate location dropdowns around app
 $user_arrays = array(
-	"law" => array(
+	"LAW" => array(
 		"NOPE" => "Please Select Your User",
 		"WLF" => "WSU Law Faculty",
 		"OTF" => "Other Faculty",
@@ -27,15 +27,12 @@ $user_arrays = array(
 		"LGP" => "Legal Professionals",
 		"COP" => "Community Patrons",
 	),
-	"med" => array(
+	"MED" => array(
 		"NOPE" => "Please Select Your User",
-		"WLF" => "WSU Law Faculty",
-		"OTF" => "Other Faculty",
-		"WLS" => "WSU Law Students",
-		"OTS" => "Other Students",
-		"WSA" => "WSU Administration/Staff",
-		"LGP" => "Legal Professionals",
-		"COP" => "Community Patrons",
-	)
+		"GOOBER" => "Of the Goober Variety",
+		"TRONIC" => "Tronic in nature",
+		"HORSE" => "Ubiquitous Horse",
+	)	
 );
+
 ?>

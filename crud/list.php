@@ -27,7 +27,7 @@ else {
 }					
 
 // perform query
-$query = "SELECT id, ref_type, location, ip, DATE_FORMAT(timestamp, '%r') AS print_timestamp, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) = DATE_ADD(CURDATE(), INTERVAL $page DAY) AND $location_where ORDER BY ordering_timestamp DESC";
+$query = "SELECT id, ref_type, location, user_group, ip, DATE_FORMAT(timestamp, '%r') AS print_timestamp, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) = DATE_ADD(CURDATE(), INTERVAL $page DAY) AND $location_where ORDER BY ordering_timestamp DESC";
 $result = mysqli_query($link, $query) or trigger_error(mysqli_error());
 $total_day_stats = mysqli_num_rows($result);
 $results_date = date('l\, m\-j\-y', strtotime( ($page)." days" ));
@@ -35,12 +35,18 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 ?>		
 		
-		<div class="row">
-			<div class="col-md-12">
-				<h3>Add Transaction</h3>				
-				<a class="btn btn-WSUgreen" href="./new.php">New Transaction</a></p>	
-			</div>
-		</div>			
+		<?php
+		if ($_COOKIE['location'] != "NOPE"){
+		?>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Add Transaction</h3>				
+					<a class="btn btn-WSUgreen" href="./new.php">New Transaction</a></p>	
+				</div>
+			</div>		
+		<?php
+		}	
+		?>
 
 		<div class="row">
 
@@ -49,7 +55,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 				<div class="col-md-3">					
 					<form action="./list.php" method="GET">	
 						<div class="form-group">		
-							<label>What location would you like to edit?</label>														
+							<label>What location would you like to view? </label>														
 							<select class="form-control" id="edit_location" name="edit_location" onchange='this.form.submit()'>
 								<?php
 								// select transactions from dropdown, or default to current tool location
@@ -103,8 +109,9 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 						<tr>
 							<td><b>Id</b></td> 
 							<td><b>Ref Type</b></td> 
-							<td><b>Location</b></td> 
-							<td><b>Ip</b></td> 
+							<td><b>Location</b></td>
+							<td><b>User Group</b></td> 
+							<td><b>Ip</b></td>
 							<td><b>Timestamp</b></td>
 							<td><b>Actions</b></td> 
 						</tr>
@@ -115,7 +122,8 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								echo "<tr>";  
 								echo "<td>" . nl2br( $row['id']) . "</td>";  
 								echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  
-								echo "<td>" . nl2br( $row['location']) . "</td>";  
+								echo "<td>" . nl2br( $row['location']) . "</td>";
+								echo "<td>" . nl2br( $row['user_group']) . "</td>";  
 								echo "<td>" . nl2br( $row['ip']) . "</td>";  
 								echo "<td>" . nl2br( $row['print_timestamp']) . "</td>";  
 								echo "<td><a href=edit.php?id={$row['id']}>Edit</a> / <a href=delete.php?id={$row['id']}>Delete</a></td> "; 

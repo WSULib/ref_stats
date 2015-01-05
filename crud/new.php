@@ -23,7 +23,7 @@ if (isset($_REQUEST['submitted']) & $_REQUEST['location'] != "NOPE") {
 		$date = date("Y-m-d");
 	}	
 	$insert_date = $date." {$_REQUEST['hour']}";
-	$sql = "INSERT INTO `ref_stats` ( `ref_type` ,  `location` ,  `ip`, `timestamp` ) VALUES(  '{$_REQUEST['ref_type']}' ,  '{$_REQUEST['location']}' ,  '$IP', '$insert_date'  ) ";
+	$sql = "INSERT INTO `ref_stats` ( `ref_type` ,  `location` , `user_group`,  `ip`, `timestamp` ) VALUES(  '{$_REQUEST['ref_type']}' ,  '{$_REQUEST['location']}' , '{$_REQUEST['user_group']}' ,  '$IP', '$insert_date'  ) ";
 	$result = mysqli_query($link, $sql) or die(mysqli_error());
 	?>
 
@@ -43,18 +43,25 @@ else {
 		<div class="row">
 			<div class="col-md-6">
 				<form action='new.php' method='POST' class="form" role="form">
-					<div class="form-group">	
-						<label>Select location for this transaction:
-							<?php
-							if (isset($_REQUEST['submitted']) & $_REQUEST['location'] == "NOPE"){
-								echo "<span style='color:red;'>*location required</span>";
-							}
-							?>
-						</label>													
-						<select class="form-control" id="location" name="location">		
-							<?php makeLocationDropdown(True); ?>						
-						</select>
-					</div>
+					
+					<!-- location -->
+					<input type="hidden" id="location" name="location" value="<?php echo $_COOKIE['location']; ?>"></input>					
+
+					<!-- if location requires users, show user_group dropdown -->
+					<?php
+					if ( array_key_exists($_COOKIE['location'], $user_arrays) ) {
+					?>
+						<!-- user_group -->
+						<div class="form-group">	
+							<label>Select User Group for this transaction:
+							</label>													
+							<select class="form-control" id="user_group" name="user_group">		
+								<?php makeUserDropdown($_COOKIE['location']); ?>						
+							</select>
+						</div>
+					<?php
+					}
+					?>	
 
 					<div class="form-group">
 						<label>Reference Type:</label>		

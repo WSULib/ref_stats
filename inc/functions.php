@@ -31,7 +31,7 @@ function locationSetter() {
 }
 
 function userSetter() {
-	setcookie('userType', 'NOPE');
+	setcookie('user_group', 'NOPE');
 }
 
 
@@ -57,18 +57,18 @@ function makeLocationDropdown($type, $please_select=True) {
 }
 
 # function to create user dropdown selections
-function makeUserDropdown($type, $please_select=True) {	
+function makeUserDropdown($please_select=True,$preset) {	
 	
 	# get user array from config.php
-	global $user_array;
-	$array = $user_array[$_COOKIE['location']];	
+	global $user_arrays;
+	$array = $user_arrays[$_COOKIE['location']];	
 
 	if ($please_select == False){
 		unset($array['NOPE']);
 	}
 
 	foreach ($array as $key => $value) {
-		if($key == $_COOKIE['location']) {
+		if($key == $preset) {
 			echo '<option value="'.$key.'" selected>'.$value.'</option>';
 		}
 		else {

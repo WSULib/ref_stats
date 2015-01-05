@@ -61,11 +61,11 @@ function lsTest(){
 
 // temporarily set user cookie
 function userCookie(value) {
-	document.cookie="userType="+value+"";
+	document.cookie="user_group="+value+"";
 }
 
 // temporarily set user cookie
 function userCookie2() {
 	var value = $('input[name="radio_button"]:checked').val();
-	document.cookie="userType="+value+"";
+	document.cookie="user_group="+value+"";
 }

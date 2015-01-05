@@ -6,6 +6,7 @@ CREATE TABLE `ref_stats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ref_type` int(11) NOT NULL,
   `location` varchar(255) NOT NULL,
+  `user_group` varchar(255), 
   `ip` varchar(45) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

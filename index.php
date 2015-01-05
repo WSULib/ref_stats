@@ -1,5 +1,7 @@
 <?php
 include('inc/functions.php');
+include('config.php');
+global $user_arrays;
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +58,9 @@ include('inc/functions.php');
 				reporter("white", "Nothing to report.", "visible");
 			}
 			session_destroy();
-			// RESET userType cookie
+			// RESET user_group cookie
 			userSetter();
 		}
-
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			
@@ -69,11 +70,11 @@ include('inc/functions.php');
 				setcookie('location', $_POST['location']);				
 				$_SESSION['result'] = "location";				
 				header('Location: ./', true, 302);
-			}
+			}			
 			elseif ($_COOKIE['location'] == 'NOPE') {
 				reporter("red", "Please Set Your Location", " ");		
 			}
-			elseif ($_COOKIE['userType'] == 'NOPE' && $_COOKIE['location'] == "LAW") {
+			elseif ($_COOKIE['user_group'] == 'NOPE' && array_key_exists($_COOKIE['location'], $user_arrays) ) {
 				reporter("red", "Please Select Your User Type", " ");
 			}
 
@@ -82,13 +83,13 @@ include('inc/functions.php');
 			  	$type = $_POST['type'];
 			  	$ip = ipGrabber();
 				$location = $_COOKIE['location'];
-				$userType = $_COOKIE['userType'];
+				$user_group = $_COOKIE['user_group'];
 
 				if (mysqli_connect_errno()) {
 					reporter("red", "Error: Submission Failed" . mysqli_connect_error());
 				}
 
-				$query = "INSERT into ref_stats(ref_type, location, ip) VALUES ('$type', '$location', '$ip')";
+				$query = "INSERT into ref_stats(ref_type, location, user_group, ip) VALUES ('$type', '$location', '$user_group', '$ip')";
 
 				if($stmt = mysqli_prepare($link, $query)) {
 
@@ -119,20 +120,34 @@ include('inc/functions.php');
 		?>
 
 		<div id="ref_actions">
-			<?php
-			// Law dropdown
-			// if ($_COOKIE['location'] == 'LAW') {
-			// 	echo '	<div class="row-fluid">
-			// 				<div class="col-md-12">
-			// 					<form action="" method="POST">
-			// 						<select class="form-control" id="userType" name="userType" onchange="userCookie(this.value)">';
-			// 							makeDropdown("law");						
-			// 	echo 				'</select>
-			// 					</form>
-			// 				</div>
-			// 			</div> <!-- row -->';
+			<div class="row-fluid">
+				<div class="col-md-12">
+					<form action="" method="POST">
+					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
+						<?php 
+						makeLocationDropdown();						
+						?>
+					</select>
+					</form>
+				</div>
+			</div> <!-- row -->
 
-			// }
+			<?php
+				// Populate dropdown with users if Law or Med
+				if ( array_key_exists($_COOKIE['location'], $user_arrays) ) {
+			?>
+				<div class="row-fluid">
+					<div class="col-md-12">
+						<form action="" method="POST">
+							<select class="form-control" id="user_group" name="user_group" onchange="userCookie(this.value)">';
+								<?php makeUserDropdown($_COOKIE['location']); ?>
+							</select>
+						</form>
+					</div>
+				</div>
+
+			<?php
+				} //end if user
 			?>
 
 			<div class="row-fluid">
@@ -162,17 +177,6 @@ include('inc/functions.php');
 				</div>
 			</div> <!-- row -->
 
-			<div class="row-fluid">
-				<div class="col-md-12">
-					<form action="" method="POST">
-					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
-						<?php 
-						makeLocationDropdown();						
-						?>
-					</select>
-					</form>
-				</div>
-			</div> <!-- row -->
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<p>

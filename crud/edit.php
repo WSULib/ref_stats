@@ -22,7 +22,7 @@ if (isset($_GET['id']) ) {
 		}	
 		$insert_date = $date." {$_REQUEST['hour']}";
 		foreach($_POST AS $key => $value) { $_POST[$key] = mysqli_real_escape_string($link, $value); } 
-		$sql = "UPDATE `ref_stats` SET  `ref_type` =  '{$_POST['ref_type']}' ,  `location` =  '{$_POST['location']}' ,  `ip` =  '{$_POST['ip']}' ,  `timestamp` =  '$insert_date'   WHERE `id` = '$id' "; 
+		$sql = "UPDATE `ref_stats` SET  `ref_type` =  '{$_POST['ref_type']}' ,  `location` =  '{$_POST['location']}' , `user_group` =  '{$_POST['user_group']}' , `ip` =  '{$_POST['ip']}' ,  `timestamp` =  '$insert_date'   WHERE `id` = '$id' "; 
 		mysqli_query($link, $sql) or die(mysqli_error());
 
 		// if coming from index.php, return
@@ -47,7 +47,20 @@ else {
 
 		<div class="row">
 			<div class="col-md-6">
-				<form action='' method='POST' class="form" role="form">					
+				<form action='' method='POST' class="form" role="form">		
+
+					<?php
+						if ( array_key_exists($_COOKIE['location'], $user_arrays) ) {
+					?>
+						<div class="form-group">
+							<label>Select User Group for this transaction</label>
+							<select class="form-control" id="user_group" name="user_group">
+								<?php makeUserDropdown(False,$row['user_group']); ?>
+							</select>
+						</div>
+					<?php
+						}
+					?>			
 
 					<div class="form-group">
 						<label>Reference Type:</label>		
@@ -68,12 +81,9 @@ else {
 						</div>
 					</div>
 
-					<div class="form-group">					
-						<label>Select location for this transaction</label>
-						<select class="form-control" id="location" name="location">
-							<?php makeLocationDropdown(False); ?>
-						</select>
-					</div>
+					<!-- location -->
+					<input type="hidden" id="location" name="location" value="<?php echo $row['location']; ?>"></input>					
+
 					<div class="form-group">						
 						<label>IP Address (automatically populated, override only if necessary)</label>
 						<input type='text' name='ip' class="form-control" value='<?= stripslashes($row['ip']) ?>'/>
