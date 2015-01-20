@@ -80,6 +80,19 @@ else {
 								<input type='radio' name='ref_type' value='3'><span class="btn btn-primary ref_type_button">Extended Reference</span>
 							</label>
 						</div>
+						<!-- Shiffman only -->
+						<?php
+							// Populate dropdown with users if Law or Med
+							if ( $_COOKIE['location'] == "MED" ) {
+						?>
+						<div class='radio'>
+							<label>
+								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 4) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Extended Reference</span>
+							</label>
+						</div>
+						<?php
+							} //end if MED button
+						?>
 					</div>
 
 					<div class="form-group">

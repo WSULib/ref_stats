@@ -29,9 +29,9 @@ $user_arrays = array(
 	),
 	"MED" => array(
 		"NOPE" => "Please Select Your User",
-		"GOOBER" => "Of the Goober Variety",
-		"TRONIC" => "Tronic in nature",
-		"HORSE" => "Ubiquitous Horse",
+		"DMC" => "Detroit Medical Center (DMC)",
+		"COM" => "Community",
+		"WSU" => "Wayne State Affiliated",
 	)	
 );
 

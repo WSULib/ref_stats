@@ -120,6 +120,8 @@ global $user_arrays;
 		?>
 
 		<div id="ref_actions">
+			
+			<!-- location choosing -->
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<form action="" method="POST">
@@ -130,7 +132,53 @@ global $user_arrays;
 					</select>
 					</form>
 				</div>
-			</div> <!-- row -->
+			</div> <!-- row -->		
+
+
+			<!-- transaction recording -->	
+
+			<div class="row-fluid">
+				<div class="col-md-12">
+				<form action="" method="POST">
+					<input name="type" type="number" value="1"></input>
+					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Directional</button>
+				</form>
+				</div>
+			</div> 
+
+			<div class="row-fluid">
+				<div class="col-md-12">
+				<form action="" method="POST">
+					<input name="type" type="number" value="2">
+					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Brief Reference</button>
+				</form>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="col-md-12">
+				<form action="" method="POST">
+					<input name="type" type="number" value="3">
+					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Extended Reference</button>
+				</form>
+				</div>
+			</div>
+
+			<?php
+				// Populate dropdown with users if Law or Med
+				if ( $_COOKIE['location'] == "MED" ) {
+			?>
+			<div class="row-fluid">
+				<div class="col-md-12">
+				<form action="" method="POST">
+					<input name="type" type="number" value="4">
+					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Consultation</button>
+				</form>
+				</div>
+			</div> 
+			<?php
+				} //end if MED button
+			?>
 
 			<?php
 				// Populate dropdown with users if Law or Med
@@ -150,33 +198,7 @@ global $user_arrays;
 				} //end if user
 			?>
 
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="1"></input>
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Directional</button>
-				</form>
-				</div>
-			</div> <!-- row -->
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="2">
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Brief Reference</button>
-				</form>
-				</div>
-			</div> <!-- row -->
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="3">
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Extended Reference</button>
-				</form>
-				</div>
-			</div> <!-- row -->
-
+			<!-- edit buttons -->
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<p>
