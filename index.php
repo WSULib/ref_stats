@@ -166,7 +166,7 @@ global $user_arrays;
 
 			<?php
 				// Populate dropdown with users if Law or Med
-				if ( $_COOKIE['location'] == "MED" ) {
+				if ( startsWith($_COOKIE['location'], "MED") ) {
 			?>
 			<div class="row-fluid">
 				<div class="col-md-12">

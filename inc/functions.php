@@ -1,7 +1,7 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/ref_stats_config.php');
 include(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
+include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/'.$config_file);
 
 function reporter($color, $msg, $visibility) {
 		// $color = ($type == 'success' ? "green" : "red");
@@ -140,32 +140,16 @@ $ref_type_hash = array(
 	2 => "Brief",
 	3 => "Extended",
 	4 => "Consultation"
-)
+);
 
 
+function startsWith($haystack, $needle) {	
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function endsWith($haystack, $needle) {
+    return $needle === "" || strpos($haystack, $needle, strlen($haystack) - strlen($needle)) !== FALSE;
+}
 
 
 
