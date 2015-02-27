@@ -42,7 +42,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 				<div class="col-md-12">
 					<h3>Add Transaction</h3>				
 					<a class="btn btn-WSUgreen" href="./new.php">New Transaction</a></p>	
-				</div>
+				</div>				
 			</div>		
 		<?php
 		}	
@@ -100,10 +100,9 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 
 			<!-- Table Row -->
 			<div id="edit_table" class="row">
-				<div class="col-md-12">
-					<!-- <h4 onclick="toggleEditTable();">Edit Table <span style="font-size:50%;">(click to toggle)</span></h4>	 -->
+				<div class="col-md-6">
 					<h4 id="toggle_table">Edit Table <span style="font-size:50%;">(click to toggle)</span></h4>	
-				</div>
+				</div>				
 				<div class="col-md-12" id="transactions_table">				
 					<table class="table table-striped">
 						<tr>
@@ -137,7 +136,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 						echo "<h4 style='text-align:center;'>No transactions recorded for this day.</h4>";
 					}
 					?>	
-				</div>
+				</div>				
 			</div>
 
 			<!-- graph -->

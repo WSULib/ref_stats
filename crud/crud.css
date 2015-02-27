@@ -54,3 +54,19 @@
     background-color:#6f6f6f;
     color:white;
 }
+
+#export_data {
+    text-align:right;       
+}
+
+#export_data a {
+    text-decoration:none;    
+    color:#238B8B;
+    color:black;
+}
+
+@media (max-width: 992px) {
+  #export_data {
+    text-align:left;
+  }
+}

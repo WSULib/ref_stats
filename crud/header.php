@@ -39,7 +39,7 @@
 					}						
 				?>
 			</span></p>			
-			<p><a class="btn btn-WSUgreen" href="../">Back to RefStats Tool</a> <a class="btn btn-WSUgreen" href="./list.php">Edit Transactions</a></p>
+			<p><a class="btn btn-WSUgreen" href="../"><!-- <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span> --> RefStats Main Page</a> <a class="btn btn-WSUgreen" href="./list.php"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage Stats</a> <a class="btn btn-WSUgreen" href="./reports.php"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Reports</a></p>
 		</div>
 	</div>
 
