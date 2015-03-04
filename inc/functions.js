@@ -69,3 +69,15 @@ function userCookie2() {
 	var value = $('input[name="radio_button"]:checked').val();
 	document.cookie="user_group="+value+"";
 }
+
+// REPORTING
+$('#ALL_checkbox').on('click', function() {
+	alert('firing');
+    $('.checkbox').not(this).prop('checked', false);  
+});
+
+
+
+
+
+

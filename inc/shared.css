@@ -70,3 +70,42 @@
 .dark_green {
 	color:#093f39; 
 }
+
+/* report */
+.stat_name{
+	font-weight:bold;
+}
+
+#report_messages{
+	display:none;
+}
+
+#export{
+	display:none;
+}
+
+#quickstats{
+	display:none;
+}
+
+.checkbox_grid li {
+    display: block;
+    float: left;
+    width: 25%;
+}
+
+.raw_json{
+	display:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

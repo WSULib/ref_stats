@@ -4,7 +4,6 @@ include(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
 include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/'.$config_file);
 
 function reporter($color, $msg, $visibility) {
-		// $color = ($type == 'success' ? "green" : "red");
 		echo '<div id="feedback" class="row-fluid" style="color: '.$color.'; visibility:'.$visibility.';">';
 		echo '<div id="msg" class="col-md-12">';
 		echo '<h4>'.$msg.'</h4>';
@@ -36,8 +35,9 @@ function userSetter() {
 
 
 # function to create location dropdown selections
-function makeLocationDropdown($type, $please_select=True) {	
+function makeLocationDropdown($please_select=True, $preset) {	
 	
+	# get location array from config.php
 	global $location_array;
 	$array = $location_array;
 
@@ -45,19 +45,42 @@ function makeLocationDropdown($type, $please_select=True) {
 		unset($array['NOPE']);
 	}
 
+	// $preset overrides even Cookie location
 	foreach ($array as $key => $value) {
-		if($key == $_COOKIE['location']) {
+		if ($key == $preset) {			
 			echo '<option value="'.$key.'" selected>'.$value.'</option>';
-		}
+		}			
 		else {
 			echo '<option value="'.$key.'">'.$value.'</option>';
 		}
 	}
-
 }
 
+# function to create location dropdown selections
+function makeCheckboxGrid($please_select=True, $preset_array) {	
+	
+	# get location array from config.php
+	global $location_array;
+	$array = $location_array;
+
+	if ($please_select == False){
+		unset($array['NOPE']);
+	}
+
+	// $preset overrides even Cookie location
+	foreach ($array as $key => $value) {
+		if ( in_array($key, $preset_array) ){			
+			echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+		}			
+		else {
+			echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'"> '.$value.'</label></div></li>';
+		}
+	}
+}
+
+
 # function to create user dropdown selections
-function makeUserDropdown($please_select=True,$preset) {	
+function makeUserDropdown($please_select=True, $preset) {	
 	
 	# get user array from config.php
 	global $user_arrays;
@@ -118,7 +141,7 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 		21 => array("9pm",""),
 		22 => array("10pm",""),
 		23 => array("11pm","")		
-		);			
+	);			
 
 	// update graph marks for each hour returned
 	while($row = mysqli_fetch_array($result)) {
