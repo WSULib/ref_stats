@@ -5,7 +5,6 @@ include('../inc/functions.php');
 if (isset($_REQUEST['submitted'])){
 
 	// establish reporting location, or select all
-
 	// default to ALL
 	if ( isset($_REQUEST['locations']) && $_REQUEST['locations'] == array("ALL")){
 		$location_where = "location = ANY(select location from ref_stats)";
@@ -22,8 +21,7 @@ if (isset($_REQUEST['submitted'])){
 	}
 	else {
 		$location_where = "location = {$_COOKIE['location']}";
-	}
-	
+	}	
 
 	// get date limitiers
 	$date_start = date("Y-m-d", strtotime($_REQUEST['date_start']));
@@ -45,7 +43,6 @@ if (isset($_REQUEST['submitted'])){
 		$location_totals[$row['location']][] = $row['ordering_timestamp'];
 	}
 
-
 	// Transaction counts
 	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY ref_type";
 	// echo $type_query;
@@ -56,7 +53,6 @@ if (isset($_REQUEST['submitted'])){
 	}
 
 	// Busiest Calculations
-
 	// Day-of-the-week (dow)
 	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY dow_index ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
@@ -82,8 +78,7 @@ if (isset($_REQUEST['submitted'])){
 	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY date ORDER BY ref_count DESC limit 5;";
 	$single_result = mysqli_query($link, $single_query) or trigger_error(mysqli_error());
 
-	
-	/* Data Explanation:
+	/* Data Explanations:
 	Recommended to use json_encode() for each array to use with charts.js
 
 	$full_result = MySQL result set for all queries
@@ -104,7 +99,6 @@ if (isset($_REQUEST['submitted'])){
 	// set display flags
 	$export_display = "block";
 	$quickstats_display = "block";
-
 
 }
 
@@ -150,13 +144,13 @@ if (isset($_REQUEST['submitted'])){
 										</label>
 									</div>
 								</li>
-								<li>
+								<!-- <li>
 									<div class="checkbox">
 										<label>
 											<input id="ALL_checkbox" type="checkbox" name="locations[]" value="PK_COMB" <?php if ( in_array("PK_COMB", $_REQUEST['locations'])) { echo "checked";} ?> > PK combined 
 										</label>
 									</div>
-								</li>							
+								</li>	 -->						
 
 								<?php  makeCheckboxGrid(False, $current_report_location_array); ?>
 							</ul>
