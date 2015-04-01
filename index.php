@@ -135,7 +135,7 @@ global $user_arrays;
 					<form action="" method="POST">
 					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
 						<?php 
-						makeLocationDropdown();						
+						makeLocationDropdown(True,$_COOKIE['location']);						
 						?>
 					</select>
 					</form>
