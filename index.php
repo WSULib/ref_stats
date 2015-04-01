@@ -210,7 +210,7 @@ global $user_arrays;
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<p>
-						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage Stats</button></a>
+						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage Transactions</button></a>
 						<a href="#" onclick="window.open('./index.php','ref_stats','menubar=0,resizable=0,width=350,height=880');"><button type="button" class="btn btn-sm btn-WSUgreen">Launch Pop-Up</button></a>
 						<a href="RefStats_Tool_Documentation.html" ><button type="button" class="btn btn-sm btn-WSUgreen">?</button></a>
 					</p>

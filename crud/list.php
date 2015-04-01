@@ -117,7 +117,12 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 						<?php	
 						if ($total_day_stats > 0) {
 							while($row = mysqli_fetch_array($result)){ 
-								foreach($row AS $key => $value) { $row[$key] = stripslashes($value); }
+								foreach($row AS $key => $value) { 
+									$row[$key] = stripslashes($value);
+									if ($row['user_group'] == "NOPE"){
+										$row['user_group'] = "None";
+									} 
+								}
 								echo "<tr>";  
 								echo "<td>" . nl2br( $row['id']) . "</td>";  
 								echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $ref_type_hash[$row['ref_type']]) . "</td>";  

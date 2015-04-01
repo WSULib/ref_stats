@@ -60,6 +60,11 @@ else {
 						</div>
 					<?php
 						}
+						else{
+							?>
+							<input type="hidden" name="user_group" value="NOPE"/>
+							<?php
+						}
 					?>			
 
 					<div class="form-group">

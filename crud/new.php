@@ -53,7 +53,7 @@ else {
 					?>
 						<!-- user_group -->
 						<div class="form-group">	
-							<label>Select User Group for this transaction:
+							<label>Select User Group for this transaction
 							</label>													
 							<select class="form-control" id="user_group" name="user_group">		
 								<?php makeUserDropdown($_COOKIE['location']); ?>						
@@ -61,10 +61,15 @@ else {
 						</div>
 					<?php
 					}
+					else{
+						?>
+						<input type="hidden" name="user_group" value="NOPE"/>
+						<?php
+					}
 					?>	
 
 					<div class="form-group">
-						<label>Reference Type:</label>		
+						<label>Reference Type</label>		
 						<div class='radio'>
 							<label>
 								<input type='radio' name='ref_type' value='1'><span class="btn btn-primary ref_type_button">Directional</span>

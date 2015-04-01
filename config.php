@@ -48,7 +48,7 @@ $user_arrays = array(
 // wide-open, reference locations
 $ip_white_list = array(
 	"141.217.54.36", // GH 
-	// "141.217.54.38", // GH 
+	"141.217.54.38", // GH 
 	"141.217.172.161",
 	"141.217.175.115",
 	"141.217.175.55",
