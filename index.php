@@ -1,4 +1,5 @@
 <?php
+include('inc/password_protect.php');
 include('inc/functions.php');
 include('config.php');
 global $user_arrays;
@@ -25,6 +26,13 @@ global $user_arrays;
 
 	<!-- Local JS -->
 	<script src="inc/functions.js"></script>	
+
+	<!-- User Login Testing -->
+	<script src="inc/jquery.cookie.js" type="text/javascript"></script>
+	<script src="inc/userData.js"></script>	
+
+
+
 </head>
 
 <body onBlur="window.focus();">	
@@ -38,7 +46,7 @@ global $user_arrays;
 		</div>
 		
 		<!-- Message reporting and action logging -->
-		<?php
+		<?php		
 		session_start();		
 		locationSetter();			
 		userSetter();
@@ -62,7 +70,7 @@ global $user_arrays;
 			userSetter();
 		}
 
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && !array_key_exists("login_refer",$_REQUEST)) {
 			
 			// set location
 			if (isset($_POST['location'])) {

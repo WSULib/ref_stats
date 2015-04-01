@@ -5,6 +5,7 @@
 	Production - updated 11/19/2014
 */
 
+// location is in 'inc/dbs/'
 $config_file = "ref_stats_beta_config.php";
 
 // location array used to populate location dropdowns around app
@@ -43,6 +44,14 @@ $user_arrays = array(
 		"WSU" => "Wayne State Affiliated",
 	)	
 );
+
+
+// wide-open, reference locations
+$reference_ip_list = array(
+	"141.217.54.36", // GH PC
+);
+
+
 
 
 ?>

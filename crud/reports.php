@@ -5,6 +5,7 @@ include('../inc/functions.php');
 if (isset($_REQUEST['submitted'])){
 
 	// establish reporting location, or select all
+
 	// default to ALL
 	if ( isset($_REQUEST['locations']) && $_REQUEST['locations'] == array("ALL")){
 		$location_where = "location = ANY(select location from ref_stats)";
@@ -144,13 +145,7 @@ if (isset($_REQUEST['submitted'])){
 										</label>
 									</div>
 								</li>
-								<!-- <li>
-									<div class="checkbox">
-										<label>
-											<input id="ALL_checkbox" type="checkbox" name="locations[]" value="PK_COMB" <?php if ( in_array("PK_COMB", $_REQUEST['locations'])) { echo "checked";} ?> > PK combined 
-										</label>
-									</div>
-								</li>	 -->						
+														
 
 								<?php  makeCheckboxGrid(False, $current_report_location_array); ?>
 							</ul>
