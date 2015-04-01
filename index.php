@@ -40,7 +40,7 @@ global $user_arrays;
 
 		<div class="row-fluid">
 			<div id="header" class="col-md-12">
-				<img id="logo" src="inc/w.png"/>
+				<a href="."><img id="logo" src="inc/w.png"/></a>
 				<h2>Reference Stats Tool</h2>
 			</div>
 		</div>

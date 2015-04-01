@@ -1,5 +1,7 @@
 <?php
 
+include(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
+
 ###############################################################
 # Page Password Protect 2.13
 ###############################################################
@@ -89,10 +91,13 @@ if(isset($_GET['logout'])) {
   exit();
 }
 
-if(!function_exists('showLoginPasswordProtect')) {
+if (!function_exists('showLoginPasswordProtect')  ) {
 
 // show login form
 function showLoginPasswordProtect($error_msg) {
+
+	// check if IP in range
+
 ?>
 <html>
 <head>
@@ -105,14 +110,17 @@ function showLoginPasswordProtect($error_msg) {
   <style>
     input { border: 1px solid black; }
   </style>
-  <div style="width:500px; margin-left:auto; margin-right:auto; text-align:center">
+  <div style="width:640px; margin-left:auto; margin-right:auto; text-align:center">
   <form method="post">
   	<h2>WSU Reference Stats Tool</h2>
     <h3>Please enter password to access this page</h3>
     <font color="red"><?php echo $error_msg; ?></font><br />
 <?php if (USE_USERNAME) echo 'Login:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
-    <input type="password" name="access_password" /><input type="hidden" name="login_refer" /><p></p><input type="submit" name="Submit" value="Submit" />
+    <input type="password" name="access_password" />
+    <input type="hidden" name="login_refer" /><p></p>
+    <input type="submit" name="Submit" value="Submit" />
   </form>
+  <p>If you have any trouble with this login, or believe your computer should be included in a list of approved reference station computers, please email <a href="mailto:libwebmaster@wayne.edu">libwebmaster</a>.</p>
   </div>
 </body>
 </html>
@@ -151,29 +159,35 @@ if (isset($_POST['access_password'])) {
 
 }
 
+// renders page
 else {
 
-  // check if password cookie is set
-  if (!isset($_COOKIE['verify'])) {
-    showLoginPasswordProtect("");
+
+  if ( !in_array($_SERVER['REMOTE_ADDR'], $ip_white_list) ){
+  	// check if password cookie is set
+	  if (!isset($_COOKIE['verify'])) {
+	    showLoginPasswordProtect("");
+	  }
+
+	  // check if cookie is good
+	  $found = false;
+	  foreach($LOGIN_INFORMATION as $key=>$val) {
+	    $lp = (USE_USERNAME ? $key : '') .'%'.$val;
+	    if ($_COOKIE['verify'] == md5($lp)) {
+	      $found = true;
+	      // prolong timeout
+	      if (TIMEOUT_CHECK_ACTIVITY) {
+	        setcookie("verify", md5($lp), $timeout, '/');
+	      }
+	      break;
+	    }
+	  }  
+	  if (!$found) {
+	    showLoginPasswordProtect("");
+	  }	
   }
 
-  // check if cookie is good
-  $found = false;
-  foreach($LOGIN_INFORMATION as $key=>$val) {
-    $lp = (USE_USERNAME ? $key : '') .'%'.$val;
-    if ($_COOKIE['verify'] == md5($lp)) {
-      $found = true;
-      // prolong timeout
-      if (TIMEOUT_CHECK_ACTIVITY) {
-        setcookie("verify", md5($lp), $timeout, '/');
-      }
-      break;
-    }
-  }
-  if (!$found) {
-    showLoginPasswordProtect("");
-  }
+  
 
 }
 
