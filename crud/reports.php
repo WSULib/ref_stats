@@ -28,23 +28,47 @@ if (isset($_REQUEST['submitted'])){
 	$date_start = date("Y-m-d", strtotime($_REQUEST['date_start']));
 	$date_end = date("Y-m-d", strtotime($_REQUEST['date_end']));
 
+
 	// All transactions in date range (appropriate for csv export)
-	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp), DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
+	/* ----------------------------------------------------------------------------------------------------- */
+	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
 	// echo $full_query;
 	$full_result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 	$total_date_range_results = mysqli_num_rows($full_result);
+	
+	
+	// Query for Location Totals
+	/* ----------------------------------------------------------------------------------------------------- */
+	// $locations_total_query = "SELECT location, DATE(timestamp) AS date_string, COUNT(DATE(timestamp)) AS date_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY DATE(timestamp) ORDER BY date_string DESC";
+	
+	$location_cases = '';
+	foreach($_REQUEST['locations'] as $location) {
+		$location_cases .= ", COUNT(CASE WHEN location = '$location' THEN DATE(timestamp) END) AS $location";
+	}
+	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY DATE(timestamp) ORDER BY date_string DESC";
+	// echo $locations_total_query;
+	$locations_total_result = mysqli_query($link, $locations_total_query) or trigger_error(mysqli_error());
 
-	// shunt to chart-ready arrays
-	$location_totals = array();
-	while ($row = mysqli_fetch_assoc($full_result)) {	
-
-		if (!array_key_exists($row['location'],$location_totals)){
-			$total_counts[$row['location']] = array();
+	// creat arrays for each location
+	$locations_total_sorted = array();
+	foreach($_REQUEST['locations'] as $location) {
+		if (!array_key_exists($location, $locations_total_sorted)) {
+			$locations_total_sorted[$location] = array();
 		}
-		$location_totals[$row['location']][] = $row['ordering_timestamp'];
 	}
 
+	// loop through rows
+	while ($row = mysqli_fetch_assoc($locations_total_result)) {	
+		foreach($_REQUEST['locations'] as $location) {
+			array_push($locations_total_sorted[$location], array( $row['date_string'], $row[$location] ) );
+		}
+		
+	}
+	
+
+
 	// Transaction counts
+	/* ----------------------------------------------------------------------------------------------------- */
 	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY ref_type";
 	// echo $type_query;
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
@@ -53,8 +77,9 @@ if (isset($_REQUEST['submitted'])){
 		$type_counts[$ref_type_hash[$row['ref_type']]] = $row['ref_type_count'];
 	}
 
-	// Busiest Calculations
-	// Day-of-the-week (dow)
+
+	// Busiest Day-of-the-week (dow)
+	/* ----------------------------------------------------------------------------------------------------- */
 	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY dow_index ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
 	$dow_counts = array();
@@ -62,7 +87,9 @@ if (isset($_REQUEST['submitted'])){
 		$dow_counts[$row['dow_name']] = $row['dow_count'];
 	}
 
-	// Day-of-the-week (dow)
+
+	// Busiest Hours
+	/* ----------------------------------------------------------------------------------------------------- */
 	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
@@ -75,7 +102,9 @@ if (isset($_REQUEST['submitted'])){
 		);
 	}
 
+
 	// Busiest Single Days
+	/* ----------------------------------------------------------------------------------------------------- */
 	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY date ORDER BY ref_count DESC limit 5;";
 	$single_result = mysqli_query($link, $single_query) or trigger_error(mysqli_error());
 
@@ -84,6 +113,8 @@ if (isset($_REQUEST['submitted'])){
 
 	$full_result = MySQL result set for all queries
 	$total_date_range_results = Total transactions from all locations.
+
+	$locations_total_result_sorted = array of arrays, with daily counts from locations
 
 	$location_totals = array of locations, each an array full of timestamp.  Can be used to create graph.
 
@@ -187,53 +218,42 @@ if (isset($_REQUEST['submitted'])){
 			<div class="col-md-12">
 				<h3>QuickStats</h3>
 
+					<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
+
+				<hr>
+
 				<div class="row">
 					<div class="col-md-6">
-						<h4>Totals</h4>
-						<p>
-							<span>[LINE GRAPH HERE - ALL LOCATIONS AS INDIVIDUAL LINES]</span>
-							<img class="img-responsive img-rounded" src="https://thisismydinner.files.wordpress.com/2012/03/img_95611.jpg" style:"max-width:100%;"/>
-							<p class="raw_json" style="display:<?php echo $_REQUEST['raw_json']; ?>"><?php echo json_encode($location_totals); ?></p>
-						</p>
-						<p><span class="stat_name">Total Transactions</span>: <?php echo $total_date_range_results; ?></p>
+						<div id="transPerLocation"></div>
+						<script type="text/javascript">
+							transPerLocation(<?php echo json_encode($locations_total_sorted); ?>,'<?php echo $date_start; ?>');
+						</script>	
 						
 					</div>
 
 					<div class="col-md-6">
-						<h4>Transactions Breakdown</h4>
-						<p>
-							<span>[PIE CHART HERE - VARIOUS REF TYPES FOR ALL LOCATIONS]</span>
-							<img class="img-responsive img-circle" src="https://thisismydinner.files.wordpress.com/2012/03/img_95611.jpg" style:"max-width:100%;"/>
-							<p class="raw_json" style="display:<?php echo $_REQUEST['raw_json']; ?>"><?php echo json_encode($type_counts); ?></p>
-						</p>
-						<ul>
-							<?php
-								foreach($type_counts as $key => $value) {
-									echo "<li><span class='stat_name'>$key</span>: $value</li>";
-								}
-							?>
-						</ul>
+						<div id="transBreakdown"></div>
+						<script type="text/javascript">
+							transBreakdown(<?php echo json_encode($type_counts); ?>);
+						</script>
 					</div>
 				</div>
 
+				<hr>
+
 				<div class="row">
 					<div class="col-md-6">
-						<h4>Busiest Days per Week</h4>
-						<p>
-							<span>[BAR CHART HERE - TOTAL TRANSACTIONS PER DAY-OF-THE-WEEK]</span>
-							<img class="img-responsive img-rounded" src="https://thisismydinner.files.wordpress.com/2012/03/img_95611.jpg" style:"max-width:100%;"/>
-							<span class="raw_json" style="display:<?php echo $_REQUEST['raw_json']; ?>"><?php echo json_encode($dow_counts); ?></span>
-						</p>					
+						<div id="busiestDOWChart"></div>
+						<script type="text/javascript">
+							busiestDOW(<?php echo json_encode($dow_counts); ?>);
+						</script>					
 					</div>
 
 					<div class="col-md-6">
-						<h4>Busiest Hours per Day</h4>
-						<p>
-							<span>[BAR CHART HERE - SIMILAR TO BAR CHART ON FRONT PAGE]</span>
-							<img class="img-responsive img-circle" src="https://thisismydinner.files.wordpress.com/2012/03/img_95611.jpg" style:"max-width:100%;"/>
-							<span class="raw_json" style="display:<?php echo $_REQUEST['raw_json']; ?>"><?php echo json_encode($hour_counts); ?></span>
-						</p>
-					</div>
+						<div id="busiestHoursChart"></div>
+						<script type="text/javascript">
+							busiestHours(<?php echo json_encode($hour_counts); ?>);
+						</script>						
 				</div>
 
 			</div>
@@ -243,12 +263,16 @@ if (isset($_REQUEST['submitted'])){
 		<div id="export" class="row" style="display:<?php echo $export_display; ?>">
 			<div class="col-md-12">
 				<h3>Export Data</h3>				
-				<!-- fires JS to generate .csv file -->
-				<button type="submit" class="btn btn-success" onclick="alert('All the data will be yours.');">Download</button>
-				</form>						
+				<!-- download CSV file -->
+				<form action="export_csv.php" method="POST">
+					<input type="hidden" name="params" value='<?php echo json_encode($_REQUEST);?>'/>
+					<button id="csv_button" type="submit" class="btn btn-success" onclick="loadingCSV('Working...','Download as CSV');">Download as CSV</button>
+				</form>
 			</div>
 		</div>
 
+		<!-- Footer -->
+		<div id="footer"></div>
 
 	<body>
 </html>

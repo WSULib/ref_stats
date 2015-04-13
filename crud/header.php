@@ -24,6 +24,9 @@ include('../inc/password_protect.php');
 	<!-- CRUD css -->
 	<link rel="stylesheet" href="crud.css">	
 	<link rel="stylesheet" href="../inc/shared.css">	
+
+	<!-- highcharts js -->
+	<script src="../inc/highcharts/js/highcharts.js"></script>
 	
 </head>
 

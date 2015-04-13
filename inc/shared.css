@@ -16,6 +16,11 @@
 	color:#9CB2B2;	 
 }
 
+/* general */
+#footer {
+	margin-bottom:20px;
+}
+
 /* buttons */
 .ref_type_button {
 	background-color:#238B8B;
@@ -94,10 +99,16 @@
     width: 25%;
 }
 
+.checkbox {
+	margin-top:0px;
+	margin-bottom:5px;
+}
+
+
+
 .raw_json{
 	display:none;
 }
-
 
 
 
