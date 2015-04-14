@@ -240,7 +240,7 @@ if (isset($_REQUEST['submitted'])){
 
 					<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
 
-				<hr>
+				<hr class="quickstats_dividers">
 
 				<div class="row">
 					<div class="col-md-6">
@@ -259,7 +259,7 @@ if (isset($_REQUEST['submitted'])){
 					</div>
 				</div>
 
-				<hr>
+				<hr class="quickstats_dividers">
 
 				<div class="row">
 					<div class="col-md-6">

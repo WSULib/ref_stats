@@ -104,12 +104,14 @@
 	margin-bottom:5px;
 }
 
-
-
 .raw_json{
 	display:none;
 }
 
+.quickstats_dividers {
+	margin-top:35px;
+	margin-bottom:35px;
+}
 
 
 

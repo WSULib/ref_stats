@@ -27,6 +27,7 @@ include('../inc/password_protect.php');
 
 	<!-- highcharts js -->
 	<script src="../inc/highcharts/js/highcharts.js"></script>
+	<script src="../inc/highcharts/js/themes/grid-refStats.js"></script>
 	
 </head>
 

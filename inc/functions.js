@@ -268,37 +268,34 @@ function busiestDOW(raw_data){
 // HighCharts - Transactions Per Date
 function transPerLocation(raw_data, date_start){
 
-	console.log(raw_data);
-
 	// prep data
 	var date_series = [];
 
 	for (var location in raw_data) {
 	    if (raw_data.hasOwnProperty(location)) {
+
 	    	temp_chunk = {
 	    		name: location,
 	    		data: raw_data[location]
 	    	}
 
-	    	
-	    	for (var i=0; i<temp_chunk['data'].length; i++){
+	    	for (var i=0; i < temp_chunk['data'].length; i++){
 
-                // convert to Dates
-                // var date_comps = temp_chunk['data'][i][0].split('-');
-                // var year = parseInt(date_comps[0]);
-                // var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
-                // var day = parseInt(date_comps[2].replace(/^0+/, ''));
-                // temp_chunk['data'][i][0] = Date.UTC(year, month, day);
-	    		
                 // convert to ints
                 temp_chunk['data'][i][1] = parseInt(temp_chunk['data'][i][1]);
+
+                // convert to Dates
+                var date_comps = temp_chunk['data'][i][0].split('-');
+                var year = parseInt(date_comps[0]);
+                var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
+                var day = parseInt(date_comps[2].replace(/^0+/, ''));
+                temp_chunk['data'][i][0] = Date.UTC(year, month, day);
+                
 	    	}
 
 	    	date_series.push(temp_chunk);
 	   	}
 	}
-
-	console.log(date_series);
 
 	// date components
 	var date_comps = date_start.split('-');
@@ -309,7 +306,7 @@ function transPerLocation(raw_data, date_start){
 	$('#transPerLocation').highcharts({
 		chart: {
 			type:"spline"
-		},
+		},        
 		title: {
 			text: "Transactions per Location"
 		},
@@ -370,6 +367,7 @@ function transBreakdown(raw_data){
 
 
 }
+
 
 
 
