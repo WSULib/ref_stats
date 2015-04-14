@@ -269,7 +269,6 @@ function busiestDOW(raw_data){
 function transPerLocation(raw_data, date_start){
 
 	console.log(raw_data);
-	// console.log(date_start);
 
 	// prep data
 	var date_series = [];
@@ -281,9 +280,18 @@ function transPerLocation(raw_data, date_start){
 	    		data: raw_data[location]
 	    	}
 
-	    	// convert to ints
+	    	
 	    	for (var i=0; i<temp_chunk['data'].length; i++){
-	    		temp_chunk['data'][i][1] = parseInt(temp_chunk['data'][i][1]);
+
+                // convert to Dates
+                // var date_comps = temp_chunk['data'][i][0].split('-');
+                // var year = parseInt(date_comps[0]);
+                // var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
+                // var day = parseInt(date_comps[2].replace(/^0+/, ''));
+                // temp_chunk['data'][i][0] = Date.UTC(year, month, day);
+	    		
+                // convert to ints
+                temp_chunk['data'][i][1] = parseInt(temp_chunk['data'][i][1]);
 	    	}
 
 	    	date_series.push(temp_chunk);

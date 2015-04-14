@@ -19,6 +19,15 @@ $location_array = array(
 	"MED_PHARM" => "Applebaum Learning Resource Center"
 );
 
+// location array used to populate location dropdowns around app
+$simple_location_array = array();
+foreach (array_keys($location_array) as $location) {
+	if ($location != "NOPE") {
+		array_push($simple_location_array, $location);
+	}
+}
+	
+
 // user array used to populate location dropdowns around app
 $user_arrays = array(
 	"LAW" => array(
