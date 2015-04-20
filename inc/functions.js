@@ -89,6 +89,109 @@ function loadingCSV(working_msg, finish_msg){
 
 /* Quick Reports functions */
 
+// HighCharts - Transactions Per Date
+function transPerLocation(raw_data, date_start){
+
+    // prep data
+    var date_series = [];
+
+    for (var location in raw_data) {
+        if (raw_data.hasOwnProperty(location)) {
+
+            temp_chunk = {
+                name: location,
+                data: raw_data[location]
+            }
+
+            for (var i=0; i < temp_chunk['data'].length; i++){
+
+                // convert to ints
+                temp_chunk['data'][i][1] = parseInt(temp_chunk['data'][i][1]);
+
+                // convert to Dates
+                var date_comps = temp_chunk['data'][i][0].split('-');
+                var year = parseInt(date_comps[0]);
+                var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
+                var day = parseInt(date_comps[2].replace(/^0+/, ''));
+                temp_chunk['data'][i][0] = Date.UTC(year, month, day);
+                
+            }
+
+            date_series.push(temp_chunk);
+        }
+    }
+
+    // date components
+    var date_comps = date_start.split('-');
+    var year = parseInt(date_comps[0]);
+    var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
+    var day = parseInt(date_comps[2].replace(/^0+/, ''));
+
+    $('#transPerLocation').highcharts({
+        chart: {
+            type:"spline"
+        },        
+        title: {
+            text: "Transactions per Location"
+        },
+        xAxis: {
+            type: 'datetime'
+        },       
+
+        series: date_series
+    });
+
+
+}
+
+
+// HighCharts - Transaction Breakdown
+function transBreakdown(raw_data){
+    
+    // format data
+    var trans_breakdown_data = [];
+    for (var trans_type in raw_data) {
+        if (raw_data.hasOwnProperty(trans_type)) {
+            var temp_data = [ trans_type, parseInt(raw_data[trans_type]) ];
+            trans_breakdown_data.push(temp_data);
+        }
+    }
+
+    $('#transBreakdown').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Transaction Type Breakdown'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Transaction Breakdown',
+            data: trans_breakdown_data
+        }]
+    });
+
+
+}
+
 // HighCharts - Busiest Hours
 function busiestHours(raw_data){
 
@@ -265,108 +368,7 @@ function busiestDOW(raw_data){
 }
 
 
-// HighCharts - Transactions Per Date
-function transPerLocation(raw_data, date_start){
 
-	// prep data
-	var date_series = [];
-
-	for (var location in raw_data) {
-	    if (raw_data.hasOwnProperty(location)) {
-
-	    	temp_chunk = {
-	    		name: location,
-	    		data: raw_data[location]
-	    	}
-
-	    	for (var i=0; i < temp_chunk['data'].length; i++){
-
-                // convert to ints
-                temp_chunk['data'][i][1] = parseInt(temp_chunk['data'][i][1]);
-
-                // convert to Dates
-                var date_comps = temp_chunk['data'][i][0].split('-');
-                var year = parseInt(date_comps[0]);
-                var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
-                var day = parseInt(date_comps[2].replace(/^0+/, ''));
-                temp_chunk['data'][i][0] = Date.UTC(year, month, day);
-                
-	    	}
-
-	    	date_series.push(temp_chunk);
-	   	}
-	}
-
-	// date components
-	var date_comps = date_start.split('-');
-	var year = parseInt(date_comps[0]);
-	var month = parseInt(date_comps[1].replace(/^0+/, '')) - 1;
-	var day = parseInt(date_comps[2].replace(/^0+/, ''));
-
-	$('#transPerLocation').highcharts({
-		chart: {
-			type:"spline"
-		},        
-		title: {
-			text: "Transactions per Location"
-		},
-        xAxis: {
-            type: 'datetime'
-        },       
-
-        series: date_series
-    });
-
-
-}
-
-
-// HighCharts - Transaction Breakdown
-function transBreakdown(raw_data){
-	
-	// format data
-	var trans_breakdown_data = [];
-	for (var trans_type in raw_data) {
-	    if (raw_data.hasOwnProperty(trans_type)) {
-			var temp_data = [ trans_type, parseInt(raw_data[trans_type]) ];
-			trans_breakdown_data.push(temp_data);
-	    }
-	}
-
-	$('#transBreakdown').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Transaction Type Breakdown'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Transaction Breakdown',
-            data: trans_breakdown_data
-        }]
-    });
-
-
-}
 
 
 

@@ -286,7 +286,7 @@ if (isset($_REQUEST['submitted'])){
 				<!-- download CSV file -->
 				<form action="export_csv.php" method="POST">
 					<input type="hidden" name="params" value='<?php echo json_encode($_REQUEST);?>'/>
-					<button id="csv_button" type="submit" class="btn btn-success" onclick="loadingCSV('Working...','Download as CSV');">Download as CSV</button>
+					<button id="csv_button" type="submit" class="btn btn-WSUgreen" onclick="loadingCSV('Working...','Download as CSV');">Download as CSV</button>
 				</form>
 			</div>
 		</div>
