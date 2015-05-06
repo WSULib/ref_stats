@@ -4,20 +4,21 @@ include('../inc/functions.php');
 
 if (isset($_REQUEST['submitted'])){
 
-	// establish reporting location, or select all
+	// establish reporting location, or select all (note: contains 'AND' from actual query to avoid altogether)
 	/* ----------------------------------------------------------------------------------------------------- */
 
 	$selected_locations = array();
 	// default to ALL
 	if ( isset($_REQUEST['locations']) && $_REQUEST['locations'] == array("ALL")){
-		$location_where = "location = ANY(select location from ref_stats)";
+		// $location_where = "AND location = ANY(select location from ref_stats)";
+		$location_where = "";
 		$selected_locations = $simple_location_array; // from config.php
 	}
 
 	elseif ( isset($_REQUEST['locations']) ) {
 		
 		// prepare SQL clause
-		$location_where = "location IN ('".implode("', '",$_REQUEST['locations'])."')";
+		$location_where = "AND location IN ('".implode("', '",$_REQUEST['locations'])."')";
 
 		// // prepare selected_locations
 		foreach($_REQUEST['locations'] as $location){
@@ -38,7 +39,7 @@ if (isset($_REQUEST['submitted'])){
 	}
 
 	else {
-		$location_where = "location = {$_COOKIE['location']}";
+		$location_where = "AND location = {$_COOKIE['location']}";
 		$selected_locations = array($_COOKIE['location']);
 	}	
 
@@ -52,7 +53,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// All transactions in date range (appropriate for csv export)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
+	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where ORDER BY ordering_timestamp DESC";
 	// echo $full_query;
 	$full_result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 	$total_date_range_results = mysqli_num_rows($full_result);
@@ -65,7 +66,7 @@ if (isset($_REQUEST['submitted'])){
 	foreach($selected_locations as $location) {
 		$location_cases .= ", COUNT(CASE WHEN location = '$location' THEN DATE(timestamp) END) AS $location";
 	}
-	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY DATE(timestamp) ORDER BY date_string DESC";
+	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY DATE(timestamp) ORDER BY date_string DESC";
 	// echo $locations_total_query;
 	$locations_total_result = mysqli_query($link, $locations_total_query) or trigger_error(mysqli_error());
 
@@ -89,7 +90,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Transaction counts
 	/* ----------------------------------------------------------------------------------------------------- */
-	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY ref_type";
+	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY ref_type";
 	// echo $type_query;
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
 	$type_counts = array();
@@ -100,7 +101,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Day-of-the-week (dow)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY dow_index ORDER BY dow_index;";
+	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY dow_index ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
 	$dow_counts = array();
 	while($row = mysqli_fetch_assoc($dow_result)) {		
@@ -110,7 +111,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Hours
 	/* ----------------------------------------------------------------------------------------------------- */
-	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY hour;";
+	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
 	while($row = mysqli_fetch_assoc($hour_result)) {		
@@ -125,7 +126,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Single Days
 	/* ----------------------------------------------------------------------------------------------------- */
-	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where GROUP BY date ORDER BY ref_count DESC limit 5;";
+	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY date ORDER BY ref_count DESC limit 5;";
 	$single_result = mysqli_query($link, $single_query) or trigger_error(mysqli_error());
 
 	/* Data Explanations:
