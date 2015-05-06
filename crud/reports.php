@@ -233,63 +233,69 @@ if (isset($_REQUEST['submitted'])){
 			</div>
 		</div>
 
+
 		<!-- QuickStats -->
 		<div id="quickstats" class="row" style="display:<?php echo $quickstats_display; ?>">
-			<div class="col-md-12">
-				<h3>QuickStats</h3>
+			<div id="stats_results" class="col-md-12">
 
-					<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
+				<!-- top row -->
+				<div class="row" style="text-align:center;">
+					<div class="col-md-6">
+						<h3>QuickStats</h3>
+						<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
+					</div>
+					<div class="col-md-6">
+						<h3>Export Data</h3>				
+						<form action="export_csv.php" method="POST">
+							<input type="hidden" name="params" value='<?php echo json_encode($_REQUEST);?>'/>
+							<button id="csv_button" type="submit" class="btn btn-WSUgreen" onclick="loadingCSV('Working...','Download as CSV');">Download as Spreadsheet (.csv)</button>
+						</form>
+					</div>
+				</div>
 
 				<hr class="quickstats_dividers">
 
 				<div class="row">
-					<div class="col-md-6">
-						<div id="transPerLocation"></div>
-						<script type="text/javascript">
-							transPerLocation(<?php echo json_encode($locations_total_sorted); ?>,'<?php echo $date_start; ?>');
-						</script>	
-						
-					</div>
-
+					
+					<!-- Pie Chart -->
 					<div class="col-md-6">
 						<div id="transBreakdown"></div>
 						<script type="text/javascript">
 							transBreakdown(<?php echo json_encode($type_counts); ?>);
 						</script>
 					</div>
-				</div>
 
-				<hr class="quickstats_dividers">
-
-				<div class="row">
+					<!-- DOW Bar Chart -->
 					<div class="col-md-6">
 						<div id="busiestDOWChart"></div>
 						<script type="text/javascript">
 							busiestDOW(<?php echo json_encode($dow_counts); ?>);
 						</script>					
 					</div>
+					
+				</div>
 
+				<hr class="quickstats_dividers">
+
+				<div class="row">
+					<!-- Line Chart -->
+					<div class="col-md-6">
+						<div id="transPerLocation"></div>
+						<script type="text/javascript">
+							transPerLocation(<?php echo json_encode($locations_total_sorted); ?>,'<?php echo $date_start; ?>');
+						</script>	
+					</div>			
+					
+					<!-- Hour Bar -->
 					<div class="col-md-6">
 						<div id="busiestHoursChart"></div>
 						<script type="text/javascript">
 							busiestHours(<?php echo json_encode($hour_counts); ?>);
 						</script>						
-				</div>
+					</div>
 
 			</div>
 		</div>	
-
-		<!-- Export -->
-		<div id="export" class="row" style="display:<?php echo $export_display; ?>">
-			<div class="col-md-12">
-				<h3>Export Data</h3>				
-				<!-- download CSV file -->
-				<form action="export_csv.php" method="POST">
-					<input type="hidden" name="params" value='<?php echo json_encode($_REQUEST);?>'/>
-					<button id="csv_button" type="submit" class="btn btn-WSUgreen" onclick="loadingCSV('Working...','Download as CSV');">Download as CSV</button>
-				</form>
-			</div>
-		</div>
 
 		<!-- Footer -->
 		<div id="footer"></div>
