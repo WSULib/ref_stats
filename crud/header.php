@@ -36,7 +36,7 @@
 
 	<div id="breadcrumb" class="row">
 		<div class="col-md-12 text-center">
-			<h2>RefStats Management</h2>			
+			<h2 class="refstats_logo"><span class="logo_prefix">REF</span>STATS</h2>
 			<p>Current location: <span style="font-size:125%;">
 				<?php 
 					if ($_COOKIE['location'] != "NOPE"){

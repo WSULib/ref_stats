@@ -39,9 +39,8 @@ global $user_arrays;
 	<div class="container tool">
 
 		<div class="row-fluid">
-			<div id="header" class="col-md-12">
-				<a href="."><img id="logo" src="inc/w.png"/></a>
-				<h2>Reference Stats Tool</h2>
+			<div id="header" class="col-md-12">				
+				<h2 class="refstats_logo"><span class="logo_prefix">REF</span>STATS</h2>
 			</div>
 		</div>
 		
@@ -236,13 +235,8 @@ global $user_arrays;
 		</div> 
 
 		<div class="row-fluid">
-			<div class="col-md-12 bookmarklet">
-				<p>
-					<p>
-						<div class="bookmark-text">Prefer a bookmark? Drag the quicklaunch button to your bookmarks bar:</div>
-					</p>
-					<a href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=1,scrollbars=yes,width=350,height=880')})();"><button type="button" class="btn btn-small btn-default">RefStats</button></a>
-				</p>
+			<div id="header" class="col-md-12">
+				<a href="."><img id="logo" src="inc/w.png"/></a>
 			</div>
 		</div>
 

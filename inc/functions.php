@@ -69,11 +69,14 @@ function makeCheckboxGrid($please_select=True, $preset_array) {
 
 	// $preset overrides even Cookie location
 	foreach ($array as $key => $value) {
-		if ( in_array($key, $preset_array) ){			
-			echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
-		}			
-		else {
-			echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'"> '.$value.'</label></div></li>';
+		$location_exceptions = array("PK1","PK2");
+		if ( !in_array($key, $location_exceptions) ){
+			if ( in_array($key, $preset_array) ){			
+				echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+			}			
+			else {
+				echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'"> '.$value.'</label></div></li>';
+			}	
 		}
 	}
 }

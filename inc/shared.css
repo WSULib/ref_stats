@@ -20,6 +20,12 @@
 #footer {
 	margin-bottom:40px;
 }
+.refstats_logo{
+	font-size:3em;
+}
+.logo_prefix{
+	color:#FFCC33;
+}
 
 /* buttons */
 .ref_type_button {

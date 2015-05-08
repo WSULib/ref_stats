@@ -86,4 +86,11 @@ $ip_white_list = array(
 	"50.249.166.130"
 );
 
+/* MySQL View Table for Reports (Feels backwards, but this works for pushing "PK1" or "PK2" to "PK" for view table):
+	
+	CREATE VIEW ref_stats_reports (id, ref_type, old_location, location, user_group, ip, timestamp) AS SELECT id, ref_type, location AS old_location, CASE location WHEN location NOT IN ('PK1','PK2') THEN 'PK' ELSE location END, user_group, ip, timestamp FROM ref_stats;
+	
+*/
+
+
 ?>
