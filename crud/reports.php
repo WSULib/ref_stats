@@ -248,12 +248,20 @@ if (isset($_REQUEST['submitted'])){
 			<div id="stats_results" class="col-md-12">
 
 				<!-- top row -->
-				<div class="row" style="text-align:center;">
+				<div class="row">
 					<div class="col-md-6">
-						<h3>QuickStats</h3>
+						<h3 style="text-align:center;">QuickStats</h3>
 						<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
+						<p><strong>Transactions Types:</strong>
+							<ul>
+								<?php
+									foreach ($type_counts as $type => $count) {
+										echo "<li>$type: $count</li>";
+									}
+								?>
+							</ul>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6" style="text-align:center;">
 						<h3>Export Data</h3>				
 						<form action="export_csv.php" method="POST">
 							<input type="hidden" name="params" value='<?php echo json_encode($_REQUEST);?>'/>

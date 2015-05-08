@@ -26,6 +26,10 @@
 .logo_prefix{
 	color:#FFCC33;
 }
+.no_dec:link, .no_dec:visited, .no_dec:hover, .no_dec:active  {
+	text-decoration:none;
+	color:black;
+}
 
 /* buttons */
 .ref_type_button {

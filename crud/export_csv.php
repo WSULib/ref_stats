@@ -24,15 +24,6 @@ $selected_locations = array();
 			}
 		}
 
-		// adjust for combined locations
-		if ( in_array("PK_COMB", $_REQUEST['locations'])){
-			$location_where = str_replace("'PK_COMB'", "'PK1','PK2'", $location_where);
-			array_push($selected_locations, "PK1","PK2");
-		}
-		if ( in_array("MAIN_CAMPUS", $_REQUEST['locations'])){
-			$location_where = str_replace("'MAIN_CAMPUS'", "'PK1','PK2','UGL'", $location_where);
-			array_push($selected_locations, "PK1", "PK2", "UGL");
-		}
 	}
 
 	else {
@@ -50,7 +41,7 @@ $selected_locations = array();
 
 
 // All transactions in date range (appropriate for csv export)
-$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
+$full_query = "SELECT ref_type, detailed_location, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
 $result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 
 $fp = fopen('php://output', 'w');
