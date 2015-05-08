@@ -235,8 +235,8 @@ global $user_arrays;
 		</div> 
 
 		<div class="row-fluid">
-			<div id="header" class="col-md-12">
-				<a href="."><img id="logo" src="inc/w.png"/></a>
+			<div id="footer" class="col-md-12">
+				<a href="http://library.wayne.edu"><img id="logo" src="inc/library_system_w.jpg"/></a>
 			</div>
 		</div>
 

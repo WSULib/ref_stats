@@ -19,6 +19,7 @@
 /* general */
 #footer {
 	margin-bottom:40px;
+	text-align:center;
 }
 .refstats_logo{
 	font-size:3em;
@@ -50,6 +51,11 @@
 .btn-WSUgreen:hover, .btn-WSUgreen:active, .btn-WSUgreen:target, .btn-WSUgreen:focus {
 	background-color:#6f6f6f;
 	color:white;
+}
+
+/* bootstrap pager override */
+.pager li>a, .pager li>span {
+	border-radius:4px;
 }
 
 #refreport h4 {
@@ -123,8 +129,12 @@
 	margin-bottom:35px;
 }
 
-
-
+#logo{
+	height:50px;
+}
+.spacer40 {
+	margin-bottom:40px;
+}
 
 
 

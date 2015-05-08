@@ -314,8 +314,12 @@ if (isset($_REQUEST['submitted'])){
 			</div>
 		</div>	
 
-		<!-- Footer -->
-		<div id="footer"></div>
+		<div class="row">
+			<div class="col-md-12 spacer40"></div>
+		</div>
+
+		<!-- footer -->
+		<?php include('footer.php') ?>
 
 	<body>
 </html>

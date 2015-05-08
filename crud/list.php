@@ -157,6 +157,9 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 					</div>
 				</div>
 			</div> 
+
+			
+
 		<?php
 		}
 		else {
@@ -169,6 +172,9 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 		<?php
 		}
 		?>
+
+		<!-- footer -->
+		<?php include('footer.php') ?>
 
 	</div>
 	<script type="text/javascript">

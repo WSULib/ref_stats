@@ -23,6 +23,10 @@ else{
 			<a href='list.php'>Back To Listing</a>
 		</div>
 	</div>
+
+	<!-- footer -->
+	<?php include('footer.php') ?>
+	
 	<?php
 }
 ?>
