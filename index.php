@@ -40,7 +40,7 @@ global $user_arrays;
 
 		<div class="row-fluid">
 			<div id="header" class="col-md-12">				
-				<a class="no_dec" href="."><h2 class="refstats_logo"><span class="logo_prefix">REF</span>STATS</h2></a>
+				<a class="no_dec" href="."><h2 class="refstats_logo"><span class="logo_prefix">Ref</span>Stats</h2></a>
 			</div>
 		</div>
 		
