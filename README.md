@@ -1,4 +1,7 @@
-ref_stats
+RefStats
 =========
 
-WSULS Reference Statistics Tool
+WSULS Reference Statistics Tool.
+PHP, Javascript front-end, MySQL backend.
+
+
