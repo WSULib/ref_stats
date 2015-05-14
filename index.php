@@ -39,8 +39,10 @@ global $user_arrays;
 	<div class="container tool">
 
 		<div class="row-fluid">
-			<div id="header" class="col-md-12">				
-				<a class="no_dec" href="."><h2 class="refstats_logo"><span class="logo_prefix">Ref</span>Stats</h2></a>
+			<div id="header" class="col-md-12">								
+				<a class="no_dec" href=".">
+					<img class="refstats_logo" src="inc/refstats_logo.png" >
+				</a>
 			</div>
 		</div>
 		
@@ -209,9 +211,9 @@ global $user_arrays;
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<p>
-						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage Transactions</button></a>
-						<a href="#" onclick="window.open('./index.php','ref_stats','menubar=0,resizable=0,width=350,height=880');"><button type="button" class="btn btn-sm btn-WSUgreen">Launch Pop-Up</button></a>
-						<a href="RefStats_Tool_Documentation.html" ><button type="button" class="btn btn-sm btn-WSUgreen">?</button></a>
+						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage</button></a>
+						<a href="#" onclick="window.open('./index.php','ref_stats','menubar=0,resizable=0,width=350,height=880');"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Launch Pop-Up</button></a>
+						<a href="RefStats_Tool_Documentation.html" ><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Help</button></a>
 					</p>
 				</div>
 			</div>

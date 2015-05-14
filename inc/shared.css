@@ -21,8 +21,10 @@
 	margin-bottom:40px;
 	text-align:center;
 }
-.refstats_logo{
-	font-size:3em;
+.refstats_logo{	
+	margin-top:20px;
+	margin-bottom:10px;
+	height:40px;
 }
 .logo_prefix{
 	/* color:#FFCC33; */

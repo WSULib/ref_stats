@@ -36,7 +36,9 @@
 
 	<div id="breadcrumb" class="row">
 		<div class="col-md-12 text-center">
-			<a class="no_dec" href="../"><h2 class="refstats_logo"><span class="logo_prefix">Ref</span>Stats</h2></a>
+			<a class="no_dec" href="../.">
+					<img class="refstats_logo" src="../inc/refstats_logo.png"/>
+				</a>
 			<p>Current location: <span style="font-size:125%;">
 				<?php 
 					if ($_COOKIE['location'] != "NOPE"){
@@ -49,7 +51,7 @@
 			</span></p>			
 			<p>
 				<a class="btn btn-WSUgreen" href="../"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Main Page</a>
-				<a class="btn btn-WSUgreen" href="./list.php"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage Transactions</a>
+				<a class="btn btn-WSUgreen" href="./list.php"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage</a>
 				<!-- <a class="btn btn-WSUgreen" href="./reports.php"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Reports</a> -->
 				<a class="btn btn-WSUgreen" href="javascript: (function(){window.open('http://library.wayne.edu/forms/ref_stats/index.php','ref_stats','menubar=0,resizable=1,scrollbars=yes,width=350,height=880')})();" alt="Drag this button to your bookmarks to have a handy 'bookmarklet' for RefStats!" title="Drag this button to your bookmarks to have a handy 'bookmarklet' for RefStats!"> <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> RefStats Bookmark</a>
 			</p>
