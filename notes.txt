@@ -1,6 +1,3 @@
-Database: data_counts
-Table: ref_stats
-
 SQL:
 CREATE TABLE `ref_stats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
