@@ -112,15 +112,16 @@ function showLoginPasswordProtect($error_msg) {
   </style>
   <div style="width:640px; margin-left:auto; margin-right:auto; text-align:center">
   <form method="post">
-  	<h2>WSU Reference Stats Tool</h2>
-    <h3>Please enter password to access this page</h3>
+  	<!-- <h2>WSU RefStats Tool</h2> -->
+    <img src="inc/refstats_logo.png"/>
+    <h3>Please enter username and password to access this page:</h3>
     <font color="red"><?php echo $error_msg; ?></font><br />
-<?php if (USE_USERNAME) echo 'Login:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
+<?php if (USE_USERNAME) echo 'Username:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
     <input type="password" name="access_password" />
     <input type="hidden" name="login_refer" /><p></p>
     <input type="submit" name="Submit" value="Submit" />
   </form>
-  <p>If you have any trouble with this login, or believe your computer should be included in a list of approved reference station computers, please email <a href="mailto:libwebmaster@wayne.edu">libwebmaster</a>.</p>
+  <p>If you have any trouble logging into RefStats, please email <a href="mailto:dv5445@wayne.edu">Katrina Rouan</a>.</p>
   </div>
 </body>
 </html>
