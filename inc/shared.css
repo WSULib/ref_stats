@@ -47,7 +47,11 @@
 .btn-WSUgreen {
 	background-color:#9CB2B2;
 	border-color:#9CB2B2;
-	color:white;
+	color:white;	
+}
+
+#breadcrumb .btn-WSUgreen {
+	margin-top:5px;
 }
 
 .btn-WSUgreen:hover, .btn-WSUgreen:active, .btn-WSUgreen:target, .btn-WSUgreen:focus {

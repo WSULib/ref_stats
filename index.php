@@ -1,5 +1,5 @@
 <?php
-// include('inc/password_protect.php');
+include('inc/password_protect.php');
 include('inc/functions.php');
 include('config.php');
 global $user_arrays;
