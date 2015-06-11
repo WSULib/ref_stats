@@ -10,8 +10,17 @@ if (isset($_REQUEST['submitted'])){
 	$selected_locations = array();
 	// default to ALL
 	if ( isset($_REQUEST['locations']) && $_REQUEST['locations'] == array("ALL")){
-		$location_where = "";
-		$selected_locations = $simple_location_array; // from config.php
+
+		# grab from MySQL
+		$all_locations_query = "SELECT DISTINCT(location) AS location FROM ref_stats_reports";
+		$all_locations_result = mysqli_query($link, $all_locations_query) or trigger_error(mysqli_error());
+		$selected_locations = array();
+		while ($row = mysqli_fetch_assoc($all_locations_result)) {
+			if ($row['location'] != ""){
+		    	array_push($selected_locations, $row['location']);
+			}
+		}		
+
 	}
 
 	elseif ( isset($_REQUEST['locations']) ) {
@@ -25,17 +34,6 @@ if (isset($_REQUEST['submitted'])){
 				array_push($selected_locations, $location);
 			}
 		}
-
-		// adjust for combined locations
-		// if ( in_array("PK_COMB", $_REQUEST['locations'])){
-		// 	$location_where = str_replace("'PK_COMB'", "'PK1','PK2'", $location_where);
-		// 	array_push($selected_locations, "PK1","PK2");
-		// }
-
-		// if ( in_array("MAIN_CAMPUS", $_REQUEST['locations'])){
-		// 	$location_where = str_replace("'MAIN_CAMPUS'", "'PK1','PK2','UGL'", $location_where);
-		// 	array_push($selected_locations, "PK1", "PK2", "UGL");
-		// }
 
 	}
 
