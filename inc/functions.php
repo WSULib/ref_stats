@@ -96,14 +96,22 @@ function makeDOWCheckboxGrid($preset_array) {
 	);	
 
 	// $preset overrides even Cookie location
-	foreach ($array as $key => $value) {		
-		if ( in_array($key, $preset_array) ){			
+	if ($preset_array == NULL){
+		foreach ($array as $key => $value) {		
 			echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
-		}			
-		else {
-			echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'"> '.$value.'</label></div></li>';
 		}
 	}
+	else {
+		foreach ($array as $key => $value) {		
+			if ( in_array($key, $preset_array) ){			
+				echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+			}			
+			else {
+				echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'"> '.$value.'</label></div></li>';
+			}
+		}	
+	}
+	
 }	
 # function to create user dropdown selections
 function makeUserDropdown($please_select=True, $preset) {	

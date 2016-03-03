@@ -253,7 +253,7 @@ if (isset($_REQUEST['submitted'])){
 									$current_dow = $_REQUEST['dow'];
 								}
 								else {									
-									$current_dow = array();
+									$current_dow = NULL;
 								}
 							?>
 							<ul class="checkbox_grid">
