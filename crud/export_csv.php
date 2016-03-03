@@ -39,9 +39,18 @@ $selected_locations = array();
 	$date_start = date("Y-m-d", strtotime($_REQUEST['date_start']));
 	$date_end = date("Y-m-d", strtotime($_REQUEST['date_end']));
 
+	// set days of the week	
+	if ( isset($_REQUEST['dow']) ) {		
+		// prepare SQL clause
+		$dow = "AND DAYOFWEEK(timestamp) IN ('".implode("', '",$_REQUEST['dow'])."')";
+	}
+	else {
+		$dow = "";
+	}
+
 
 // All transactions in date range (appropriate for csv export)
-$full_query = "SELECT ref_type, detailed_location, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where ORDER BY ordering_timestamp DESC";
+$full_query = "SELECT ref_type, detailed_location, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where $dow ORDER BY ordering_timestamp DESC";
 $result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 
 $fp = fopen('php://output', 'w');

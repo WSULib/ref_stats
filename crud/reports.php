@@ -2,7 +2,7 @@
 include('header.php');
 include('../inc/functions.php');
 
-if (isset($_REQUEST['submitted'])){
+if (isset($_REQUEST['submitted'])){	
 
 	// establish reporting location, or select all (note: contains 'AND' from actual query to avoid altogether)
 	/* ----------------------------------------------------------------------------------------------------- */
@@ -37,10 +37,14 @@ if (isset($_REQUEST['submitted'])){
 
 	}
 
-	else {
+	elseif (isset($_COOKIE['location'])) {
 		$location_where = "AND location = {$_COOKIE['location']}";
 		$selected_locations = array($_COOKIE['location']);
 	}	
+
+	else {
+		$location_where = "";
+	}
 
 	// finish cleaning $selected_locations
 	$selected_locations = array_unique($selected_locations);
@@ -49,10 +53,19 @@ if (isset($_REQUEST['submitted'])){
 	$date_start = date("Y-m-d", strtotime($_REQUEST['date_start']));
 	$date_end = date("Y-m-d", strtotime($_REQUEST['date_end']));
 
+	// set days of the week	
+	if ( isset($_REQUEST['dow']) ) {		
+		// prepare SQL clause
+		$dow = "AND DAYOFWEEK(timestamp) IN ('".implode("', '",$_REQUEST['dow'])."')";
+	}
+	else {
+		$dow = "";
+	}
+
 
 	// All transactions in date range (appropriate for csv export)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where ORDER BY ordering_timestamp DESC";
+	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow ORDER BY ordering_timestamp DESC";
 	// echo $full_query;
 	$full_result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 	$total_date_range_results = mysqli_num_rows($full_result);
@@ -65,7 +78,7 @@ if (isset($_REQUEST['submitted'])){
 	foreach($selected_locations as $location) {
 		$location_cases .= ", COUNT(CASE WHEN location = '$location' THEN DATE(timestamp) END) AS $location";
 	}
-	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY DATE(timestamp) ORDER BY date_string DESC";
+	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY DATE(timestamp) ORDER BY date_string DESC";
 	// echo $locations_total_query;
 	$locations_total_result = mysqli_query($link, $locations_total_query) or trigger_error(mysqli_error());
 
@@ -84,12 +97,10 @@ if (isset($_REQUEST['submitted'])){
 		}
 		
 	}
-	
-
 
 	// Transaction counts
 	/* ----------------------------------------------------------------------------------------------------- */
-	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY ref_type";
+	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY ref_type";
 	// echo $type_query;
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
 	$type_counts = array();
@@ -100,7 +111,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Day-of-the-week (dow)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY dow_index ORDER BY dow_index;";
+	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY dow_index ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
 	$dow_counts = array();
 	while($row = mysqli_fetch_assoc($dow_result)) {		
@@ -110,7 +121,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Hours
 	/* ----------------------------------------------------------------------------------------------------- */
-	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY hour;";
+	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
 	while($row = mysqli_fetch_assoc($hour_result)) {		
@@ -125,7 +136,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Single Days
 	/* ----------------------------------------------------------------------------------------------------- */
-	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where GROUP BY date ORDER BY ref_count DESC limit 5;";
+	$single_query = "SELECT DAYNAME(timestamp) as dow_name, DATE(timestamp) AS date, count(ref_type) AS ref_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY date ORDER BY ref_count DESC limit 5;";
 	$single_result = mysqli_query($link, $single_query) or trigger_error(mysqli_error());
 
 	/* Data Explanations:
@@ -181,11 +192,10 @@ if (isset($_REQUEST['submitted'])){
 										array_push($current_report_location_array, $_COOKIE['location']);
 									}
 								?>
-
 								<li>
 									<div class="checkbox">
 										<label>
-											<input id="ALL_checkbox" type="checkbox" name="locations[]" onclick="$('input').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['locations'] == array("ALL")) { echo "checked";} ?> > All 
+											<input id="ALL_checkbox" type="checkbox" name="locations[]" onclick="$('input.locationcheckbox').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['locations'] == array("ALL")) { echo "checked";} ?> > All 
 										</label>
 									</div>
 								</li>	
@@ -199,17 +209,18 @@ if (isset($_REQUEST['submitted'])){
 								<li>
 									<div class="checkbox">
 										<label>
-											<input id="ALL_checkbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge 
+											<input class="locationcheckbox" id="ALL_checkbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge 
 										</label>
 									</div>
 								</li>
-														
 
 								<?php  makeCheckboxGrid(False, $current_report_location_array); ?>
 							</ul>
 						</div>
 
 					</div>
+
+					<!-- date select -->
 					<div class="row">
 						<div class="form-group col-md-3">
 							<label>Start Date:</label>
@@ -229,7 +240,29 @@ if (isset($_REQUEST['submitted'])){
 								});
 							</script>
 						</div>
-					</div>					
+					</div>
+
+					<!-- DOW select -->
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label>Select Days of the Week:</label>
+							<?php
+								// select transactions from DROPDOWN, or default to current tool location
+								$current_dow = array();									
+								if (isset($_REQUEST['dow'])) {																		
+									$current_dow = $_REQUEST['dow'];
+								}
+								else {									
+									$current_dow = array();
+								}
+							?>
+							<ul class="checkbox_grid">
+								<?php  makeDOWCheckboxGrid($current_dow); ?>								
+							</ul>
+						</div>						
+					</div>
+
+					<!-- submit -->					
 					<div class="row">
 						<div class="form-group col-md-1">
 							<input type="hidden" name="submitted" value="true"/>

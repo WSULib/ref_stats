@@ -56,7 +56,7 @@ function makeLocationDropdown($please_select=True, $preset) {
 	}
 }
 
-# function to create location dropdown selections
+# function to create location checkbox grid
 function makeCheckboxGrid($please_select=True, $preset_array) {	
 	
 	# get location array from config.php
@@ -72,16 +72,39 @@ function makeCheckboxGrid($please_select=True, $preset_array) {
 		$location_exceptions = array("PK1","PK2");
 		if ( !in_array($key, $location_exceptions) ){
 			if ( in_array($key, $preset_array) ){			
-				echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+				echo '<li><div class="checkbox"><label><input class="locationcheckbox" type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
 			}			
 			else {
-				echo '<li><div class="checkbox"><label><input type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'"> '.$value.'</label></div></li>';
+				echo '<li><div class="checkbox"><label><input class="locationcheckbox" type="checkbox" onclick="$(\'#ALL_checkbox\').not(this).prop(\'checked\', false);" name="locations[]" value="'.$key.'"> '.$value.'</label></div></li>';
 			}	
 		}
 	}
 }
 
+# function to create days of week checkbox grid
+function makeDOWCheckboxGrid($preset_array) {	
 
+	# get location array from config.php	
+	$array = array(
+		"2" => "Monday",
+		"3" => "Tuesday",
+		"4" => "Wednesday",
+		"5" => "Thursday",
+		"6" => "Friday",
+		"7" => "Saturday",
+		"1" => "Sunday"
+	);	
+
+	// $preset overrides even Cookie location
+	foreach ($array as $key => $value) {		
+		if ( in_array($key, $preset_array) ){			
+			echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+		}			
+		else {
+			echo '<li><div class="checkbox"><label><input type="checkbox" name="dow[]" value="'.$key.'"> '.$value.'</label></div></li>';
+		}
+	}
+}	
 # function to create user dropdown selections
 function makeUserDropdown($please_select=True, $preset) {	
 	
