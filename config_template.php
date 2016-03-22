@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 
 	Maintaing other arrays such as 'simple_location_array' and 'user_arrays'.
 
-	Moved 'ref_type_hash' from functions.php to here.
+	Moved 'ref_type_hash' from functions.php to here, renamed 'transaction_type_hash'.
 */
 
 // location is in 'inc/dbs/'
@@ -193,7 +193,7 @@ $user_arrays = array(
 
 // Transaction Type Hash
 // Translates transaction numbers from DB to human readable form
-$ref_type_hash = array(
+$transaction_type_hash = array(
 
 	// Reference
 	1 => "Directional",

@@ -105,7 +105,7 @@ if (isset($_REQUEST['submitted'])){
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
 	$type_counts = array();
 	while($row = mysqli_fetch_assoc($type_result)) {		
-		$type_counts[$ref_type_hash[$row['ref_type']]] = $row['ref_type_count'];
+		$type_counts[$transaction_type_hash[$row['ref_type']]] = $row['ref_type_count'];
 	}
 
 

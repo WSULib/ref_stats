@@ -107,7 +107,7 @@ global $user_arrays;
 					if ($insert_result === TRUE) {
 						$_SESSION['result'] = "success";
 						$_SESSION['date'] = date("h:i:sa");
-						$_SESSION['ref_type_string'] = $ref_type_hash[$_POST['type']];
+						$_SESSION['ref_type_string'] = $transaction_type_hash[$_POST['type']];
 						$_SESSION['last_trans_id'] = mysqli_insert_id($link);
 					}
 					else {						

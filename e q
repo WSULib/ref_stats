@@ -1,0 +1,384 @@
+commit d4390102b01de08527e6caf95ba159c9c4d47325
+Author: Joseph A.L. Gajda <josephgajda@gmail.com>
+Date:   Tue Mar 22 11:24:12 2016 -0400
+
+    updated config with button / transaction mapping, added to groups array
+
+commit d38419780751ba25119d8d4a8bd3a97a444e6d39
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Tue Mar 22 10:42:13 2016 -0400
+
+    adding config temp to github, expanding config out
+
+commit ccfe31810f15c822389ce3fb6c242bbd7e90abda
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu Mar 3 10:26:30 2016 -0500
+
+    switched to all DOW checked by default
+
+commit 808b63b0c742740ecbdd1c252cf821a9f00bead1
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu Mar 3 09:38:22 2016 -0500
+
+    added Days of the Week limiters to reports
+
+commit ebedd70abc7ce4bf6b7b38a93b891cd95a746da3
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Tue Jun 16 11:38:04 2015 -0400
+
+    bumped timeout to 1440
+
+commit 1fcc9fbbf4b36e545472b2b8a79602ff730872e6
+Author: root <root@vmlib2.lib.wayne.edu>
+Date:   Thu Jun 11 12:32:36 2015 -0400
+
+    fixed dissection of PK locations
+
+commit d8d76d4295f495516c08686b09c626d5407f9177
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Jun 10 16:54:50 2015 -0400
+
+    flipped on and fixed bugs
+
+commit ce90a18d1ed1bccba686dd8a0e24527e70b715ad
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Jun 10 16:21:35 2015 -0400
+
+    pushing changes for login / reports rollout
+
+commit 1809b2292dca3fc9d4f36e16fdef850b2459732f
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu May 28 23:02:49 2015 -0400
+
+    Update README.md
+
+commit b5c28bd2249ea671c3e5e856cceb446056b9a6ad
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu May 28 23:01:35 2015 -0400
+
+    Update README.md
+
+commit 41f28a2e2da3f79fc4102bc7c5d2a94e423b1c96
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu May 28 21:08:05 2015 -0400
+
+    Update notes.txt
+
+commit 9e6f4155c595a156f4de9d3a3f65365a7d2b3ec9
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Thu May 14 16:20:46 2015 -0400
+
+    small fix for width
+
+commit 61d45c88ffa08aa2f5e97bf60f58709aeab1883a
+Merge: a288d7c a077013
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Thu May 14 09:45:53 2015 -0400
+
+    Merge branch 'master' of https://github.com/WSUlib/ref_stats
+
+commit a288d7cb42ac2286843c48d784c3cb9f18386cca
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Thu May 14 09:45:41 2015 -0400
+
+    fix to button widths, addition of logo
+
+commit a077013c63834994946f770659f2877435e5041a
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Tue May 12 10:46:06 2015 -0400
+
+    Update README.md
+
+commit 68c87034899670f7dc15fec148e3ed1a9805c3cd
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Mon May 11 15:30:11 2015 -0400
+
+    pushing fixes
+
+commit 50f0aa6c8c36cd7151e6c32e95fb29c6ec7d2fb7
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Mon May 11 15:16:42 2015 -0400
+
+    cleanup
+
+commit 90feba055bc4249af3473f7ae198764a3a1490f9
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Mon May 11 15:11:04 2015 -0400
+
+    supressing color change
+
+commit ce7dd70f50f56951a51e289ce60badaf57e6e5e8
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Fri May 8 11:22:33 2015 -0400
+
+    cleanup
+
+commit 24c9e65403cb4f6c350f9800f3ab0aa6106b2dd2
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Fri May 8 11:18:54 2015 -0400
+
+    final pushes before soft rollout
+
+commit e8a23ca79979f3f75b8c11558e6fbd67cf5c166e
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Fri May 8 10:55:39 2015 -0400
+
+    finalizing changes pre soft rollout
+
+commit 08e588a711e5b0c733e55f8b9d91ca7cdfa27183
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Fri May 8 10:40:38 2015 -0400
+
+    fixes to logo, locations, others
+
+commit 50325f3c1cd201b767d99191ae14be41962792f4
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed May 6 11:56:36 2015 -0400
+
+    tweaking MySQL queries
+
+commit 7bc47cae485c1c21b6008af79efc1dde79be5c1e
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed May 6 11:45:59 2015 -0400
+
+    temporarily hid reports, login, and reordered reports
+
+commit c27c2d0a620a42ddac40d6c458117338678162dd
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Mon Apr 20 11:28:35 2015 -0400
+
+    updated colors in reporting
+
+commit 953f00968c1420760d77caf33e4b9c62567bb4e2
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Tue Apr 14 10:53:07 2015 -0400
+
+    updated report filename generation
+
+commit b1c5794de4fc782e603901873fdaa7bc4cc03e3a
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Tue Apr 14 09:22:21 2015 -0400
+
+    reporting ready for testing
+
+commit 603687fa4d891be28bc0e20ed349983e6d296e82
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Tue Apr 14 08:54:36 2015 -0400
+
+    cleaning up graphs
+
+commit a6442915274944c08d013c1128dfa470db291768
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Mon Apr 13 16:15:58 2015 -0400
+
+    progress on reporting
+
+commit dfe6960aba9af28ff7fce64bef694db474a81721
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Apr 1 15:43:02 2015 -0400
+
+    last commit before more work - getting stable for move
+
+commit a572690b76c2ec4fcb64372e191adf8a24ccaad9
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Apr 1 15:07:46 2015 -0400
+
+    login complete, with whitelist as well
+
+commit 1780de83b179ae610f9242337bb5a384d58d2f38
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Apr 1 14:31:02 2015 -0400
+
+    fixed problem with location
+
+commit 3f19b568f78bd2ac5d3cc29de02bd2f559c19f80
+Author: Graham Hukill <ej2929@vmlib2.lib.wayne.edu>
+Date:   Wed Apr 1 14:21:41 2015 -0400
+
+    added login page
+
+commit 9a4ee53708c73c91482a705979280b4284eedec5
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Mar 4 16:18:25 2015 -0500
+
+    clean up
+
+commit 2fc42b81d1518723b18c21cf8ea90be6e74f35eb
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Mar 4 16:13:11 2015 -0500
+
+    lots of work on reporting
+
+commit beaf6f862b57132eaa37e5519559878ec881aeaf
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Fri Feb 27 16:28:26 2015 -0500
+
+    beginning to add reporting capabilities / icons
+
+commit 6d66dbbfcb6bc7f7ae3b6e201a88dd52cd3389c1
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Feb 16 09:15:30 2015 -0500
+
+    ignoring config.php
+
+commit a174cf7e640f64be39551db3ccf4c5fbeda354d1
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Feb 16 09:08:05 2015 -0500
+
+    updating documentation
+
+commit 90a912fc84ab3c5c12e774c9b67beb0d97dd630c
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Jan 21 09:21:13 2015 -0500
+
+    pushing changes for med / law
+
+commit ec7b6e1043b6b9659711cd0ccb932ea333d8a95f
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Tue Jan 20 11:13:32 2015 -0500
+
+    new locations and transaction types for Shiffman and Law
+
+commit e3d41144da780292eb500c5c506179315f154b80
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Jan 5 16:28:32 2015 -0500
+
+    added user_group to DB, and CRUD management
+
+commit 30f6c4a7652ae441aa03bf3c436c4a9229688fd7
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Jan 5 13:49:26 2015 -0500
+
+    breaking up functions
+
+commit 0bceb35bfbc1ca5f396d9d108960624a5d3eaed5
+Author: Cole Hudson <cole.hudson@wayne.edu>
+Date:   Fri Dec 19 15:38:51 2014 -0500
+
+    law update for index
+
+commit 32ba79a1459c47968e85614f6d89deb80d92a1dd
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Nov 24 12:23:09 2014 -0500
+
+    small UI changes / updates
+
+commit 99779d52af3e0d23923cd795668bc44758a304d8
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Nov 24 12:05:34 2014 -0500
+
+    logic updates to new, requires location
+
+commit 9b025f84cf1ac30ba1c7bbdb64a25955fe59b87e
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Nov 24 11:25:57 2014 -0500
+
+    updates to new, edit, datepicker
+
+commit b9283d71e7035b5472fa6a0ad83c6e55ea90b220
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Nov 24 11:06:00 2014 -0500
+
+    small change to dropdown maker, push optional location
+
+commit 16322b7d77abb2b559deec4ba459ef68803fa92c
+Author: System Administrator <root@ghukill-workmac.local>
+Date:   Mon Nov 24 10:37:50 2014 -0500
+
+    holding off on PK desks
+
+commit 690f4ca3cd098da4885a72fa27b9f29d77cd0ef6
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu Nov 20 09:10:16 2014 -0500
+
+    small changes from bugs / suggestions list
+
+commit 44f2784843012688a73d7807b10a16fba497a8e1
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Nov 19 12:04:25 2014 -0500
+
+    abstracted location dropdowns out to config.php, using makeDropdown() from functions.php
+
+commit de2b6d0919c8c1ed187359d69e6abff1b43d4338
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Fri Nov 14 09:37:41 2014 -0500
+
+    improvements - made toggle sticky when localstorage is available in browser
+
+commit cf066af7a88504c721080e38f9a25fa3a8201d5f
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Fri Nov 14 08:35:03 2014 -0500
+
+    small bug fixes - arrows, ALL locations, maintain page on form submit, etc.
+
+commit 84937207752c6173956da7e514e0454807cfab44
+Author: Cole Hudson <cole.hudson@wayne.edu>
+Date:   Wed Nov 12 08:48:32 2014 -0500
+
+    initial work on help document
+
+commit a967df51f9b985a3ff536b45bcccddcd8d7fdf5c
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Tue Nov 11 13:06:20 2014 -0500
+
+    added small question mark button to tool
+
+commit 04fbba79390eb06eae654ee86ef24d9854e8b708
+Author: Cole Hudson <cole.hudson@wayne.edu>
+Date:   Mon Nov 10 14:43:14 2014 -0500
+
+    updated proper css
+
+commit 8c2091e6af220e33b31361fb0975a7ab5597f7dd
+Author: Cole Hudson <cole.hudson@wayne.edu>
+Date:   Mon Nov 10 14:33:36 2014 -0500
+
+    added bookmarks button
+
+commit 9a8337976b166dfe05003e2870816a2abae0b203
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Mon Nov 10 13:40:30 2014 -0500
+
+    color changes and other small ones
+
+commit e37432f1736c2fcda95b316c23ba9c439c598ce0
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Nov 5 15:12:06 2014 -0500
+
+    colorized ref_type in crud list
+
+commit 032b4912f3c25b6e14e96b22b17056a5968e3b98
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Nov 5 14:58:53 2014 -0500
+
+    color revisions, 'quick edit' after submission
+
+commit 51f2bb18690611508a7ea7ff9131f7015157105c
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Wed Nov 5 13:00:16 2014 -0500
+
+    added colors to graph, added graph to edits, minor tweaks
+
+commit d115a96f982bdad490e983ed062b4b246a42a8c4
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Fri Oct 31 11:44:47 2014 -0400
+
+    new additions, waiting to pull into prod
+
+commit bd41cf91c5fbc983690ff1034bbd994c83add27d
+Author: Graham Hukill <ghukill@gmail.com>
+Date:   Thu Oct 30 09:26:32 2014 -0400
+
+    first commit, pre-meeting 10/30
+
+commit 19283ead1d7a1f2774898afce2f5c614e0798e61
+Author: Cole Hudson <cole.hudson@wayne.edu>
+Date:   Thu Oct 30 09:12:31 2014 -0400
+
+    initial commit
+
+commit 9eb3eeceb5112acfb9f33998f0d72e44b6f20dc2
+Author: Cole Hudson <colehudson@gmail.com>
+Date:   Thu Oct 30 09:06:25 2014 -0400
+
+    Initial commit
