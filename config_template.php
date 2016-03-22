@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /*
 	configuration file for RefStats
 	TEMPLATE - updated 03/2016
@@ -20,7 +24,9 @@
 	'location_array'
 		- created on the fly from user ip, resulting in locations that user can access
 
-	Maintaing other arrays such as 'simple_location_array' and 'user_arrays'
+	Maintaing other arrays such as 'simple_location_array' and 'user_arrays'.
+
+	Moved 'ref_type_hash' from functions.php to here.
 */
 
 // location is in 'inc/dbs/'
@@ -34,7 +40,7 @@ $groups_array = array(
 		"locations" => array(
 			"UGL" => "Undergraduate Library"
 		),
-		"buttons" => array(),
+		"buttons" => array(1,2,3,5,6,7,8,9,10,11,12),
 		"open" => False
 	),
 	"PKINFO_GROUP" => array(
@@ -42,14 +48,14 @@ $groups_array = array(
 			"PK1" => "Purdy Kresge Library - Desk 1",
 			"PK2" => "Purdy Kresge Library - Desk 2",
 		),
-		"buttons" => array(),
+		"buttons" => array(1,2,3,8,9,10),
 		"open" => False
 	),
 	"PKCIRC_GROUP" => array(
 		"locations" => array(
 			"PKCIRC" => "Purdy Kresge Library - Circulation"
 		),
-		"buttons" => array(),
+		"buttons" => array(5,6,7,8,9,10),
 		"open" => False
 	),
 	"MED_GROUP" => array(
@@ -57,14 +63,14 @@ $groups_array = array(
 			"MED_LIB" => "Shiffman Medical Library",
 			"MED_PHARM" => "Applebaum Learning Resource Center"
 		),
-		"buttons" => array(),
+		"buttons" => array(1,2,3,4),
 		"open" => True
 	),
 	"LAW_GROUP" => array(
 		"locations" => array(
 			"LAW" => "Neef Law Library"
 		),
-		"buttons" => array(),
+		"buttons" => array(1,2,3),
 		"open" => True
 	)
 );
@@ -104,12 +110,15 @@ function generateLocationArray($groups_array, $ip_whitelist) {
 	
 	// vars	
 	$user_ip = $_SERVER['REMOTE_ADDR'];
-	$user_groups = $ip_whitelist[$user_ip];
 	$user_locations = array();
+
+	// prime with `NOPE` location
+	$user_locations['NOPE'] = "Please Select Your Location";
 
 	# if IP in ip_whitelist
 	if (array_key_exists($user_ip, $ip_whitelist)) {
-		echo "IP found";
+		$user_groups = $ip_whitelist[$user_ip];
+		// echo "IP found";
 		// loop through groups
 		foreach ($groups_array as $key => $value) {
 			// check group affiliation
@@ -126,7 +135,7 @@ function generateLocationArray($groups_array, $ip_whitelist) {
 	# else, ascribe to "open" groups
 	// loop through groups
 	else {
-		echo "IP *not* found";
+		// echo "IP *not* found";
 		foreach ($groups_array as $key => $value) {			
 			if ($groups_array[$key]['open'] == True){				
 				// loop through locations
@@ -182,16 +191,43 @@ $user_arrays = array(
 );
 
 
+// Transaction Type Hash
+// Translates transaction numbers from DB to human readable form
+$ref_type_hash = array(
+
+	// Reference
+	1 => "Directional",
+	2 => "Brief",
+	3 => "Extended",
+	4 => "Consultation",
+
+	// Circ
+	5 => "General Circ",
+	6 => "Reserves Circ",
+	7 => "ILL / MEL Circ",
+
+	// Tech
+	8 => "Print / Copy / Scan",
+	9 => "Desktop Support",
+	10 => "BYOD Support",
+	11 => "Staff Support",
+	12 => "Classroom Support",
+);
+
+
 // DEBUG
-echo "<p>user IP</p>";
-echo $_SERVER['REMOTE_ADDR'];
-echo "<p>location_array</p>";
-print_r($location_array);
-echo "<p>simple_location_array</p>";
-print_r($simple_location_array);
+// echo "<p>user IP</p>";
+// echo $_SERVER['REMOTE_ADDR'];
+// echo "<p>location_array</p>";
+// print_r($location_array);
+// echo "<p>simple_location_array</p>";
+// print_r($simple_location_array);
+
+
 
 /* MySQL View Table for Reports (Feels backwards, but this works for pushing "PK1" or "PK2" to "PK" for view table):
 CREATE VIEW ref_stats_reports (id, ref_type, detailed_location, location, user_group, ip, timestamp) AS SELECT id, ref_type, location AS detailed_location, CASE location WHEN location NOT IN ('PK1','PK2') THEN 'PK' ELSE location END, user_group, ip, timestamp FROM ref_stats;
 */
+
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
+include_once(__DIR__."/../config.php"); //imports relative to "inc/functions.php"
 include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/'.$config_file);
 
 function reporter($color, $msg, $visibility) {
@@ -191,13 +191,13 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 	}
 }
 
-// reference type
-$ref_type_hash = array(
-	1 => "Directional",
-	2 => "Brief",
-	3 => "Extended",
-	4 => "Consultation"
-);
+// // reference type
+// $ref_type_hash = array(
+// 	1 => "Directional",
+// 	2 => "Brief",
+// 	3 => "Extended",
+// 	4 => "Consultation"
+// );
 
 
 function startsWith($haystack, $needle) {	
