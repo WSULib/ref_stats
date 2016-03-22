@@ -164,7 +164,7 @@ if (isset($_POST['access_password'])) {
 else {
 
 
-  if ( !in_array($_SERVER['REMOTE_ADDR'], $ip_white_list) ){
+  if ( !array_key_exists($_SERVER['REMOTE_ADDR'], $ip_whitelist) ){
   	// check if password cookie is set
 	  if (!isset($_COOKIE['verify'])) {
 	    showLoginPasswordProtect("");
