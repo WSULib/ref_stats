@@ -209,5 +209,100 @@ function endsWith($haystack, $needle) {
 }
 
 
+function autoSelectLocation() {
+	// Sets the location automatically if there's only one location to choose from
+	// Does this by adding the location ID to $_POST['location'] and $_COOKIE['location']
+	# get location array from config.php
+	global $location_array;
+
+	// make a temp variable from which to check $location array
+	$temp_array = $location_array;
+	unset($temp_array['NOPE']);
+
+	if (count($temp_array) == 1) {
+		// make sure this check hasn't happened already
+		if ($_COOKIE['location'] == key($temp_array)) {
+			return;
+		}
+		else {
+			$_COOKIE['location'] = key($temp_array);
+			$_SESSION['result'] == "location";
+			return;
+		}
+	}
+}
+
+function authenticator() {
+	global $groups_array;
+	global $user_groups;
+	$location = '';
+
+	// Locate the location in the uber-variable that has all our location, group, and button info
+	foreach($groups_array as $gkey => $gvalue) {
+		// now go get the correct buttons for the group
+		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+			$location = $gkey;
+		}
+	}
+
+	// if they're set to ADMIN group 'ALL'
+	if(in_array('ALL', $user_groups)) {
+		return True;
+	}
+
+	// if they have the user group enabled for the location they want
+	elseif(in_array($location, $user_groups)) {
+		return True;
+	}
+	// if that location is set to be open
+	elseif($groups_array[$location]['open']) {
+		return True;
+	}
+	
+	// nope
+	else {
+		return False;
+	}
+
+}
+
+function buttonMaker($transaction_type_hash) {
+	// Makes the buttons needed according to the locations it has available in $location_array
+	global $groups_array;
+	global $user_groups;
+	global $location_array;
+	$user_buttons = array();
+
+		// Locate the location in the uber-variable that has all our location, group, and button info
+			foreach($groups_array as $gkey => $gvalue) {
+				// now go get the correct buttons for the group
+				if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+					// make sure you're allowed to see these buttons
+					if (authenticator()) {
+						$user_buttons = $gvalue['buttons'];	
+					}
+					else {
+						// Not allowed. No buttons. Do not pass go; Do not collection $200
+						return;
+					}
+				}
+			}
+
+	// Makes buttons according to the array of buttons provided by $user_buttons
+	foreach ($user_buttons as $button) {
+		$buttons[] = <<<"EOF"
+			<div class="row-fluid">
+				<div class="col-md-12">
+					<form action="" method="POST">
+						<input name="type" type="number" value="$button"></input>
+						<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">$transaction_type_hash[$button]</button>
+					</form>
+				</div>
+			</div>
+EOF;
+			}
+
+	return $buttons;
+}
 
 ?>

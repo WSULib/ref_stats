@@ -12,18 +12,26 @@ else {
 
 // establish editing location, or select all
 if (isset($_REQUEST['edit_location']) && $_REQUEST['edit_location'] == "ALL"){
-	$location_where = "location = ANY(select location from ref_stats)";
+	if (authenticator()){
+		$location_where = "location = ANY(select location from ref_stats)";
+	}
 }
 elseif (isset($_REQUEST['edit_location'])) {
-	$location_where = "location = '{$_REQUEST['edit_location']}'";
+	if (authenticator()){
+		$location_where = "location = '{$_REQUEST['edit_location']}'";
+	}
 }
 elseif (isset($_COOKIE['location']) && $_COOKIE['location'] != "NOPE"){	
 	// default to current location
-	$location_where = "location = '{$_COOKIE['location']}'";
+	if (authenticator()){
+		$location_where = "location = '{$_COOKIE['location']}'";
+	}
 }
 else {
-	$_REQUEST['edit_location'] = "ALL";
-	$location_where = "location = ANY(select location from ref_stats)";	
+	if (authenticator()){
+		$_REQUEST['edit_location'] = "ALL";
+		$location_where = "location = ANY(select location from ref_stats)";	
+	}
 }					
 
 // perform query
@@ -66,10 +74,14 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 									$current_edit_location = $_COOKIE['location'];
 								}
 								?>
-								<!-- adding "All Locations" option element -->								
+								<!-- adding "All Locations" option element -->	
+								<?php
+								echo $user_groups;
+								if(in_array('ALL', $user_groups)) {
+								?>							
 								<option <?php if ( $current_edit_location=="ALL") echo 'selected="selected"'; ?> value="ALL">All Locations</option>
+								<?php } ?>
 								<?php makeLocationDropdown(False, $current_edit_location); ?>							
-
 							</select>	
 							<!-- hidden input to maintain current page -->
 							<input type="hidden" name="page" value="<?php echo $page; ?>"/>

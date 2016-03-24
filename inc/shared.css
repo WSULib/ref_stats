@@ -1,19 +1,64 @@
 /* gradient blue tallies */
+/*Directional*/
 .ref_type_1 {
 	color:#FFCC33; 	
 }
 
+/*Brief*/
 .ref_type_2 {
 	color:#238B8B; 	
 }
 
+/*Extended*/
 .ref_type_3 {
 	color:#3b3b3b;	 
 }
 
-/* Shiffman only, Consultation */
+/*Consultation*/
 .ref_type_4 {
 	color:#9CB2B2;	 
+}
+
+/*General Circ*/
+.ref_type_5 {
+	color:#FF6633
+;	 
+}
+
+/*Reserves Circ*/
+.ref_type_6 {
+	color:#003DF5
+;	 
+}
+
+/*ILL / MEL Circ*/
+.ref_type_7 {
+	color:#FF3366;	 
+}
+
+/*Print / Copy / Scan*/
+.ref_type_8 {
+	color:#FF33CC;	 
+}
+
+/*Desktop Support*/
+.ref_type_9 {
+	color:#6633FF;	 
+}
+
+/*BYOD Support*/
+.ref_type_10 {
+	color:#D49454;	 
+}
+
+/*Staff Support*/
+.ref_type_11 {
+	color:#66FF33;	 
+}
+
+/*Classroom Support*/
+.ref_type_12 {
+	color:#578B23;	 
 }
 
 /* general */

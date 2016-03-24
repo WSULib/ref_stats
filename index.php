@@ -51,20 +51,26 @@ global $user_arrays;
 		session_start();		
 		locationSetter();			
 		userSetter();
+		autoSelectLocation();
+		$buttonFlag=false;
 
-		// 
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 			if (isset($_SESSION['result']) && $_SESSION['result'] == "success") {								
 				reporter("green", "<a style='color:green;'href='crud/edit.php?id={$_SESSION['last_trans_id']}&origin=index'>Submitted '{$_SESSION['ref_type_string']}' at ".$_SESSION['date']."</a>");
+				$buttonFlag=True;
 			}
 			elseif (isset($_SESSION['result']) && $_SESSION['result'] == "fail") {
 				reporter("red", "Error: Submission Failed", " ");
+				$buttonFlag=True;
+
 			}
 			elseif (isset($_SESSION['result']) && $_SESSION['result'] == "location") {
 				reporter("orange", "You Changed Your Location", " ");
+				$buttonFlag=True;
 			}
 			else {
 				reporter("white", "Nothing to report.", "visible");
+				$buttonFlag=True;
 			}
 			session_destroy();
 			// RESET user_group cookie
@@ -75,16 +81,23 @@ global $user_arrays;
 			
 			// set location
 			if (isset($_POST['location'])) {
-				$_COOKIE['location'] = $_POST['location'];
-				setcookie('location', $_POST['location']);				
-				$_SESSION['result'] = "location";				
-				header('Location: ./', true, 302);
-			}			
+				// echo $_POST['location'];
+				// if ($_POST['location'] == $_COOKIE['location']) {
+				// 	// header('Location: ./', true, 302);
+				// }
+				// else {
+					$_COOKIE['location'] = $_POST['location'];
+					setcookie('location', $_POST['location']);				
+					$_SESSION['result'] = "location";				
+					header('Location: ./', true, 302);
+			// }
+			}		
 			elseif ($_COOKIE['location'] == 'NOPE') {
 				reporter("red", "Please Set Your Location", " ");		
 			}
 			elseif ($_COOKIE['user_group'] == 'NOPE' && array_key_exists($_COOKIE['location'], $user_arrays) ) {
 				reporter("red", "Please Select Your User Type", " ");
+				$buttonFlag=True;
 			}
 
 			// register reference transaction
@@ -136,59 +149,23 @@ global $user_arrays;
 					<form action="" method="POST">
 					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
 						<?php 
-						makeLocationDropdown(True,$_COOKIE['location']);						
+						makeLocationDropdown(True,$_COOKIE['location']);
 						?>
 					</select>
 					</form>
 				</div>
-			</div> <!-- row -->		
-
-
-			<!-- transaction recording -->	
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="1"></input>
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Directional</button>
-				</form>
-				</div>
-			</div> 
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="2">
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Brief Reference</button>
-				</form>
-				</div>
-			</div>
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="3">
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Extended Reference</button>
-				</form>
-				</div>
-			</div>
-
+			</div> <!-- row -->
 			<?php
-				// Populate dropdown with users if Law or Med
-				if ( startsWith($_COOKIE['location'], "MED") ) {
+			if($buttonFlag === True) {
+				// Make buttons
+				$buttons = buttonMaker($transaction_type_hash);
+				foreach($buttons as $button) {
+					echo $button;
+				}
+			}
+			print_r($location_array);
+			echo $_COOKIE['location'];
 			?>
-			<div class="row-fluid">
-				<div class="col-md-12">
-				<form action="" method="POST">
-					<input name="type" type="number" value="4">
-					<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">Consultation</button>
-				</form>
-				</div>
-			</div> 
-			<?php
-				} //end if MED button
-			?>
-
 			<?php
 				// Populate dropdown with users if Law or Med
 				if ( array_key_exists($_COOKIE['location'], $user_arrays) ) {
