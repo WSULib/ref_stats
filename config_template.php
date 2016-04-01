@@ -1,12 +1,12 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 /*
 	configuration file for RefStats
-	TEMPLATE - updated 03/2016
+	Production - updated 03/2016
 
 	## 03/2016 ##
 	Expanding "ref_stats" to include information from other locations.
@@ -38,15 +38,15 @@ $config_file = "ref_stats_config.php";
 $groups_array = array(
 	"UGL_GROUP" => array(
 		"locations" => array(
-			"UGL" => "Undergraduate Library"
+			"UGL" => "UGL Integrated Desk"
 		),
 		"buttons" => array(1,2,3,5,6,7,8,9,10,11,12),
 		"open" => False
 	),
 	"PKINFO_GROUP" => array(
 		"locations" => array(
-			"PK1" => "Purdy Kresge Library - Desk 1",
-			"PK2" => "Purdy Kresge Library - Desk 2",
+			"PK1" => "Purdy Reference Desk 1 (South)",
+			"PK2" => "Purdy Reference Desk 2 (North)",
 		),
 		"buttons" => array(1,2,3,8,9,10),
 		"open" => False
@@ -97,9 +97,10 @@ $ip_whitelist = array(
 	"x.y.z.a" => array('PKCIRC_GROUP'),
 
 	//ADMIN
-	"x.y.z.a" => array('ALL'),
-	"x.y.z.a" => array('ALL'),
-	"x.y.z.a" => array('ALL')
+	"x.y.z.a" => array('ALL'), // GH
+	"x.y.z.a" => array('ALL'), // GH
+	"x.y.z.a" => array('ALL'), // CH	
+	"x.y.z.a" => array('PKCIRC_GROUP', 'UGL_GROUP') // CH
 
 );
 
@@ -107,7 +108,7 @@ $ip_whitelist = array(
 // location array
 // Generated on-the-fly from user IP.  If IP not in list, ascribe to open groups (e.g. Med and Law)
 function generateLocationArray($groups_array, $ip_whitelist) {
-	
+	global $user_groups;
 	// vars	
 	$user_ip = $_SERVER['REMOTE_ADDR'];
 	$user_locations = array();
@@ -197,8 +198,8 @@ $transaction_type_hash = array(
 
 	// Reference
 	1 => "Directional",
-	2 => "Brief",
-	3 => "Extended",
+	2 => "Brief Reference",
+	3 => "Extended Reference",
 	4 => "Consultation",
 
 	// Circ
@@ -213,7 +214,6 @@ $transaction_type_hash = array(
 	11 => "Staff Support",
 	12 => "Classroom Support",
 );
-
 
 // DEBUG
 // echo "<p>user IP</p>";

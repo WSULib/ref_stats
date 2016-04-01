@@ -137,7 +137,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 								}
 								echo "<tr>";  
 								echo "<td>" . nl2br( $row['id']) . "</td>";  
-								echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $transaction_type_hash[$row['ref_type']]) . "</td>";  
+								echo "<td class='ref_type_{$row['ref_type']}'>" . nl2br( $transaction_type_hash[$row['ref_type']][0]) . "</td>";  
 								echo "<td>" . nl2br( $row['location']) . "</td>";
 								echo "<td>" . nl2br( $row['user_group']) . "</td>";  
 								echo "<td>" . nl2br( $row['ip']) . "</td>";  

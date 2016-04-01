@@ -66,7 +66,7 @@ if ($fp && $result) {
 	}
 	echo $header."\n";
     while ($row = $result->fetch_assoc()) {
-		$row['ref_type'] = $transaction_type_hash[$row['ref_type']];
+		$row['ref_type'] = $transaction_type_hash[$row['ref_type']][0];
 		fputcsv($fp, array_values($row));
 	}
     die;

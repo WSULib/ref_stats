@@ -174,8 +174,23 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 		20 => array("8pm",""),
 		21 => array("9pm",""),
 		22 => array("10pm",""),
-		23 => array("11pm","")		
-	);			
+		23 => array("11pm",""),
+		0 => array("12am",""),
+		1 => array("1am",""),
+		2 => array("2am",""),
+		3 => array("3am",""),
+		4 => array("4am",""),
+		5 => array("5am",""),
+		6 => array("6am",""),
+		7 => array("7am","")
+	);
+
+	// strip after hours if not UGL
+	if ($location != "UGL") {
+		foreach (range(1, 7) as $number) {
+		    unset($shown_hours[$number]);
+		}
+	}
 
 	// update graph marks for each hour returned
 	while($row = mysqli_fetch_array($result)) {
@@ -273,29 +288,31 @@ function buttonMaker($transaction_type_hash) {
 	global $location_array;
 	$user_buttons = array();
 
-		// Locate the location in the uber-variable that has all our location, group, and button info
-			foreach($groups_array as $gkey => $gvalue) {
-				// now go get the correct buttons for the group
-				if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
-					// make sure you're allowed to see these buttons
-					if (authenticator()) {
-						$user_buttons = $gvalue['buttons'];	
-					}
-					else {
-						// Not allowed. No buttons. Do not pass go; Do not collection $200
-						return;
-					}
-				}
+	// Locate the location in the uber-variable that has all our location, group, and button info
+	foreach($groups_array as $gkey => $gvalue) {
+		// now go get the correct buttons for the group
+		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+			// make sure you're allowed to see these buttons
+			if (authenticator()) {
+				$user_buttons = $gvalue['buttons'];	
 			}
+			else {
+				// Not allowed. No buttons. Do not pass go; Do not collection $200
+				return;
+			}
+		}
+	}
 
 	// Makes buttons according to the array of buttons provided by $user_buttons
 	foreach ($user_buttons as $button) {
+		$value = $transaction_type_hash[$button][0];
+		$ref_group = $transaction_type_hash[$button][1];		
 		$buttons[] = <<<"EOF"
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<form action="" method="POST">
 						<input name="type" type="number" value="$button"></input>
-						<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg">$transaction_type_hash[$button]</button>
+						<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</button>
 					</form>
 				</div>
 			</div>
