@@ -109,12 +109,12 @@ button.ref:hover {
 button.circ {
 	background-color:#eec445;
 	border-color:#eec445;
-	color:white;
+	color:black;
 }
 button.circ:hover {
 	background-color:#B79736;
 	border-color:#B79736;
-	color:white;
+	color:black;
 }
 
 button.tech {
