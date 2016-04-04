@@ -110,13 +110,13 @@ button.circ {
 	background-color:#eec445;
 	border-color:#eec445;
 	color:black;
-	font-weight:bold;
+	/*font-weight:bold;*/
 }
 button.circ:hover {
 	background-color:#B79736;
 	border-color:#B79736;		
 	color:black;
-	font-weight:bold;
+	/*font-weight:bold;*/
 }
 
 button.tech {
