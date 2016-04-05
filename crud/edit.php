@@ -67,39 +67,19 @@ else {
 						}
 					?>			
 
+					<!-- ################################################################################ -->
 					<div class="form-group">
-						<label>Reference Type:</label>		
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='1' <?php if ( $row['ref_type'] == 1) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Directional</span>
-							</label>
-						</div>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='2' <?php if ( $row['ref_type'] == 2) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Brief Reference</span>
-							</label>
-						</div>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 3) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Extended Reference</span>
-							</label>
-						</div>
-
-						<!-- Shiffman only -->
-						<?php
-							// Populate dropdown with users if Law or Med
-							if ( startsWith($_COOKIE['location'], "MED") ) {
-						?>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 4) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Extended Reference</span>
-							</label>
-						</div>
-						<?php
-							} //end if MED button
-						?>
-						
+						<ul style="list-style-type: none;">
+							<?php
+								// Make buttons
+								$buttons = buttonMakerForm($transaction_type_hash,$row);
+								foreach($buttons as $button) {
+									echo $button;
+								}
+							?>
+						</ul>
 					</div>
+					<!-- ################################################################################ -->
 
 					<!-- location -->
 					<input type="hidden" id="location" name="location" value="<?php echo $row['location']; ?>"></input>					
@@ -117,6 +97,12 @@ else {
 							// derive previous hour							
 							$timestamp_linux = strtotime($row['timestamp']);
 							$timestamp_hour = date("H",$timestamp_linux);
+							if ($_COOKIE['location'] == "UGL") {
+								$hour = 0;
+							}
+							else {
+								$hour = 8;
+							}
 							$hour = 8;							
 
 							while ($hour < 24) {								

@@ -97,34 +97,34 @@
 	color:white;
 }
 
-button.ref {
+span.ref, button.ref {
 	background-color:#069e87;
 	border-color:#069e87;
 }
-button.ref:hover {
+span.ref:hover, button.ref:hover {
 	background-color:#046F5F;
 	border-color:#046F5F;
 }
 
-button.circ {
+span.circ, button.circ {
 	background-color:#eec445;
 	border-color:#eec445;
 	color:black;
 	/*font-weight:bold;*/
 }
-button.circ:hover {
+span.circ:hover, button.circ:hover {
 	background-color:#B79736;
 	border-color:#B79736;		
 	color:black;
 	/*font-weight:bold;*/
 }
 
-button.tech {
+span.tech, button.tech {
 	
 	background-color:#00565c;
 	border-color:#00565c;
 }
-button.tech:hover {
+span.tech:hover, button.tech:hover {
 	background-color:#00363A;
 	border-color:#00363A;
 }

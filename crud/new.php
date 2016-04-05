@@ -37,7 +37,6 @@ if (isset($_REQUEST['submitted']) & $_REQUEST['location'] != "NOPE") {
 <?php
 } 
 else {	
-
 ?>
 		
 		<div class="row">
@@ -68,45 +67,33 @@ else {
 					}
 					?>	
 
+
+					<!-- ################################################################################ -->
 					<div class="form-group">
-						<label>Reference Type</label>		
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='1'><span class="btn btn-primary ref_type_button">Directional</span>
-							</label>
-						</div>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='2'><span class="btn btn-primary ref_type_button">Brief Reference</span>
-							</label>
-						</div>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='3'><span class="btn btn-primary ref_type_button">Extended Reference</span>
-							</label>
-						</div>
-						<!-- Shiffman only -->
-						<?php
-							// Populate dropdown with users if Law or Med
-							if ( startsWith($_COOKIE['location'], "MED") ) {
-						?>
-						<div class='radio'>
-							<label>
-								<input type='radio' name='ref_type' value='3' <?php if ( $row['ref_type'] == 4) { echo "checked='checked'"; } ?>><span class="btn btn-primary ref_type_button">Extended Reference</span>
-							</label>
-						</div>
-						<?php
-							} //end if MED button
-						?>
+						<ul style="list-style-type: none;">
+							<?php
+								// Make buttons
+								$buttons = buttonMakerForm($transaction_type_hash);
+								foreach($buttons as $button) {
+									echo $button;
+								}
+							?>
+						</ul>
 					</div>
+					<!-- ################################################################################ -->
+
 
 					<div class="form-group">
 						<label>Time (hour window)</label>						
 						<select class="form-control" id="hour" name="hour">
 							<?php
-							$current_hour = date("H");							
-							$hour = 8;							
-
+							$current_hour = date("H");							 
+							if ($_COOKIE['location'] == "UGL") {
+								$hour = 0;
+							}
+							else {
+								$hour = 8;
+							}
 							while ($hour < 24) {								
 								$startHour = date("g a", strtotime("$hour:00"));
 								$endHour = date("g a", strtotime(($hour+1).":00"));
