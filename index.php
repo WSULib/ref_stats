@@ -41,7 +41,7 @@ global $user_arrays;
 		<div class="row-fluid">
 			<div id="header" class="col-md-12">								
 				<a class="no_dec" href=".">
-					<img class="refstats_logo" src="inc/refstats_logo.png" >
+					<img class="refstats_logo" src="inc/deskstats_logo.png" >
 				</a>
 			</div>
 		</div>
