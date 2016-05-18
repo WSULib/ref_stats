@@ -196,24 +196,25 @@ $user_arrays = array(
 // Translates transaction numbers from DB to human readable form
 $transaction_type_hash = array(
 
-	// Reference
-	1 => "Directional",
-	2 => "Brief Reference",
-	3 => "Extended Reference",
-	4 => "Consultation",
+        // Reference
+        1 => array("Directional","ref"),
+        2 => array("Brief Reference","ref"),
+        3 => array("Extended Reference","ref"),
+        4 => array("Consultation","ref"),
 
-	// Circ
-	5 => "General Circ",
-	6 => "Reserves Circ",
-	7 => "ILL / MEL Circ",
+        // Circ
+        5 => array("General Circ","circ"),
+        6 => array("Reserves Circ","circ"),
+        7 => array("ILL / MEL Circ","circ"),
 
-	// Tech
-	8 => "Print / Copy / Scan",
-	9 => "Desktop Support",
-	10 => "BYOD Support",
-	11 => "Staff Support",
-	12 => "Classroom Support",
+        // Tech
+        8 => array("Print / Copy / Scan","tech"),
+        9 => array("Desktop Support","tech"),
+        10 => array("BYOD Support","tech"),
+        11 => array("Staff Support","tech"),
+        12 => array("Classroom Support","tech")
 );
+
 
 // DEBUG
 // echo "<p>user IP</p>";
