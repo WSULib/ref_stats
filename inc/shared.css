@@ -213,8 +213,22 @@ span.tech:hover, button.tech:hover {
 	margin-bottom:40px;
 }
 
+/* help */
+.button_help_icon {
+	float:right;
+	margin:auto;
+	border-radius: 6px;	
+}
 
+.button_help_icon:hover {	
+	color:yellow;
+	font-weight:bold;		
+}
 
+.button_help_html {
+	text-align:left;
+	display:none;
+}
 
 
 
