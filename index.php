@@ -189,7 +189,7 @@ global $user_arrays;
 				<div class="col-md-12">
 					<p>
 						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage</button></a>
-						<a href="RefStats_Tool_Documentation.html" ><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button></a>
+						<a href="inc/docs/DeskStats_Documentation.pdf" ><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button></a>
 					</p>
 				</div>
 			</div>
