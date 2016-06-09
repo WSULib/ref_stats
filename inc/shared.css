@@ -221,13 +221,17 @@ span.tech:hover, button.tech:hover {
 }
 
 .button_help_icon:hover {	
-	color:yellow;
+	color:#ffcd34;
 	font-weight:bold;		
 }
 
 .button_help_html {
 	text-align:left;
 	display:none;
+	background-color:#eaeaea;
+	padding:10px;
+	border-radius:6px;
+	
 }
 
 
