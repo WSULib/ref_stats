@@ -1,65 +1,85 @@
-/* gradient blue tallies */
+/* REF */
 /*Directional*/
 .ref_type_1 {
-	color:#FFCC33; 	
+	color:#069e87; 	
 }
-
 /*Brief*/
 .ref_type_2 {
-	color:#238B8B; 	
+	color:#069e87; 	
 }
-
 /*Extended*/
 .ref_type_3 {
-	color:#3b3b3b;	 
+	color:#069e87;	 
 }
-
 /*Consultation*/
 .ref_type_4 {
-	color:#9CB2B2;	 
+	color:#069e87;	 
+}
+span.ref, button.ref, button.ref:active, button.ref:focus {
+	background-color:#069e87;
+	border-color:#069e87;
+}
+span.ref:hover, button.ref:hover {
+	background-color:#046F5F;
+	border-color:#046F5F;
 }
 
+/* CIRC */
 /*General Circ*/
 .ref_type_5 {
-	color:#FF6633
-;	 
+	color:#eec445;	 
 }
-
 /*Reserves Circ*/
 .ref_type_6 {
-	color:#003DF5
-;	 
+	color:#eec445;	 
 }
-
 /*ILL / MEL Circ*/
 .ref_type_7 {
-	color:#FF3366;	 
+	color:#eec445;	 
+}
+span.circ, button.circ, button.circ:active, button.circ:focus {
+	background-color:#eec445;
+	border-color:#eec445;
+	color:black;
+	/*font-weight:bold;*/
+}
+span.circ:hover, button.circ:hover {
+	background-color:#B79736;
+	border-color:#B79736;		
+	color:black;
 }
 
+
+/* TECH */
 /*Print / Copy / Scan*/
 .ref_type_8 {
-	color:#FF33CC;	 
+	color:rgb(142, 144, 144);	 
 }
-
 /*Desktop Support*/
 .ref_type_9 {
-	color:#6633FF;	 
+	color:rgb(142, 144, 144);	 
 }
-
 /*BYOD Support*/
 .ref_type_10 {
-	color:#D49454;	 
+	color:rgb(142, 144, 144);	 
 }
-
 /*Staff Support*/
 .ref_type_11 {
-	color:#66FF33;	 
+	color:rgb(142, 144, 144);	 
 }
-
 /*Classroom Support*/
 .ref_type_12 {
-	color:#578B23;	 
+	color:rgb(142, 144, 144);	 
 }
+span.tech, button.tech, button.tech:active, button.tech:focus {
+	background-color:rgb(142, 144, 144);
+	border-color:rgb(142, 144, 144);
+}
+span.tech:hover, button.tech:hover {
+	background-color:rgb(107, 107, 107);
+	border-color:rgb(107, 107, 107);
+}
+
 
 /* general */
 #footer {
@@ -81,7 +101,6 @@
 
 /* buttons */
 
-
 .btn-WSUgreen {
 	background-color:#9CB2B2;
 	border-color:#9CB2B2;
@@ -95,38 +114,6 @@
 .btn-WSUgreen:hover, .btn-WSUgreen:active, .btn-WSUgreen:target, .btn-WSUgreen:focus {
 	background-color:#596565;
 	color:white;
-}
-
-span.ref, button.ref {
-	background-color:#069e87;
-	border-color:#069e87;
-}
-span.ref:hover, button.ref:hover {
-	background-color:#046F5F;
-	border-color:#046F5F;
-}
-
-span.circ, button.circ {
-	background-color:#eec445;
-	border-color:#eec445;
-	color:black;
-	/*font-weight:bold;*/
-}
-span.circ:hover, button.circ:hover {
-	background-color:#B79736;
-	border-color:#B79736;		
-	color:black;
-	/*font-weight:bold;*/
-}
-
-span.tech, button.tech {
-	
-	background-color:#00565c;
-	border-color:#00565c;
-}
-span.tech:hover, button.tech:hover {
-	background-color:#00363A;
-	border-color:#00363A;
 }
 
 
@@ -228,10 +215,10 @@ span.tech:hover, button.tech:hover {
 .button_help_html {
 	text-align:left;
 	display:none;
-	background-color:#eaeaea;
+	background-color:#f9f9f9;
 	padding:10px;
 	border-radius:6px;
-	
+
 }
 
 

@@ -13,11 +13,10 @@ Highcharts.createElement('link', {
 
 Highcharts.theme = {
 	colors: [
-		"#FFCC33", 
-		"#238B8B", 
-		"#3b3b3b", 
+		"#069e87", 
+		"#eec445", 
+		"rgb(142, 144, 144)", 
 		"#9CB2B2", 
-		
 		"#aaeeee", 
 		"#ff0066", 
 		"#eeaaee",

@@ -195,6 +195,8 @@ function transBreakdown(raw_data){
 // HighCharts - Busiest Hours
 function busiestHours(raw_data){
 
+    console.log(raw_data);
+
 	// PREPARE DATA
 	// series are horizontal color segments, in our case reference types
 	var reftype_series = [{
@@ -206,9 +208,32 @@ function busiestHours(raw_data){
         }, {
             name: 'Extended',
             data: []
-        },
-        {
+        }, {
             name: 'Consultation',
+            data: []
+        }, {
+            name: 'General_Circ',
+            data: []
+        }, {
+            name: 'Reserves_Circ',
+            data: []
+        }, {
+            name: 'ILL_MEL_Circ',
+            data: []
+        }, {
+            name: 'Print_Copy_Scan',
+            data: []
+        }, {
+            name: 'Desktop_Support',
+            data: []
+        }, {
+            name: 'BYOD_Support',
+            data: []
+        }, {
+            name: 'Staff_Support',
+            data: []
+        }, {
+            name: 'Classroom_Support',
             data: []
         }
     ]

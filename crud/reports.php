@@ -121,7 +121,20 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Hours
 	/* ----------------------------------------------------------------------------------------------------- */
-	$hour_query = "SELECT HOUR(timestamp) AS hour, COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional, COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief, COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended, COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY hour;";
+	$hour_query = "SELECT HOUR(timestamp) AS hour, 
+		COUNT(CASE WHEN ref_type = 1 THEN ref_type END) AS Directional,
+		COUNT(CASE WHEN ref_type = 2 THEN ref_type END) AS Brief,
+		COUNT(CASE WHEN ref_type = 3 THEN ref_type END) AS Extended,
+		COUNT(CASE WHEN ref_type = 4 THEN ref_type END) AS Consultation,
+		COUNT(CASE WHEN ref_type = 5 THEN ref_type END) AS General_Circ,
+		COUNT(CASE WHEN ref_type = 6 THEN ref_type END) AS Reserves_Circ,
+		COUNT(CASE WHEN ref_type = 7 THEN ref_type END) AS ILL_MEL_Circ,
+		COUNT(CASE WHEN ref_type = 8 THEN ref_type END) AS Print_Copy_Scan,
+		COUNT(CASE WHEN ref_type = 9 THEN ref_type END) AS Desktop_Support,
+		COUNT(CASE WHEN ref_type = 10 THEN ref_type END) AS BYOD_Support,
+		COUNT(CASE WHEN ref_type = 11 THEN ref_type END) AS Staff_Support,
+		COUNT(CASE WHEN ref_type = 12 THEN ref_type END) AS Classroom_Support
+		FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
 	while($row = mysqli_fetch_assoc($hour_result)) {		
@@ -130,6 +143,14 @@ if (isset($_REQUEST['submitted'])){
 			"Brief" => $row['Brief'],
 			"Extended" => $row['Extended'],
 			"Consultation" => $row['Consultation'],
+			"General_Circ" => $row['General_Circ'],
+			"Reserves_Circ" => $row['Reserves_Circ'],
+			"ILL_MEL_Circ" => $row['ILL_MEL_Circ'],
+			"Print_Copy_Scan" => $row['Print_Copy_Scan'],
+			"Desktop_Support" => $row['Desktop_Support'],
+			"BYOD_Support" => $row['BYOD_Support'],
+			"Staff_Support" => $row['Staff_Support'],
+			"Classroom_Support" => $row['Classroom_Support'],
 		);
 	}
 
