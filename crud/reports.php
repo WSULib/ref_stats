@@ -62,10 +62,19 @@ if (isset($_REQUEST['submitted'])){
 		$dow = "";
 	}
 
+	// set days of the week	
+	if ( isset($_REQUEST['user']) && $_REQUEST['user'] != array("ALL") ) {		
+		// prepare SQL clause
+		$user = "AND user_group IN ('".implode("', '",$_REQUEST['user'])."')";
+	}
+	else {
+		$user = "";
+	}
+
 
 	// All transactions in date range (appropriate for csv export)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow ORDER BY ordering_timestamp DESC";
+	$full_query = "SELECT ref_type, location, user_group, DAYNAME(timestamp) as day_of_week, DATE(timestamp) AS simple_date, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user ORDER BY ordering_timestamp DESC";
 	// echo $full_query;
 	$full_result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 	$total_date_range_results = mysqli_num_rows($full_result);
@@ -78,7 +87,7 @@ if (isset($_REQUEST['submitted'])){
 	foreach($selected_locations as $location) {
 		$location_cases .= ", COUNT(CASE WHEN location = '$location' THEN DATE(timestamp) END) AS $location";
 	}
-	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY DATE(timestamp) ORDER BY date_string DESC";
+	$locations_total_query = "SELECT DATE(timestamp) AS date_string $location_cases FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY DATE(timestamp) ORDER BY date_string DESC";
 	// echo $locations_total_query;
 	$locations_total_result = mysqli_query($link, $locations_total_query) or trigger_error(mysqli_error());
 
@@ -100,7 +109,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Transaction counts
 	/* ----------------------------------------------------------------------------------------------------- */
-	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY ref_type";
+	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY ref_type";
 	// echo $type_query;
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
 	$type_counts = array();
@@ -111,7 +120,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Day-of-the-week (dow)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY dow_index ORDER BY dow_index;";
+	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY dow_index ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
 	$dow_counts = array();
 	while($row = mysqli_fetch_assoc($dow_result)) {		
@@ -134,24 +143,19 @@ if (isset($_REQUEST['submitted'])){
 		COUNT(CASE WHEN ref_type = 10 THEN ref_type END) AS BYOD_Support,
 		COUNT(CASE WHEN ref_type = 11 THEN ref_type END) AS Staff_Support,
 		COUNT(CASE WHEN ref_type = 12 THEN ref_type END) AS Classroom_Support
-		FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow GROUP BY hour;";
+		FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
-	while($row = mysqli_fetch_assoc($hour_result)) {		
-		$hour_counts[$row['hour']] = array(
-			"Directional" => $row['Directional'],
-			"Brief" => $row['Brief'],
-			"Extended" => $row['Extended'],
-			"Consultation" => $row['Consultation'],
-			"General_Circ" => $row['General_Circ'],
-			"Reserves_Circ" => $row['Reserves_Circ'],
-			"ILL_MEL_Circ" => $row['ILL_MEL_Circ'],
-			"Print_Copy_Scan" => $row['Print_Copy_Scan'],
-			"Desktop_Support" => $row['Desktop_Support'],
-			"BYOD_Support" => $row['BYOD_Support'],
-			"Staff_Support" => $row['Staff_Support'],
-			"Classroom_Support" => $row['Classroom_Support'],
-		);
+	while($row = mysqli_fetch_assoc($hour_result)) {
+
+		// NEW
+		$hour_counts[$row['hour']] = array();
+		foreach ($row as $key => $value) {
+			if ($value != 0) {
+				$hour_counts[$row['hour']][$key] = $value;
+			}
+		}
+
 	}
 
 
@@ -175,7 +179,7 @@ if (isset($_REQUEST['submitted'])){
 
 	$dow_counts = Associative array with Day-of-the-Week (dow) names and total transactions counts for that day
 
-	$hour_counts = Nested Associative array with hours of the day, and numbers for "Directional", "Brief", "Extended", and "Consultation"
+	$hour_counts = Nested Associative array with hours of the day, and numbers for transaction types
 
 	$busiest_day_counts 
 	*/
@@ -196,12 +200,13 @@ if (isset($_REQUEST['submitted'])){
 
 		<!-- Limiters -->
 		<div id="limiters" class="row">
-			<div class="col-md-12">
-				<h3>Select Location(s) and Date Range</h3>		
+			<div class="col-md-12 well">
+				<h3>Select Filters</h3>		
 				<form action="reports.php" method="GET" class="form" role="form">
 					<div class="row">											
 
 						<div class="form-group col-md-12">
+							<label>Select Location:</label>
 							<ul class="checkbox_grid">
 								<?php
 									// select transactions from DROPDOWN, or default to current tool location
@@ -219,14 +224,7 @@ if (isset($_REQUEST['submitted'])){
 											<input id="ALL_checkbox" type="checkbox" name="locations[]" onclick="$('input.locationcheckbox').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['locations'] == array("ALL")) { echo "checked";} ?> > All 
 										</label>
 									</div>
-								</li>	
-								<!-- <li>
-									<div class="checkbox">
-										<label>
-											<input id="ALL_checkbox" type="checkbox" name="locations[]" value="MAIN_CAMPUS" <?php if ( in_array("MAIN_CAMPUS", $_REQUEST['locations'])) { echo "checked";} ?> > Main Campus 
-										</label>
-									</div>
-								</li> -->
+								</li>
 								<li>
 									<div class="checkbox">
 										<label>
@@ -265,7 +263,7 @@ if (isset($_REQUEST['submitted'])){
 
 					<!-- DOW select -->
 					<div class="row">
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-5">
 							<label>Select Days of the Week:</label>
 							<?php
 								// select transactions from DROPDOWN, or default to current tool location
@@ -279,6 +277,29 @@ if (isset($_REQUEST['submitted'])){
 							?>
 							<ul class="checkbox_grid">
 								<?php  makeDOWCheckboxGrid($current_dow); ?>								
+							</ul>
+						</div>
+						<div class="form-group col-md-7">
+							<label>Limit by User:</label>
+							<?php
+								// select transactions from DROPDOWN, or default to current tool location
+								$current_user = array();									
+								if (isset($_REQUEST['user'])) {																		
+									$current_user = $_REQUEST['user'];
+								}
+								else {									
+									$current_user = NULL;
+								}
+							?>
+							<ul class="checkbox_grid">
+								<li>
+									<div class="checkbox">
+										<label>
+											<input id="ALL_user_checkbox" type="checkbox" name="user[]" onclick="$('input.usercheckbox').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['user'] == array("ALL") || !in_array('user', $_REQUEST)) { echo "checked";} ?> > All 
+										</label>
+									</div>
+								</li>
+								<?php  makeUserCheckboxGrid($current_user); ?>								
 							</ul>
 						</div>						
 					</div>
@@ -348,22 +369,28 @@ if (isset($_REQUEST['submitted'])){
 
 				<div class="row">
 					<!-- Line Chart -->
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div id="transPerLocation"></div>
 						<script type="text/javascript">
 							transPerLocation(<?php echo json_encode($locations_total_sorted); ?>,'<?php echo $date_start; ?>');
 						</script>	
-					</div>			
-					
+					</div>		
+				</div>	
+
+				<hr class="quickstats_dividers">
+
+				<div class="row">
 					<!-- Hour Bar -->
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div id="busiestHoursChart"></div>
 						<script type="text/javascript">
 							busiestHours(<?php echo json_encode($hour_counts); ?>);
 						</script>						
 					</div>
+				</div>
 
 			</div>
+
 		</div>	
 
 		<div class="row">

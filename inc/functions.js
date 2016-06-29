@@ -195,8 +195,6 @@ function transBreakdown(raw_data){
 // HighCharts - Busiest Hours
 function busiestHours(raw_data){
 
-    console.log(raw_data);
-
 	// PREPARE DATA
 	// series are horizontal color segments, in our case reference types
 	var reftype_series = [{
@@ -237,7 +235,8 @@ function busiestHours(raw_data){
             data: []
         }
     ]
-	var x_axis_hours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
+
+	var x_axis_hours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7];
 
 	// iterate through x axis hours
 	for (var i=0; i < x_axis_hours.length; i++){
@@ -293,11 +292,8 @@ function busiestHours(raw_data){
         },
         legend: {
             align: 'right',
-            x: -30,
-            verticalAlign: 'top',
-            y: 25,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            verticalAlign: 'bottom',
+            floating: false,
             borderColor: '#CCC',
             borderWidth: 1,
             shadow: false

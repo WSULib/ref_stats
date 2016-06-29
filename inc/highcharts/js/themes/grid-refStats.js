@@ -23,7 +23,7 @@ Highcharts.theme = {
 		"#55BF3B",
 		"#DF5353",
 		"#7798BF",
-		"#aaeeee"
+		"#665544"
 	],
 	chart: {
 		backgroundColor: null,

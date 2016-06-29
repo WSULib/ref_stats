@@ -112,7 +112,47 @@ function makeDOWCheckboxGrid($preset_array) {
 		}	
 	}
 	
-}	
+}
+
+
+# function to create user checkbox grid
+function makeUserCheckboxGrid($preset_array) {	
+
+	# get location array from config.php	
+	$array = array(
+		"WLF" => "WSU Law Faculty",
+		"OTF" => "Other Faculty",
+		"WLS" => "WSU Law Students",
+		"OTS" => "Other Students",
+		"WSA" => "WSU Administration/Staff",
+		"LGP" => "Legal Professionals",
+		"COP" => "Community Patrons",
+		"DMC" => "Detroit Medical Center (DMC)",
+		"COM" => "Community",
+		"WSU" => "Wayne State Affiliated"
+	);	
+
+	// $preset overrides even Cookie location
+	if ($preset_array == NULL){
+		foreach ($array as $key => $value) {		
+			echo '<li><div class="checkbox"><label><input onclick="$(\'#ALL_user_checkbox\').prop(\'checked\', false);"class="usercheckbox" type="checkbox" name="user[]" value="'.$key.'"> '.$value.'</label></div></li>';
+		}
+	}
+	else {
+		foreach ($array as $key => $value) {		
+			if ( in_array($key, $preset_array) ){			
+				echo '<li><div class="checkbox"><label><input onclick="$(\'#ALL_user_checkbox\').prop(\'checked\', false);"class="usercheckbox" type="checkbox" name="user[]" value="'.$key.'" checked> '.$value.'</label></div></li>';
+			}			
+			else {
+				echo '<li><div class="checkbox"><label><input onclick="$(\'#ALL_user_checkbox\').prop(\'checked\', false);"class="usercheckbox" type="checkbox" name="user[]" value="'.$key.'"> '.$value.'</label></div></li>';
+			}
+		}	
+	}
+	
+}
+
+
+
 # function to create user dropdown selections
 function makeUserDropdown($please_select=True, $preset) {	
 	

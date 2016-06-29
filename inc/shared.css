@@ -102,9 +102,9 @@ span.tech:hover, button.tech:hover {
 /* buttons */
 
 .btn-WSUgreen {
-	background-color:#9CB2B2;
-	border-color:#9CB2B2;
-	color:white;	
+	background-color:#f9f9f9;
+	border-color:#bbbbbb;
+	color:#3e3e3e;	
 }
 
 #breadcrumb .btn-WSUgreen {
@@ -112,7 +112,7 @@ span.tech:hover, button.tech:hover {
 }
 
 .btn-WSUgreen:hover, .btn-WSUgreen:active, .btn-WSUgreen:target, .btn-WSUgreen:focus {
-	background-color:#596565;
+	background-color:#bbbbbb;
 	color:white;
 }
 
