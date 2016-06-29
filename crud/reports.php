@@ -110,13 +110,25 @@ if (isset($_REQUEST['submitted'])){
 	// Transaction counts
 	/* ----------------------------------------------------------------------------------------------------- */
 	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY ref_type";
-	// echo $type_query;
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
 	$type_counts = array();
 	while($row = mysqli_fetch_assoc($type_result)) {		
 		$type_counts[$transaction_type_hash[$row['ref_type']][0]] = $row['ref_type_count'];
 	}
 
+	// User Group counts
+	/* ----------------------------------------------------------------------------------------------------- */
+	$user_group_query = "SELECT user_group, COUNT(user_group) AS user_group_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY user_group";
+	$user_group_result = mysqli_query($link, $user_group_query) or trigger_error(mysqli_error());
+	$user_group_counts = array();
+	while($row = mysqli_fetch_assoc($user_group_result)) {		
+		$user_group_counts[$user_hash[$row['user_group']]] = $row['user_group_count'];
+	}
+	if (array_key_exists('Please Select Your User', $user_group_counts)) {
+		$user_group_counts['Undefined'] = $user_group_counts['Please Select Your User'];
+		unset($user_group_counts['Please Select Your User']);	
+	}
+	
 
 	// Busiest Day-of-the-week (dow)
 	/* ----------------------------------------------------------------------------------------------------- */
@@ -228,7 +240,16 @@ if (isset($_REQUEST['submitted'])){
 								<li>
 									<div class="checkbox">
 										<label>
-											<input class="locationcheckbox" id="ALL_checkbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge 
+											<input class="locationcheckbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge 
+										</label>
+									</div>
+								</li>
+
+								<!-- Old Neef Law option -->
+								<li>
+									<div class="checkbox">
+										<label>
+											<input class="locationcheckbox" type="checkbox" name="locations[]" value="LAW" <?php if ( in_array("LAW", $_REQUEST['locations'])) { echo "checked";} ?> > Neef Law (OLD)
 										</label>
 									</div>
 								</li>
@@ -308,7 +329,7 @@ if (isset($_REQUEST['submitted'])){
 					<div class="row">
 						<div class="form-group col-md-1">
 							<input type="hidden" name="submitted" value="true"/>
-							<button type="submit" class="btn btn-default">Update</button>
+							<button type="submit" class="btn btn-success">Update</button>
 						</div>
 					</div>
 				</form>
@@ -325,14 +346,30 @@ if (isset($_REQUEST['submitted'])){
 					<div class="col-md-6">
 						<h3 style="text-align:center;">QuickStats</h3>
 						<p><strong>Total Transaction</strong>: <?php echo $total_date_range_results; ?></p>
-						<p><strong>Transactions Types:</strong>
-							<ul>
-								<?php
-									foreach ($type_counts as $type => $count) {
-										echo "<li>$type: $count</li>";
-									}
-								?>
-							</ul>
+
+						<div class="col-md-6">
+							<p><strong>Transactions Types:</strong>
+								<ul>
+									<?php
+										foreach ($type_counts as $type => $count) {
+											echo "<li>$type: $count</li>";
+										}
+									?>
+								</ul>
+							</p>
+						</div>
+						<div class="col-md-6">
+							<p><strong>User Groups:</strong>
+								<ul>
+									<?php
+										foreach ($user_group_counts as $user => $count) {
+											echo "<li>$user: $count</li>";
+										}
+									?>
+								</ul>
+							</p>
+						</div>
+
 					</div>
 					<div class="col-md-6" style="text-align:center;">
 						<h3>Export Data</h3>				
@@ -343,32 +380,48 @@ if (isset($_REQUEST['submitted'])){
 					</div>
 				</div>
 
+				<!-- Transaction Breakdown -->
 				<hr class="quickstats_dividers">
-
 				<div class="row">
-					
-					<!-- Pie Chart -->
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div id="transBreakdown"></div>
 						<script type="text/javascript">
 							transBreakdown(<?php echo json_encode($type_counts); ?>);
 						</script>
 					</div>
+				</div>
 
-					<!-- DOW Bar Chart -->
-					<div class="col-md-6">
+				<!-- User Breakdown -->
+				<?php 
+					if (count($user_group_counts) > 1) {
+				?>
+				<hr class="quickstats_dividers">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="userBreakdown"></div>
+						<script type="text/javascript">
+							userBreakdown(<?php echo json_encode($user_group_counts); ?>);
+						</script>
+					</div>
+				</div>
+				<?php 
+					} // close user if block
+				?>
+
+				<!-- Busiest Day of Week -->
+				<hr class="quickstats_dividers">
+				<div class="row">
+					<div class="col-md-12">
 						<div id="busiestDOWChart"></div>
 						<script type="text/javascript">
 							busiestDOW(<?php echo json_encode($dow_counts); ?>);
 						</script>					
 					</div>
-					
-				</div>
+				</div>				
 
+				<!-- Busiest Transaction -->
 				<hr class="quickstats_dividers">
-
 				<div class="row">
-					<!-- Line Chart -->
 					<div class="col-md-12">
 						<div id="transPerLocation"></div>
 						<script type="text/javascript">
@@ -377,10 +430,9 @@ if (isset($_REQUEST['submitted'])){
 					</div>		
 				</div>	
 
+				<!-- Busiest Hours -->
 				<hr class="quickstats_dividers">
-
 				<div class="row">
-					<!-- Hour Bar -->
 					<div class="col-md-12">
 						<div id="busiestHoursChart"></div>
 						<script type="text/javascript">
@@ -389,9 +441,7 @@ if (isset($_REQUEST['submitted'])){
 					</div>
 				</div>
 
-			</div>
-
-		</div>	
+			</div>	
 
 		<div class="row">
 			<div class="col-md-12 spacer40"></div>

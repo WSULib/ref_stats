@@ -41,7 +41,7 @@ $groups_array = array(
 			"UGL" => "UGL Integrated Desk"
 		),
 		"buttons" => array(1,2,3,5,6,7,8,9,10,11,12),
-		"open" => False
+		"open" => True
 	),
 	"PKINFO_GROUP" => array(
 		"locations" => array(
@@ -49,14 +49,14 @@ $groups_array = array(
 			"PK2" => "Purdy Reference Desk 2 (North)",
 		),
 		"buttons" => array(1,2,3,8,9,10),
-		"open" => False
+		"open" => True
 	),
 	"PKCIRC_GROUP" => array(
 		"locations" => array(
 			"PKCIRC" => "Purdy Kresge Library - Circulation"
 		),
 		"buttons" => array(5,6,7,8,9,10),
-		"open" => False
+		"open" => True
 	),
 	"MED_GROUP" => array(
 		"locations" => array(
@@ -66,11 +66,18 @@ $groups_array = array(
 		"buttons" => array(1,2,3,4),
 		"open" => True
 	),
-	"LAW_GROUP" => array(
+	"LAWINFO_GROUP" => array(
 		"locations" => array(
-			"LAW" => "Neef Law Library"
+			"LAWINFO" => "Neef Law Library - Reference"
 		),
-		"buttons" => array(1,2,3),
+		"buttons" => array(1,2,3,6,8,9,10),
+		"open" => True
+	),
+	"LAWCIRC_GROUP" => array(
+		"locations" => array(
+			"LAWCIRC" => "Neef Law Library - Circulation"
+		),
+		"buttons" => array(5,6,7,8,9,10),
 		"open" => True
 	)
 );
@@ -97,7 +104,7 @@ $ip_whitelist = array(
 	"x.y.z.a" => array('PKCIRC_GROUP'),
 
 	//ADMIN
-	"x.y.z.a" => array('ALL'), // GH
+	"141.217.54.95" => array('ALL'), // GH
 	"x.y.z.a" => array('ALL'), // GH
 	"x.y.z.a" => array('ALL'), // CH	
 	"x.y.z.a" => array('PKCIRC_GROUP', 'UGL_GROUP') // CH
@@ -167,7 +174,17 @@ foreach (array_keys($location_array) as $location) {
 
 // user array used to populate location dropdowns around app
 $user_arrays = array(
-	"LAW" => array(
+	"LAWINFO" => array(
+		"NOPE" => "Please Select Your User",
+		"WLF" => "WSU Law Faculty",
+		"OTF" => "Other Faculty",
+		"WLS" => "WSU Law Students",
+		"OTS" => "Other Students",
+		"WSA" => "WSU Administration/Staff",
+		"LGP" => "Legal Professionals",
+		"COP" => "Community Patrons",
+	),
+	"LAWCIRC" => array(
 		"NOPE" => "Please Select Your User",
 		"WLF" => "WSU Law Faculty",
 		"OTF" => "Other Faculty",
@@ -197,23 +214,26 @@ $user_arrays = array(
 $transaction_type_hash = array(
 
         // Reference
-        1 => array("Directional","ref"),
-        2 => array("Brief Reference","ref"),
-        3 => array("Extended Reference","ref"),
-        4 => array("Consultation","ref"),
-
+        1 => array("Directional","ref","<div><p><strong>Defined:</strong>  Involves the logistical use of the library, campus or the website. Includes questions on policies and procedures.</p><p><strong>Examples:</strong><ul><li>Where is a department located?</li><li>How late are you open today?</li><li>What is the URL for the library homepage?</li><li>Do you have vending machines in this building?</li><li>How does course reserves work?</li></ul></p></div>"),
+        2 => array("Brief Reference","ref","<div><p><strong>Defined:</strong> Involves the knowledge, use or instruction of one or more information sources
+(catalog, library homepage, print books, databases, etc.) and lasts less than 3 minutes.</p><p><strong>Examples:</strong><ul><li>Do you own this book?</li><li>How do I cite a web page using APA style?</li><li>Where should I go to find resources relating to social work?</li></ul></p></div>"),
+        3 => array("Extended Reference","ref","<div><p><strong>Defined:</strong>  Involves the knowledge, use or instruction of one or more information sources
+(catalog, library homepage, print books, databases, etc.) and lasts more than 3 minutes.</p><p><strong>Examples:</strong><ul><li>I need 5 literary criticism articles.</li><li>Can you help me locate this specific inventory for PTSD?</li><li>I need help finding historical images of a particular building.</li></ul></p></div>"),
+        4 => array("Consultation","ref","<div><p><strong>Defined:</strong> Definition not available.</p><p><strong>Examples:</strong><ul><!-- Examples here --></ul></p></div>"),
+        
         // Circ
-        5 => array("General Circ","circ"),
-        6 => array("Reserves Circ","circ"),
-        7 => array("ILL / MEL Circ","circ"),
-
+        5 => array("General Circ","circ","<div><p><strong>Defined:</strong> Pertaining to general circulation functions.</p><p><strong>Examples:</strong><ul><li>General inquiries about Circulation policies and procedures.</li><li>Check in/out materials from the general stacks.</li><li>Collect Library fines.</li><li>Creating/updating patron records.</li></ul></p></div>"),
+        6 => array("Reserves Circ","circ","<div><p><strong>Defined:</strong> Pertaining to Reserve items.</p><p><strong>Examples:</strong><ul><li>General inquiries about Reserve materials.</li><li>Check in/out items from Reserves collection.</li><li>Process request for items to be on Reserve</li></ul></p></div>"),
+        7 => array("ILL / MEL Circ","circ","<div><p><strong>Defined:</strong> Pertaining to ILL / MEL items.</p><p><strong>Examples:</strong><ul><li>General inquiries about ILL / MEL materials.</li><li>Check in/out ILL / MEL materials.</li><li>Assist with requesting ILL / MEL materials.</li></ul></p></div>"),
+        
         // Tech
-        8 => array("Print / Copy / Scan","tech"),
-        9 => array("Desktop Support","tech"),
-        10 => array("BYOD Support","tech"),
-        11 => array("Staff Support","tech"),
-        12 => array("Classroom Support","tech")
+        8 => array("Print / Copy / Scan","tech","<div><p><strong>Defined:</strong> Pertaining to public printing, copying, scanning services.</p><p><strong>Examples:</strong><ul><li>General inquiries about printing/copying/scanning services.</li><li>Assist with printing/copying/scanning process.</li><li>Submit a maintenance request</li></ul></p></div>"),
+        9 => array("Desktop Support","tech","<div><p><strong>Defined:</strong> Pertaining to public computing services.</p><p><strong>Examples:</strong><ul><li>General inquiries about public computing.</li><li>Assist with WSU related applications (i.e. Academica, Blackboard).</li><li>Assist with Microsoft Office applications or other specialty software applications.</li></ul></p></div>"),
+        10 => array("BYOD Support","tech","<div><p><strong>Defined:</strong> Pertaining to personal mobile devices.</p><p><strong>Examples:</strong><ul><li>General inquiries about personal mobile devices.</li><li>Assist with accessing/configuring mobile device with WSU wireless.</li></ul></p></div>"),
+        11 => array("Staff Support","tech","<div><p><strong>Defined:</strong> Pertaining to assisting Library System staff.</p><p><strong>Examples:</strong><ul><li>Assist with inquiries regarding desktop support for Library System staff.</li><li>Submit a maintenance request.</li></ul></p></div>"),
+        12 => array("Classroom Support","tech","<div><p><strong>Defined:</strong> Pertaining to assisting Library System staff.</p><p><strong>Examples:</strong><ul><li>Assist with inquiries regarding classroom technology.</li><li>Assist with inquiries regarding lecture capture technology.</li><li>Submit a maintenance request.</li></ul></p></div>")
 );
+
 
 
 // DEBUG

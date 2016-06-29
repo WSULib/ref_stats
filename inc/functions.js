@@ -192,6 +192,56 @@ function transBreakdown(raw_data){
 
 }
 
+
+// HighCharts - Transaction Breakdown
+function userBreakdown(raw_data){
+    
+    // format data
+    var user_breakdown_data = [];
+    for (var user in raw_data) {
+        if (raw_data.hasOwnProperty(user)) {
+            var temp_data = [ user, parseInt(raw_data[user]) ];
+            user_breakdown_data.push(temp_data);
+        }
+    }
+
+    $('#userBreakdown').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'User Group Breakdown'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'User Group Breakdown',
+            data: user_breakdown_data
+        }]
+    });
+
+
+}
+
+
+
 // HighCharts - Busiest Hours
 function busiestHours(raw_data){
 

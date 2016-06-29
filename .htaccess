@@ -1,0 +1,10 @@
+Order Deny,Allow
+Deny from All
+# main campus
+Allow from 141 217.1 217.255
+# med
+Allow from 146 9.1 9.255
+# wireless
+Allow from 35 16.0 16.127
+
+
