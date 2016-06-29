@@ -62,7 +62,7 @@ if (isset($_REQUEST['submitted'])){
 		$dow = "";
 	}
 
-	// set days of the week	
+	// set user
 	if ( isset($_REQUEST['user']) && $_REQUEST['user'] != array("ALL") ) {		
 		// prepare SQL clause
 		$user = "AND user_group IN ('".implode("', '",$_REQUEST['user'])."')";
@@ -295,7 +295,7 @@ if (isset($_REQUEST['submitted'])){
 								<li>
 									<div class="checkbox">
 										<label>
-											<input id="ALL_user_checkbox" type="checkbox" name="user[]" onclick="$('input.usercheckbox').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['user'] == array("ALL") || !in_array('user', $_REQUEST)) { echo "checked";} ?> > All 
+											<input id="ALL_user_checkbox" type="checkbox" name="user[]" onclick="$('input.usercheckbox').not(this).prop('checked', false);" value="ALL" <?php if ($_REQUEST['user'] == array("ALL") || !array_key_exists('user', $_REQUEST)) { echo "checked";} ?> > All 
 										</label>
 									</div>
 								</li>

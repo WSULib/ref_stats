@@ -48,9 +48,18 @@ $selected_locations = array();
 		$dow = "";
 	}
 
+	// set user
+	if ( isset($_REQUEST['user']) && $_REQUEST['user'] != array("ALL") ) {		
+		// prepare SQL clause
+		$user = "AND user_group IN ('".implode("', '",$_REQUEST['user'])."')";
+	}
+	else {
+		$user = "";
+	}
+
 
 // All transactions in date range (appropriate for csv export)
-$full_query = "SELECT ref_type, detailed_location, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where $dow ORDER BY ordering_timestamp DESC";
+$full_query = "SELECT ref_type, detailed_location, location, user_group, DAYNAME(timestamp) as day_of_week, timestamp AS ordering_timestamp FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' AND $location_where $dow $user ORDER BY ordering_timestamp DESC";
 $result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 
 $fp = fopen('php://output', 'w');
