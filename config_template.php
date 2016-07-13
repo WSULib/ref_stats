@@ -5,13 +5,6 @@
 // error_reporting(E_ALL);
 
 /*
-	configuration file for RefStats
-	Production - updated 03/2016
-
-	## 03/2016 ##
-	Expanding "ref_stats" to include information from other locations.
-	As such, creating creating new arrays in config that will power things.
-	
 	Arrays:
 
 	'groups':

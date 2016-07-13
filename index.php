@@ -9,7 +9,7 @@ global $user_arrays;
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>RefStats Tool - Wayne State University Libraries</title>
+	<title>DeskStats Tool - Wayne State University Libraries</title>
 	<link rel="icon" href="../../inc/img/favicon.ico" type="image/x-icon" />
 	<!-- jQuery -->
 	<script src="inc/jquery-1.11.1.min.js"></script>

@@ -65,7 +65,7 @@ $result = mysqli_query($link, $full_query) or trigger_error(mysqli_error());
 $fp = fopen('php://output', 'w');
 if ($fp && $result) {
     header('Content-Type: text/csv');
-    header("Content-Disposition: attachment; filename='RefStats_Report-$date_start_$date_end-$selected_locations_string.csv'");
+    header("Content-Disposition: attachment; filename='DeskStats_Report-$date_start_$date_end-$selected_locations_string.csv'");
     
     // write column names
     $fields = mysqli_num_fields ( $result );

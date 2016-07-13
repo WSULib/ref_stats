@@ -4,6 +4,7 @@ include('../inc/password_protect.php');
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DeskStats Tool - Wayne State University Libraries</title>
 
 	<!-- jQuery -->
 	<script src="../inc/jquery-1.11.1.min.js"></script>
