@@ -112,7 +112,7 @@ function showLoginPasswordProtect($error_msg) {
   </style>
   <div style="width:640px; margin-left:auto; margin-right:auto; text-align:center">
   <form method="post">
-    <img src="inc/deskstats_logo.png"/>
+    <img width=240 src="inc/deskstats_logo.png"/>
     <h3>Please enter username and password to access this page:</h3>
     <font color="red"><?php echo $error_msg; ?></font><br />
 <?php if (USE_USERNAME) echo 'Username:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
