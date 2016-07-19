@@ -200,11 +200,26 @@ span.tech:hover, button.tech:hover {
 	margin-bottom:40px;
 }
 
+#edit_buttons {
+	padding-top:10px;
+	width:100%;
+}
+
 /* help */
-.button_help_icon {
-	float:right;
+.ref_button_wrapper {
+	width:92%;
+	float:left;
 	margin:auto;
-	border-radius: 6px;	
+}
+
+.button_help_icon {
+	width:8%;
+	float:right;
+	border-radius: 6px;
+	color:#4e4e4e;
+	font-size:18px;
+	padding-top:10px;
+	cursor:pointer;
 }
 
 .button_help_icon:hover {	

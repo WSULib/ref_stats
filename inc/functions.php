@@ -349,17 +349,18 @@ function buttonMaker($transaction_type_hash) {
 		$ref_group = $transaction_type_hash[$button][1];
 		$help_html = $transaction_type_hash[$button][2];
 		$buttons[] = <<<"EOF"
-			<div class="row-fluid">
+			<div class="row">
 				<div class="col-md-12">
-					<form action="" method="POST">
-						<input name="type" type="number" value="$button"></input>
-						<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value
-							<div class="button_help_icon" onclick="$('#button_help_$button').slideToggle(); return false;">
-								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-							</div>
-						</button>
-					</form>
-					<div id="button_help_$button" class="button_help_html">$help_html</div>
+					<div class="ref_button_wrapper">
+						<form action="" method="POST">
+							<input name="type" type="number" value="$button"></input>
+							<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</button>
+						</form>
+						<div id="button_help_$button" class="button_help_html">$help_html</div>
+					</div>
+					<div class="button_help_icon" onclick="$('#button_help_$button').slideToggle(); return false;">
+						<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+					</div>
 				</div>
 			</div>
 EOF;

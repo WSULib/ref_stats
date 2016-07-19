@@ -144,7 +144,7 @@ global $user_arrays;
 		<div id="ref_actions">
 			
 			<!-- location choosing -->
-			<div class="row-fluid">
+			<div class="row">
 				<div class="col-md-12">
 					<form action="" method="POST">
 					<select class="form-control" id="location" name="location" onchange=this.form.submit()>
@@ -170,7 +170,7 @@ global $user_arrays;
 				// Populate dropdown with users if Law or Med
 				if ( array_key_exists($_COOKIE['location'], $user_arrays) ) {
 			?>
-				<div class="row-fluid">
+				<div class="row">
 					<div class="col-md-12">
 						<form action="" method="POST">
 							<select class="form-control" id="user_group" name="user_group" onchange="userCookie(this.value)">';
@@ -185,11 +185,11 @@ global $user_arrays;
 			?>
 
 			<!-- edit buttons -->
-			<div class="row-fluid">
-				<div class="col-md-12">
+			<div class="row">
+				<div id="edit_buttons" class="col-md-12">
 					<p>
 						<a href="crud/list.php"><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manage</button></a>
-						<a href="inc/docs/DeskStats_Documentation.pdf" ><button type="button" class="btn btn-sm btn-WSUgreen"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button></a>
+						<a href="inc/docs/DeskStats_Documentation.pdf" ><button type="button" class="btn btn-sm btn-WSUgreen">Help</button></a>
 					</p>
 				</div>
 			</div>
@@ -198,7 +198,7 @@ global $user_arrays;
 		<hr>
 
 		<div id="ref_graph">
-			<div class="row-fluid">	
+			<div class="row">	
 				<div class="col-md-12" id="refreport">				
 					<h4 id="toggle_graph">Today's Stats <span style="font-size:50%;">(click to toggle)</span></h4>	
 					<div id="table_wrapper">
