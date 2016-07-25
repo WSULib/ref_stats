@@ -68,6 +68,13 @@ global $user_arrays;
 				reporter("orange", "You Changed Your Location", " ");
 				$buttonFlag=True;
 			}
+			elseif (count($location_array) == 2) {
+				$cl = array_slice($location_array, 1, 1);
+				$_COOKIE['location'] = key($cl);
+				setcookie('location', key($cl));
+				reporter("white", "Nothing to report.", "visible");
+				$buttonFlag=True;
+			}
 			else {
 				reporter("white", "Nothing to report.", "visible");
 				$buttonFlag=True;
@@ -137,7 +144,6 @@ global $user_arrays;
 			} // cookie
 			userSetter();
 		} // post
-
 		
 		?>
 
