@@ -6,10 +6,9 @@
 
 /*
 	Arrays:
-
-	'groups':
-		- locations - array of locations included in that group
-		- buttons and values - array of buttons and values
+	'complete_location_array':
+		- location code is key
+		- contains long name of location with associated buttons (as another array)
 
 	'ip_whitelist':
 		- ip address as key, groups as array
@@ -22,139 +21,156 @@
 	Moved 'ref_type_hash' from functions.php to here, renamed 'transaction_type_hash'.
 */
 
-// location is in 'inc/dbs/'
 $config_file = "ref_stats_config.php";
 
-
-// Group array
-// Contains array of Groups.  Within each group, are associated locations and buttons.
-$groups_array = array(
-	"UGL_GROUP" => array(
-		"locations" => array(
-			"UGL" => "UGL Integrated Desk"
+// location array
+// Contains array of location.  Within each location are associated names and buttons.
+$complete_location_array = array(
+	"UGL" => array(
+		"UGL" => "UGL Integrated Desk",
+		"buttons" => array(1,2,3,5,6,7,8,9,10,11,12)
 		),
-		"buttons" => array(1,2,3,5,6,7,8,9,10,11,12),
-		"open" => True
-	),
-	"PKINFO_GROUP" => array(
-		"locations" => array(
-			"PK1" => "Purdy Reference Desk 1 (South)",
-			"PK2" => "Purdy Reference Desk 2 (North)",
+	"PK1" => array(
+		"PK1" => "Purdy Library - Reference Desk 1 (South)",
+		"buttons" => array(1,2,3,8,9,10)
 		),
-		"buttons" => array(1,2,3,8,9,10),
-		"open" => True
-	),
-	"PKCIRC_GROUP" => array(
-		"locations" => array(
-			"PKCIRC" => "Purdy Kresge Library - Circulation"
+	"PK2" => array(
+		"PK2" => "Purdy Library - Reference Desk 2 (North)",
+		"buttons" => array(1,2,3,8,9,10)
 		),
-		"buttons" => array(5,6,7,8,9,10),
-		"open" => True
-	),
-	"MED_GROUP" => array(
-		"locations" => array(
-			"MED_LIB" => "Shiffman Medical Library",
-			"MED_PHARM" => "Applebaum Learning Resource Center"
+	"PCIRC" => array(
+		"PCIRC" => "Purdy Library - Circulation", 
+		"buttons" => array(1,5,6,7,8,9,10)
 		),
-		"buttons" => array(1,2,3,4),
-		"open" => True
-	),
-	"LAWINFO_GROUP" => array(
-		"locations" => array(
-			"LAWINFO" => "Neef Law Library - Reference"
+	"KCIRC" => array(
+		"KCIRC" => "Kresge Library - Circulation",
+		"buttons" => array(1,5,6,7,8,9,10)
 		),
-		"buttons" => array(1,2,3,6,8,9,10),
-		"open" => True
-	),
-	"LAWCIRC_GROUP" => array(
-		"locations" => array(
-			"LAWCIRC" => "Neef Law Library - Circulation"
+	"MED_LIB" => array(
+		"MED_LIB" => "Shiffman Medical Library",
+		"buttons" => array(1,2,3,4)
 		),
-		"buttons" => array(5,6,7,8,9,10),
-		"open" => True
-	)
-);
+	"MED_PHARM" => array(
+		"MED_PHARM" => "Applebaum Learning Resource Center",
+		"buttons" => array(1,2,3,4)
+		),
+	"LAWREF" => array(
+		"LAWREF" => "Neef Law Library - Reference",
+		"buttons" => array(1,2,3,6,8,9,10)
+		),
+	"LAWCIRC" => array(
+		"LAWCIRC" => "Neef Law Library - Circulation",
+		"buttons" => array(5,6,7,8,9,10)
+		)
+	);
 
 // IP whitelist
-// Contains IP as key for array of groups this IP is allowed for
+// Contains IP as key for array of locations this IP is allowed for
 $ip_whitelist = array(
 
-	// UGL
-	"x.y.z.a" => array('UGL_GROUP'),
-	"x.y.z.a" => array('UGL_GROUP'),
-	"x.y.z.a" => array('UGL_GROUP'),
-	"x.y.z.a" => array('UGL_GROUP'),
-	"x.y.z.a" => array('UGL_GROUP'),
-	"x.y.z.a" => array('UGL_GROUP'),
+	# Kresge Library – Circulation	 
+	"x.y.z.a" => array('KCIRC'),
 
-	// PKINFO_GROUP
-	"x.y.z.a" => array('PKINFO_GROUP'),
-	"x.y.z.a" => array('PKINFO_GROUP'),
+	# Purdy Library – Circulation	 
+	"x.y.z.a" => array('PCIRC'),
 
-	// PKCIRC_GROUP
-	"x.y.z.a" => array('PKCIRC_GROUP'),
-	"x.y.z.a" => array('PKCIRC_GROUP'),
-	"x.y.z.a" => array('PKCIRC_GROUP'),
+	# Purdy Library – Reference Desk 1 (South)	 
+	"x.y.z.a" => array('PK1'),
 
-	//ADMIN
-	"141.217.54.95" => array('ALL'), // GH
-	"x.y.z.a" => array('ALL'), // GH
-	"x.y.z.a" => array('ALL'), // CH	
-	"x.y.z.a" => array('PKCIRC_GROUP', 'UGL_GROUP') // CH
+	# Purdy Library – Reference Desk 2 (North)	 
+	"x.y.z.a" => array('PK2'),
+
+	# UGL Integrated Desk
+	"x.y.z.a" => array('UGL'),
 
 );
 
 
-// location array
-// Generated on-the-fly from user IP.  If IP not in list, ascribe to open groups (e.g. Med and Law)
-function generateLocationArray($groups_array, $ip_whitelist) {
-	global $user_groups;
+
+function generateLocationArray($complete_location_array, $ip_whitelist) {
+	global $allowed_locations;
 	// vars	
 	$user_ip = $_SERVER['REMOTE_ADDR'];
 	$user_locations = array();
 
 	// prime with `NOPE` location
 	$user_locations['NOPE'] = "Please Select Your Location";
-
 	# if IP in ip_whitelist
 	if (array_key_exists($user_ip, $ip_whitelist)) {
-		$user_groups = $ip_whitelist[$user_ip];
+		$allowed_locations = $ip_whitelist[$user_ip];
 		// echo "IP found";
-		// loop through groups
-		foreach ($groups_array as $key => $value) {
-			// check group affiliation
-			if (in_array($key, $user_groups) || in_array("ALL", $user_groups) ){
-				// loop through locations
-				foreach ($groups_array[$key]['locations'] as $key => $value) {
-					// push to $user_locations
-					$user_locations[$key] = $value;
-				}	
+		// loop through locations
+		foreach ($complete_location_array as $key => $value) {
+			// check for allowed locations
+			if (in_array($key, $allowed_locations)){
+				// give var a location code => long form name
+				$user_locations[$key] = $value[$key];
 			}	
 		}
 	}
 
-	# else, ascribe to "open" groups
-	// loop through groups
+	# else, allow user to select all locations
+	// loop through locations
 	else {
 		// echo "IP *not* found";
-		foreach ($groups_array as $key => $value) {			
-			if ($groups_array[$key]['open'] == True){				
-				// loop through locations
-				foreach ($groups_array[$key]['locations'] as $key => $value) {
-					// push to $user_locations					
-					$user_locations[$key] = $value;
-				}	
-			}
+		foreach ($complete_location_array as $key => $value) {		
+			$user_locations[$key] = $value[$key];	
 		}	
 	}
-	
 	return $user_locations;
 
 }
 
-// finally, set $location_array
-$location_array = generateLocationArray($groups_array, $ip_whitelist);
+// location array
+// Generated on-the-fly from user IP.  If IP not in list, ascribe to open groups (e.g. Med and Law)
+// function generateLocationArray($groups_array, $ip_whitelist) {
+// 	global $user_groups;
+// 	// vars	
+// 	$user_ip = $_SERVER['REMOTE_ADDR'];
+// 	$user_locations = array();
 
+// 	// prime with `NOPE` location
+// 	$user_locations['NOPE'] = "Please Select Your Location";
+
+// 	# if IP in ip_whitelist
+// 	if (array_key_exists($user_ip, $ip_whitelist)) {
+// 		$user_groups = $ip_whitelist[$user_ip];
+// 		// echo "IP found";
+// 		// loop through groups
+// 		foreach ($groups_array as $key => $value) {
+// 			// check group affiliation
+// 			if (in_array($key, $user_groups) || in_array("ALL", $user_groups) ){
+// 				// loop through locations
+// 				foreach ($groups_array[$key]['locations'] as $key => $value) {
+// 					// push to $user_locations
+// 					$user_locations[$key] = $value;
+// 				}	
+// 			}	
+// 		}
+// 	}
+
+// 	# else, ascribe to "open" groups
+// 	// loop through groups
+// 	else {
+// 		// echo "IP *not* found";
+// 		foreach ($groups_array as $key => $value) {			
+// 			if ($groups_array[$key]['open'] == True){				
+// 				// loop through locations
+// 				foreach ($groups_array[$key]['locations'] as $key => $value) {
+// 					// push to $user_locations					
+// 					$user_locations[$key] = $value;
+// 				}	
+// 			}
+// 		}	
+// 	}
+	
+// 	return $user_locations;
+
+// }
+
+// finally, set $location_array
+// $location_array = generateLocationArray($groups_array, $ip_whitelist);
+$location_array = generateLocationArray($complete_location_array, $ip_whitelist);
 
 // location array used to populate location dropdowns around app
 $simple_location_array = array();
@@ -167,7 +183,7 @@ foreach (array_keys($location_array) as $location) {
 
 // user array used to populate location dropdowns around app
 $user_arrays = array(
-	"LAWINFO" => array(
+	"LAWREF" => array(
 		"NOPE" => "Please Select Your User",
 		"WLF" => "WSU Law Faculty",
 		"OTF" => "Other Faculty",
@@ -200,6 +216,14 @@ $user_arrays = array(
 		"WSU" => "Wayne State Affiliated",
 	)	
 );
+
+// human readable user array
+$user_hash = array();
+foreach ($user_arrays as $group => $group_array) {
+	foreach ($group_array as $code => $title) {
+		$user_hash[$code] = $title;
+	}
+}
 
 
 // Transaction Type Hash
@@ -236,12 +260,6 @@ $transaction_type_hash = array(
 // print_r($location_array);
 // echo "<p>simple_location_array</p>";
 // print_r($simple_location_array);
-
-
-
-/* MySQL View Table for Reports (Feels backwards, but this works for pushing "PK1" or "PK2" to "PK" for view table):
-CREATE VIEW ref_stats_reports (id, ref_type, detailed_location, location, user_group, ip, timestamp) AS SELECT id, ref_type, location AS detailed_location, CASE location WHEN location NOT IN ('PK1','PK2') THEN 'PK' ELSE location END, user_group, ip, timestamp FROM ref_stats;
-*/
 
 
 ?>
