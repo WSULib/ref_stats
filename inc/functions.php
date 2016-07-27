@@ -181,6 +181,7 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 	// get location
 	$location = $_COOKIE['location'];	
 
+
 	# main index, current time
 	if ($context == "index") {
 		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE(timestamp)=DATE(NOW()) AND location = '$location' ORDER BY ref_type";
@@ -245,6 +246,15 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 	}
 }
 
+// // reference type
+// $ref_type_hash = array(
+// 	1 => "Directional",
+// 	2 => "Brief",
+// 	3 => "Extended",
+// 	4 => "Consultation"
+// );
+
+
 function startsWith($haystack, $needle) {	
     return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
 }
@@ -277,110 +287,59 @@ function autoSelectLocation() {
 	}
 }
 
-function authenticator() {
-	global $groups_array;
-	global $user_groups;
-	$location = '';
 
-	// Locate the location in the uber-variable that has all our location, group, and button info
-	foreach($groups_array as $gkey => $gvalue) {
-		// now go get the correct buttons for the group
-		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
-			$location = $gkey;
-		}
-	}
+// function authenticator() {
+// 	global $groups_array;
+// 	global $user_groups;
+// 	$location = '';
 
-	// if they're set to ADMIN group 'ALL'
-	if(in_array('ALL', $user_groups)) {
-		return True;
-	}
+// 	// Locate the location in the uber-variable that has all our location, group, and button info
+// 	foreach($groups_array as $gkey => $gvalue) {
+// 		// now go get the correct buttons for the group
+// 		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+// 			$location = $gkey;
+// 		}
+// 	}
 
-	// if they have the user group enabled for the location they want
-	elseif(in_array($location, $user_groups)) {
-		return True;
-	}
-	// if that location is set to be open
-	elseif($groups_array[$location]['open']) {
-		return True;
-	}
+// 	// if they're set to ADMIN group 'ALL'
+// 	if(in_array('ALL', $user_groups)) {
+// 		return True;
+// 	}
+
+// 	// if they have the user group enabled for the location they want
+// 	elseif(in_array($location, $user_groups)) {
+// 		return True;
+// 	}
+// 	// if that location is set to be open
+// 	elseif($groups_array[$location]['open']) {
+// 		return True;
+// 	}
 	
-	// nope
-	else {
-		return False;
-	}
+// 	// nope
+// 	else {
+// 		return False;
+// 	}
 
-}
-
-
-function buttonMaker2($transaction_type_hash) {
-	// Makes the buttons needed according to the locations it has available in $location_array
-	global $complete_location_array;
-	global $user_groups;
-	global $location_array;
-	$user_buttons = array();
-	// Locate the location in the uber-variable that has all our location, group, and button info
-	foreach($complete_location_array as $key => $value) {
-		// return $key;
-		// now go get the correct buttons for the group
-		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
-			// make sure you're allowed to see these buttons
-			if (authenticator()) {
-				$user_buttons = $value['buttons'];	
-			}
-			else {
-				// Not allowed. No buttons. Do not pass go; Do not collection $200
-				return;
-			}
-		}
-	}
-
-	// Makes buttons according to the array of buttons provided by $user_buttons
-	foreach ($user_buttons as $button) {
-		$value = $transaction_type_hash[$button][0];
-		$ref_group = $transaction_type_hash[$button][1];
-		$help_html = $transaction_type_hash[$button][2];
-		$buttons[] = <<<"EOF"
-			<div class="row">
-				<div class="col-md-12">
-					<div class="ref_button_wrapper">
-						<form action="" method="POST">
-							<input name="type" type="number" value="$button"></input>
-							<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</button>
-						</form>
-						<div id="button_help_$button" class="button_help_html">$help_html</div>
-					</div>
-					<div class="button_help_icon" onclick="$('#button_help_$button').slideToggle(); return false;">
-						<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-					</div>
-				</div>
-			</div>
-EOF;
-			}
-
-	return $buttons;
-}
-
+// }
 
 
 function buttonMaker($transaction_type_hash) {
 	// Makes the buttons needed according to the locations it has available in $location_array
-	global $groups_array;
-	global $user_groups;
+	global $complete_location_array;
 	global $location_array;
 	$user_buttons = array();
-
-	// Locate the location in the uber-variable that has all our location, group, and button info
-	foreach($groups_array as $gkey => $gvalue) {
-		// now go get the correct buttons for the group
-		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+	// Locate the location in the uber-variable that has all our location and button info
+	foreach($complete_location_array as $key => $value) {
+		// now go get the correct buttons for the location
+		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
 			// make sure you're allowed to see these buttons
-			if (authenticator()) {
-				$user_buttons = $gvalue['buttons'];	
-			}
-			else {
+			// if (authenticator()) {
+				$user_buttons = $value['buttons'];	
+			// }
+			// else {
 				// Not allowed. No buttons. Do not pass go; Do not collection $200
-				return;
-			}
+				// return;
+			// }
 		}
 	}
 
@@ -409,78 +368,27 @@ EOF;
 
 	return $buttons;
 }
-
-
-function buttonMakerForm2($transaction_type_hash,$row) {
-	// Makes the buttons needed according to the locations it has available in $location_array
-	global $complete_location_array;
-	global $user_groups;
-	global $location_array;
-	$user_buttons = array();
-
-	// Locate the location in the uber-variable that has all our location, group, and button info
-	foreach($complete_location_array as $key => $value) {
-		// now go get the correct buttons for the group
-		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
-			// make sure you're allowed to see these buttons
-			if (authenticator()) {
-				$user_buttons = $value['buttons'];
-			}
-			else {
-				// Not allowed. No buttons. Do not pass go; Do not collection $200
-				return;
-			}
-		}
-	}
-
-	// Makes buttons according to the array of buttons provided by $user_buttons
-	foreach ($user_buttons as $button) {
-		$value = $transaction_type_hash[$button][0];
-		$ref_group = $transaction_type_hash[$button][1];
-		if ($row['ref_type'] == $button){
-			$checked = 'checked="checked"';	
-		}
-		else {
-			$checked = "";	
-		}		
-		$buttons[] = <<<"EOF"
-		<li>
-			<div class='radio'>
-				<label>
-					<input type="radio" name="ref_type" value="$button" $checked>
-						<span class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</span>
-					</input>
-				</label>
-			<div>
-		</li>
-EOF;
-			}
-
-	return $buttons;
-}
-
 
 
 
 function buttonMakerForm($transaction_type_hash,$row) {
 	// Makes the buttons needed according to the locations it has available in $location_array
-	global $groups_array;
-	global $user_groups;
+	global $complete_location_array;
 	global $location_array;
 	$user_buttons = array();
 
-	// Locate the location in the uber-variable that has all our location, group, and button info
-	foreach($groups_array as $gkey => $gvalue) {
-		// now go get the correct buttons for the group
-		if(array_key_exists($_COOKIE['location'], $gvalue['locations'])) {
+	// Locate the location in the uber-variable that has all our location and button info
+	foreach($complete_location_array as $key => $value) {
+		// now go get the correct buttons for the location
+		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
 			// make sure you're allowed to see these buttons
-			if (authenticator()) {
-				$user_buttons = $gvalue['buttons'];	
-			}
-			else {
+			// if (authenticator2()) {
+				$user_buttons = $value['buttons'];
+			// }
+			// else {
 				// Not allowed. No buttons. Do not pass go; Do not collection $200
-				return;
-			}
+				// return;
+			// }
 		}
 	}
 
@@ -509,6 +417,7 @@ EOF;
 
 	return $buttons;
 }
+
 
 
 ?>

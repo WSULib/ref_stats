@@ -164,37 +164,12 @@ global $user_arrays;
 			<?php
 			if($buttonFlag === True) {
 				// Make buttons
-				$buttons = buttonMaker2($transaction_type_hash);
+				$buttons = buttonMaker($transaction_type_hash);
 				foreach($buttons as $button) {
 					echo $button;
 				}
 			}
-/********Testing */
-			echo $_COOKIE['location'];
-			// var_dump(buttonMakerForm());
-			// echo "\n";
-			// echo "STUFF";
-			// echo "\n";
-			// var_dump(buttonMakerForm2());
-			// echo "Location array";
-			// echo "<pre>";
-			// print_r($location_array);
-			// echo "</pre>";
-			// echo "\n";
-			// echo "New Location array";
-			// echo "<pre>";
-			// print_r($location_array2);
-			// echo "</pre>";
-			// echo "\n";
-			// echo "User group";
-			// echo "<pre>";
-			// print_r($user_groups);
-			// echo "</pre>";
-			// echo "<pre>";
-			// print_r($orig_location_array);
-			// echo "</pre>";
-			//echo $_COOKIE['location'];
-/************/
+
 			?>
 			<?php
 				// Populate dropdown with users if Law or Med

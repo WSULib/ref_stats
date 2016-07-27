@@ -12,26 +12,26 @@ else {
 
 // establish editing location, or select all
 if (isset($_REQUEST['edit_location']) && $_REQUEST['edit_location'] == "ALL"){
-	if (authenticator()){
+	// if (authenticator()){
 		$location_where = "location = ANY(select location from ref_stats)";
-	}
+	// }
 }
 elseif (isset($_REQUEST['edit_location'])) {
-	if (authenticator()){
+	// if (authenticator()){
 		$location_where = "location = '{$_REQUEST['edit_location']}'";
-	}
+	// }
 }
 elseif (isset($_COOKIE['location']) && $_COOKIE['location'] != "NOPE"){	
 	// default to current location
-	if (authenticator()){
+	// if (authenticator()){
 		$location_where = "location = '{$_COOKIE['location']}'";
-	}
+	// }
 }
 else {
-	if (authenticator()){
+	// if (authenticator()){
 		$_REQUEST['edit_location'] = "ALL";
 		$location_where = "location = ANY(select location from ref_stats)";	
-	}
+	// }
 }					
 
 // perform query
