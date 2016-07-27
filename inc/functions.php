@@ -321,6 +321,57 @@ function authenticator() {
 
 }
 
+
+function buttonMaker2($transaction_type_hash) {
+	// Makes the buttons needed according to the locations it has available in $location_array
+	global $complete_location_array;
+	global $user_groups;
+	global $location_array;
+	$user_buttons = array();
+	// Locate the location in the uber-variable that has all our location, group, and button info
+	foreach($complete_location_array as $key => $value) {
+		// return $key;
+		// now go get the correct buttons for the group
+		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
+			// make sure you're allowed to see these buttons
+			if (authenticator()) {
+				$user_buttons = $value['buttons'];	
+			}
+			else {
+				// Not allowed. No buttons. Do not pass go; Do not collection $200
+				return;
+			}
+		}
+	}
+
+	// Makes buttons according to the array of buttons provided by $user_buttons
+	foreach ($user_buttons as $button) {
+		$value = $transaction_type_hash[$button][0];
+		$ref_group = $transaction_type_hash[$button][1];
+		$help_html = $transaction_type_hash[$button][2];
+		$buttons[] = <<<"EOF"
+			<div class="row">
+				<div class="col-md-12">
+					<div class="ref_button_wrapper">
+						<form action="" method="POST">
+							<input name="type" type="number" value="$button"></input>
+							<button type="submit" class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</button>
+						</form>
+						<div id="button_help_$button" class="button_help_html">$help_html</div>
+					</div>
+					<div class="button_help_icon" onclick="$('#button_help_$button').slideToggle(); return false;">
+						<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+					</div>
+				</div>
+			</div>
+EOF;
+			}
+
+	return $buttons;
+}
+
+
+
 function buttonMaker($transaction_type_hash) {
 	// Makes the buttons needed according to the locations it has available in $location_array
 	global $groups_array;
@@ -368,6 +419,58 @@ EOF;
 
 	return $buttons;
 }
+
+
+function buttonMakerForm2($transaction_type_hash,$row) {
+	// Makes the buttons needed according to the locations it has available in $location_array
+	global $complete_location_array;
+	global $user_groups;
+	global $location_array;
+	$user_buttons = array();
+
+	// Locate the location in the uber-variable that has all our location, group, and button info
+	foreach($complete_location_array as $key => $value) {
+		// now go get the correct buttons for the group
+		if(array_key_exists($_COOKIE['location'], $complete_location_array[$key])) {
+			// make sure you're allowed to see these buttons
+			if (authenticator()) {
+				$user_buttons = $value['buttons'];
+			}
+			else {
+				// Not allowed. No buttons. Do not pass go; Do not collection $200
+				return;
+			}
+		}
+	}
+
+	// Makes buttons according to the array of buttons provided by $user_buttons
+	foreach ($user_buttons as $button) {
+		$value = $transaction_type_hash[$button][0];
+		$ref_group = $transaction_type_hash[$button][1];
+		if ($row['ref_type'] == $button){
+			$checked = 'checked="checked"';	
+		}
+		else {
+			$checked = "";	
+		}		
+		$buttons[] = <<<"EOF"
+		<li>
+			<div class='radio'>
+				<label>
+					<input type="radio" name="ref_type" value="$button" $checked>
+						<span class="btn ref_type_button btn-primary btn-block btn-lg $ref_group">$value</span>
+					</input>
+				</label>
+			<div>
+		</li>
+EOF;
+			}
+
+	return $buttons;
+}
+
+
+
 
 function buttonMakerForm($transaction_type_hash,$row) {
 	// Makes the buttons needed according to the locations it has available in $location_array
