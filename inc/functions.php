@@ -181,7 +181,6 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 	// get location
 	$location = $_COOKIE['location'];	
 
-
 	# main index, current time
 	if ($context == "index") {
 		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE(timestamp)=DATE(NOW()) AND location = '$location' ORDER BY ref_type";
@@ -245,15 +244,6 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 		echo "</tr>";
 	}
 }
-
-// // reference type
-// $ref_type_hash = array(
-// 	1 => "Directional",
-// 	2 => "Brief",
-// 	3 => "Extended",
-// 	4 => "Consultation"
-// );
-
 
 function startsWith($haystack, $needle) {	
     return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;

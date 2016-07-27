@@ -1,19 +1,19 @@
 /* REF */
 /*Directional*/
 .ref_type_1 {
-	color:#069e87; 	
+	color:rgba(6,158,135,.3);
 }
 /*Brief*/
 .ref_type_2 {
-	color:#069e87; 	
+	color:rgba(6,158,135,.6);
 }
 /*Extended*/
 .ref_type_3 {
-	color:#069e87;	 
+	color:rgba(6,158,135,1);
 }
 /*Consultation*/
 .ref_type_4 {
-	color:#069e87;	 
+	color:rgba(4,111,95,1);
 }
 span.ref, button.ref, button.ref:active, button.ref:focus {
 	background-color:#069e87;
@@ -27,15 +27,15 @@ span.ref:hover, button.ref:hover {
 /* CIRC */
 /*General Circ*/
 .ref_type_5 {
-	color:#eec445;	 
+	color:rgba(238,196,69,.35);
 }
 /*Reserves Circ*/
 .ref_type_6 {
-	color:#eec445;	 
+	color:rgba(238,196,69,.6);
 }
 /*ILL / MEL Circ*/
 .ref_type_7 {
-	color:#eec445;	 
+	color:rgba(238,196,69,1);
 }
 span.circ, button.circ, button.circ:active, button.circ:focus {
 	background-color:#eec445;
@@ -53,23 +53,23 @@ span.circ:hover, button.circ:hover {
 /* TECH */
 /*Print / Copy / Scan*/
 .ref_type_8 {
-	color:rgb(142, 144, 144);	 
+	color:rgba(142, 144, 144, .2);	 
 }
 /*Desktop Support*/
 .ref_type_9 {
-	color:rgb(142, 144, 144);	 
+	color:rgba(142, 144, 144, .4);	 
 }
 /*BYOD Support*/
 .ref_type_10 {
-	color:rgb(142, 144, 144);	 
+	color:rgba(142, 144, 144, .6);	 
 }
 /*Staff Support*/
 .ref_type_11 {
-	color:rgb(142, 144, 144);	 
+	color:rgba(142, 144, 144, .9);	
 }
 /*Classroom Support*/
 .ref_type_12 {
-	color:rgb(142, 144, 144);	 
+	color:rgba(110, 110, 110, 1);	 	
 }
 span.tech, button.tech, button.tech:active, button.tech:focus {
 	background-color:rgb(142, 144, 144);
