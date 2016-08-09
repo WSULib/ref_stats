@@ -11,20 +11,23 @@ Highcharts.createElement('link', {
 	type: 'text/css'
 }, null, document.getElementsByTagName('head')[0]);
 
+var chart_colors = [
+	"rgba(6,158,135,.3)", 
+	"rgba(6,158,135,.6)", 
+	"rgba(6,158,135,1)", 
+	"rgba(4,111,95,1)", 
+	"rgba(238,196,69,.35)", 
+	"rgba(238,196,69,.6)", 
+	"rgba(238,196,69,1)",
+	"rgba(142, 144, 144, .2)",
+	"rgba(142, 144, 144, .4)",
+	"rgba(142, 144, 144, .6)",
+	"rgba(142, 144, 144, .9)",
+	"rgba(110, 110, 110, 1)"
+]
+
 Highcharts.theme = {
-	colors: [
-		"#069e87", 
-		"#eec445", 
-		"rgb(142, 144, 144)", 
-		"#9CB2B2", 
-		"#aaeeee", 
-		"#ff0066", 
-		"#eeaaee",
-		"#55BF3B",
-		"#DF5353",
-		"#7798BF",
-		"#665544"
-	],
+	colors: chart_colors,
 	chart: {
 		backgroundColor: null,
 		style: {

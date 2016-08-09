@@ -111,10 +111,24 @@ if (isset($_REQUEST['submitted'])){
 	/* ----------------------------------------------------------------------------------------------------- */
 	$type_query = "SELECT ref_type, COUNT(ref_type) AS ref_type_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY ref_type";
 	$type_result = mysqli_query($link, $type_query) or trigger_error(mysqli_error());
-	$type_counts = array();
+	$type_counts = array ( 
+		'Directional' => 0,
+		'Brief Reference' => 0,
+		'Extended Reference' => 0,
+		'Consultation' => 0,
+		'General Circ' => 0,
+		'Reserves Circ' => 0,
+		'ILL / MEL Circ' => 0,
+		'Print / Copy / Scan' => 0,
+		'Desktop Support' => 0,
+		'BYOD Support' => 0,
+		'Staff Support' => 0,
+		'Classroom Support' => 0
+	);
 	while($row = mysqli_fetch_assoc($type_result)) {		
 		$type_counts[$transaction_type_hash[$row['ref_type']][0]] = $row['ref_type_count'];
 	}
+
 
 	// User Group counts
 	/* ----------------------------------------------------------------------------------------------------- */
@@ -240,7 +254,7 @@ if (isset($_REQUEST['submitted'])){
 								<li>
 									<div class="checkbox">
 										<label>
-											<input class="locationcheckbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge 
+											<input class="locationcheckbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge Reference
 										</label>
 									</div>
 								</li>
