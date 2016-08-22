@@ -37,6 +37,10 @@ span.ref:hover, button.ref:hover {
 .ref_type_7 {
 	color:rgba(238,196,69,1);
 }
+/*Reserves*/
+.ref_type_8 {
+	color:rgba(183,152,53,1);
+}
 span.circ, button.circ, button.circ:active, button.circ:focus {
 	background-color:#eec445;
 	border-color:#eec445;
@@ -52,23 +56,23 @@ span.circ:hover, button.circ:hover {
 
 /* TECH */
 /*Print / Copy / Scan*/
-.ref_type_8 {
+.ref_type_9 {
 	color:rgba(142, 144, 144, .2);	 
 }
 /*Desktop Support*/
-.ref_type_9 {
+.ref_type_10 {
 	color:rgba(142, 144, 144, .4);	 
 }
 /*BYOD Support*/
-.ref_type_10 {
+.ref_type_11 {
 	color:rgba(142, 144, 144, .6);	 
 }
 /*Staff Support*/
-.ref_type_11 {
+.ref_type_12 {
 	color:rgba(142, 144, 144, .9);	
 }
 /*Classroom Support*/
-.ref_type_12 {
+.ref_type_13 {
 	color:rgba(110, 110, 110, 1);	 	
 }
 span.tech, button.tech, button.tech:active, button.tech:focus {
