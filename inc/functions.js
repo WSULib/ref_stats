@@ -442,7 +442,19 @@ function busiestDOW(raw_data){
 }
 
 
+function sortStatsGraph() {
 
+    var tds = $('.ref_type_block');
+    for (var i = tds.length - 1; i >= 0; i--) {
+        td = tds[i]        
+        if ($(td).find('span').length > 0) {            
+            $(td).find('span').sort(function (a, b) {            
+                return +a.getAttribute('sort_order') - +b.getAttribute('sort_order');
+            }).appendTo( $(td) );
+        }
+    };
+
+}
 
 
 

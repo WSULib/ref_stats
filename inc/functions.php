@@ -176,7 +176,7 @@ function makeUserDropdown($please_select=True, $preset) {
 }
 
 // function to report 8am - 11pm table rows showing stats
-function statsGraph($link, $context, $current_edit_location, $graph_date){			
+function statsGraph($transaction_type_hash, $link, $context, $current_edit_location, $graph_date){			
 
 	// get location
 	$location = $_COOKIE['location'];	
@@ -193,7 +193,7 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 		if ($current_edit_location != "ALL") {
 			$location_filter = "AND location = '$current_edit_location'";			
 		}		
-		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE_FORMAT(timestamp, '%m %d %Y') = '$graph_date' $location_filter ORDER BY ref_type";				
+		$query = "SELECT HOUR(timestamp) AS hour, ref_type FROM `ref_stats` WHERE DATE_FORMAT(timestamp, '%m %d %Y') = '$graph_date' $location_filter ORDER BY ref_type";
 		$result = mysqli_query($link, $query) or trigger_error(mysqli_error()); 	
 	}	
 
@@ -225,34 +225,58 @@ function statsGraph($link, $context, $current_edit_location, $graph_date){
 		7 => array("7am","")
 	);
 
+	$sorting_hours = array(
+		8 => array(),
+		9 => array(),
+		10 => array(),
+		11 => array(),
+		12 => array(),
+		13 => array(),
+		14 => array(),
+		15 => array(),
+		16 => array(),
+		17 => array(),
+		18 => array(),
+		19 => array(),
+		20 => array(),
+		21 => array(),
+		22 => array(),
+		23 => array(),
+		0 => array(),
+		1 => array(),
+		2 => array(),
+		3 => array(),
+		4 => array(),
+		5 => array(),
+		6 => array(),
+		7 => array()
+	);
+
 	// strip after hours if not UGL
 	if ($location != "UGL") {
 		foreach (range(1, 7) as $number) {
 		    unset($shown_hours[$number]);
 		}
-	}
+	}	
 
 	// update graph marks for each hour returned
 	while($row = mysqli_fetch_array($result)) {
-		$shown_hours[(int)$row['hour']][1].= "<span class='ref_type_{$row['ref_type']}'>&#9608;</span>"; 		
+		// add sort attribute to html element		
+		$sort = array_search($row['ref_type'], array_keys($transaction_type_hash));
+		$shown_hours[(int)$row['hour']][1].= "<span class='ref_type_{$row['ref_type']}' sort_order=$sort>&#9608;</span>";
 	}
 
 	// push to page
 	foreach($shown_hours as $hour){
 		echo "<tr>";
 		echo "<td class='time_col'>{$hour[0]}</td>";
-		echo "<td><strong>{$hour[1]}</strong></td>";
+		echo "<td class='ref_type_block'>{$hour[1]}</td>";
 		echo "</tr>";
 	}
-}
 
-// // reference type
-// $ref_type_hash = array(
-// 	1 => "Directional",
-// 	2 => "Brief",
-// 	3 => "Extended",
-// 	4 => "Consultation"
-// );
+	// fire javascript to reorg
+	echo "<script type='text/javascript'>sortStatsGraph();</script>";
+}
 
 
 function startsWith($haystack, $needle) {	

@@ -209,7 +209,7 @@ global $user_arrays;
 					<div id="table_wrapper">
 						<table class="table table-striped table-condensed">						
 							<?php						
-							statsGraph($link,"index",'','');							
+							statsGraph($transaction_type_hash,$link,"index",'','');							
 							?>
 						</table>
 					</div>

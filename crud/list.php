@@ -163,7 +163,7 @@ $graph_date = date('m d Y', strtotime( ($page)." days" ));
 					<div id="table_wrapper">
 						<table class="table table-striped table-condensed">						
 							<?php						
-							statsGraph($link, "crud", $current_edit_location, $graph_date);														
+							statsGraph($transaction_type_hash, $link, "crud", $current_edit_location, $graph_date);														
 							?>
 						</table>
 					</div>
