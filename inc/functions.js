@@ -269,6 +269,9 @@ function busiestHours(raw_data){
             name: 'ILL_MEL_Circ',
             data: []
         }, {
+            name: 'Room_Reservation',
+            data: []
+        }, {
             name: 'Print_Copy_Scan',
             data: []
         }, {

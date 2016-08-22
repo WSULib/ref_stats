@@ -119,6 +119,7 @@ if (isset($_REQUEST['submitted'])){
 		'General Circ' => 0,
 		'Reserves Circ' => 0,
 		'ILL / MEL Circ' => 0,
+		'Room Reservation' => 0,
 		'Print / Copy / Scan' => 0,
 		'Desktop Support' => 0,
 		'BYOD Support' => 0,
@@ -164,11 +165,12 @@ if (isset($_REQUEST['submitted'])){
 		COUNT(CASE WHEN ref_type = 5 THEN ref_type END) AS General_Circ,
 		COUNT(CASE WHEN ref_type = 6 THEN ref_type END) AS Reserves_Circ,
 		COUNT(CASE WHEN ref_type = 7 THEN ref_type END) AS ILL_MEL_Circ,
-		COUNT(CASE WHEN ref_type = 8 THEN ref_type END) AS Print_Copy_Scan,
-		COUNT(CASE WHEN ref_type = 9 THEN ref_type END) AS Desktop_Support,
-		COUNT(CASE WHEN ref_type = 10 THEN ref_type END) AS BYOD_Support,
-		COUNT(CASE WHEN ref_type = 11 THEN ref_type END) AS Staff_Support,
-		COUNT(CASE WHEN ref_type = 12 THEN ref_type END) AS Classroom_Support
+		COUNT(CASE WHEN ref_type = 8 THEN ref_type END) AS Room_Reservation,
+		COUNT(CASE WHEN ref_type = 9 THEN ref_type END) AS Print_Copy_Scan,
+		COUNT(CASE WHEN ref_type = 10 THEN ref_type END) AS Desktop_Support,
+		COUNT(CASE WHEN ref_type = 11 THEN ref_type END) AS BYOD_Support,
+		COUNT(CASE WHEN ref_type = 12 THEN ref_type END) AS Staff_Support,
+		COUNT(CASE WHEN ref_type = 13 THEN ref_type END) AS Classroom_Support
 		FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY hour;";
 	$hour_result = mysqli_query($link, $hour_query) or trigger_error(mysqli_error());
 	$hour_counts = array();
@@ -181,7 +183,6 @@ if (isset($_REQUEST['submitted'])){
 				$hour_counts[$row['hour']][$key] = $value;
 			}
 		}
-
 	}
 
 
@@ -257,16 +258,7 @@ if (isset($_REQUEST['submitted'])){
 											<input class="locationcheckbox" type="checkbox" name="locations[]" value="PK" <?php if ( in_array("PK", $_REQUEST['locations'])) { echo "checked";} ?> > Purdy/Kresge Reference
 										</label>
 									</div>
-								</li>
-
-								<!-- Old Neef Law option -->
-								<li>
-									<div class="checkbox">
-										<label>
-											<input class="locationcheckbox" type="checkbox" name="locations[]" value="LAW" <?php if ( in_array("LAW", $_REQUEST['locations'])) { echo "checked";} ?> > Neef Law (OLD)
-										</label>
-									</div>
-								</li>
+								</li>								
 
 								<?php  makeCheckboxGrid(False, $current_report_location_array); ?>
 							</ul>
