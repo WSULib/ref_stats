@@ -26,13 +26,6 @@ global $user_arrays;
 
 	<!-- Local JS -->
 	<script src="inc/functions.js"></script>	
-
-	<!-- User Login Testing -->
-	<script src="inc/jquery.cookie.js" type="text/javascript"></script>
-	<script src="inc/userData.js"></script>	
-
-
-
 </head>
 
 <body onBlur="window.focus();">	
