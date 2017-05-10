@@ -40,12 +40,12 @@ $complete_location_array = array(
 		),
 	"PCIRC" => array(
 		"PCIRC" => "Purdy Library - Circulation", 
-		"buttons" => array(1,5,6,7,8,9,10)
+		"buttons" => array(1,5,7,8,9,10)
 		),
-	"KCIRC" => array(
-		"KCIRC" => "Kresge Library - Circulation",
-		"buttons" => array(1,5,6,7,8,9,10)
-		),
+// 	"KCIRC" => array(
+// 		"KCIRC" => "Kresge Library - Circulation",
+// 		"buttons" => array(1,5,6,7,8,9,10)
+// 		),
 	"MED_LIB" => array(
 		"MED_LIB" => "Shiffman Medical Library",
 		"buttons" => array(1,2,3,4)
