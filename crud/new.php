@@ -1,4 +1,4 @@
-<? 
+<?php 
 include($_SERVER['DOCUMENT_ROOT'].'inc/dbs/ref_stats_config.php'); 
 include('header.php');
 include('../inc/functions.php');

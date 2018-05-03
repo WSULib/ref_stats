@@ -41,6 +41,9 @@ span.ref:hover, button.ref:hover {
 .ref_type_13 {
 	color:rgba(204,169,59,1);
 }
+.ref_type_14 {
+	color:rgba(160,132,47,1);
+}
 span.circ, button.circ, button.circ:active, button.circ:focus {
 	background-color:#eec445;
 	border-color:#eec445;
