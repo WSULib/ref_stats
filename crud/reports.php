@@ -147,7 +147,7 @@ if (isset($_REQUEST['submitted'])){
 
 	// Busiest Day-of-the-week (dow)
 	/* ----------------------------------------------------------------------------------------------------- */
-	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY dow_index ORDER BY dow_index;";
+	$dow_query = "SELECT DAYNAME(timestamp) AS dow_name, DAYOFWEEK(timestamp) AS dow_index, count(DAYOFWEEK(timestamp)) AS dow_count FROM ref_stats_reports WHERE DATE(timestamp) >= '$date_start' AND DATE(timestamp) <= '$date_end' $location_where $dow $user GROUP BY dow_index, dow_name ORDER BY dow_index;";
 	$dow_result = mysqli_query($link, $dow_query) or trigger_error(mysqli_error());
 	$dow_counts = array();
 	while($row = mysqli_fetch_assoc($dow_result)) {		
